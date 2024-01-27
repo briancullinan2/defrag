@@ -1,0 +1,1 @@
+/df_hud_videocapture_fontshadow [0-1] (default: 1)

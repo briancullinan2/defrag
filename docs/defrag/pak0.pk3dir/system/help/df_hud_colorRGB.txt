@@ -1,0 +1,4 @@
+/df_hud_colorRGB (R,G,B)
+	Sets a custom hud color exprimed in the 24 bits RGB format (0,0,0 to 255,255,255).
+	As an example, 0,255,0 will display a green hud.
+

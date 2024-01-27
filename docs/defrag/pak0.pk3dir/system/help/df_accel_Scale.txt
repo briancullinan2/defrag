@@ -1,0 +1,5 @@
+\df_accel_Scale [ DEFAULT: -1.2 RANGE: -F TO F TYPE: float ] - changes the amount of offset the accel CH is adjusted based on the angle difference between the user's chosen direction of travel (wishdir) and the optimal angle.
+
+Normally, with a scale value of 1.0, a 5 degree difference between the wishdir and optimaldir results in a 5 position offset.  A scale value of 2.0 would effectively multiply the angle difference: 5 degrees would equal a 10 position offset.  Scale is the magnification of the degree difference.  It may help to think of the scale as the "snsitivity" of the accelmeter.
+
+Positive scale values are simple maginifications of the degree difference.  Negative scale values are the magnification of the degree difference, but scales based on speed.  Above 600ups the scale begins to increase with speed.  This is useful, since at higher speeds the amount of change between the starting CH position (on jump) and the ending CH position (on landing) is smaller.  Using the negative scale means that at higher speeds, you accelmeter will feel closer to the sensitivity of the accelmeter at lower speeds.

@@ -1,0 +1,15 @@
+\df_lg_Knockback [ DEFAULT: 0 (off) RANGE: 0 (off) TO 1 (on) ] - toggles lightning gun knockback
+
+*** requires map_restart to take effect
+
+The knockback on the lighting gun is dictated by this cvar (set on the server), unless the lightning gun is actually picked up as an item, in which case the lightning gun knockback setting for the weapon (as set by the mapper), dictates if knockback is on (for the player that just picked up the lighting gun).
+
+As a mapper, you may change the knockback on/off setting, by using the "speed" key/value pair in the entities window for the lighting gun.  To do this, create the lighting gun in the map, then open the entities window for the LG.  Create the "speed" key/value pair.
+
+Speed:
+
+0 = knockback off
+1 = knockback on
+
+Now, if the player picks up the lighting gun ingame, the setting you applied for the LG will override the server's df_lg_Knockback setting. Note that since the speed key/value pair is absent for the LG on normal maps (id, etc.), the knockback will be set to "off" for the player if the player picks up the LG ingame (even if the df_lg_Knockback setting is "on" for the server.)
+

@@ -1,0 +1,5 @@
+/dmq_add [file|directory]
+
+Adds either the specified demo or all the demos of the specified directory to the Demo Queue.
+
+Related commands are: dmq_clear, dmq_play, dmq_stop.

@@ -1,0 +1,104 @@
+================
+Advanced Camming
+================
+
+1. Initial Information
+2. Walkthrough #1 - Player in trick demo is the subject
+3. Walkthrough #2 - Player in trick demo is not the subject
+
+----------------------
+1. Initial Information
+----------------------
+
+For these examples, we're going to assume that we have a trick demo, named demo0001.
+
+To start, make sure replays are turned off, and democams are turned off:
+
+\df_demos_ReplayMode 0
+\df_demos_CameraMode 0
+
+Also, in order for ghosts to play, sv_pure must be 0 (otherwise you'll get an error - "cannot open ghost file for play" - when trying to play the ghost files.  Use the defrag UI to start a map.
+
+-------------------------------------------------------
+2. Walkthrough #1 - Player in trick demo is the subject
+-------------------------------------------------------
+We want to create a moving camera that tracks the player.  To accomplish this, we will need to use multiple ghosts. 
+
+1. Record a ghost from the demo.  Set df_ghosts_AutoMode 1.  Play the demo (must be from the UI, not from the console).  This creates a ghost with the same name as the demo filename.  This is our "subject" or "target" ghost.  I'll use the term "target".  So, our first ghost record is our target ghost (called demo0001.boo_01).
+
+2. Now, we want to create "camera" ghost.  Load the map through the UI (sv_pure must be 0).  Go to spectator mode, and move into proper position.  In the console, type: "ghost #1 play demo0001; ghost #2 record camera_demo0001".  Now, the first ghost will start playing.  Move around and follow this ghost.  The main concern should be your movements are smooth - don't worry about the camera angles - those will be fixed automatically.  When ghost 1 stops playing, in the console, type: "ghost #2 stop".  You now have the "camera" ghost, named camera_demo0001.
+
+3. We need to rename some files.  Find the first ghost - the one with the same name as the demoname.  Rename this from demo0001.boo_01 to target-demo0001.boo_01.  Copy the camera_demo0001.boo_01 file.  Rename the copy of the file to demo0001.boo_01.
+
+4. Now, what we want to do is play the original trick demo, and have the camera ghost play during the demo, and track the player.  Set df_ghosts_AutoMode 2.  Set df_ghost1_PlayCameraMode 14 (this is the cameramode that tracks a player).  Now start the demo from the UI.
+
+You should now see the demo, and the camera ghost should be playing (since we renamed the camera ghost to the same name as the demo filename).  The position of the camera should be your recorded movements, and the angles of the camera should be tracking the player.
+
+Here's the steps again, with just the commands:
+
+1. df_ghosts_AutoMode 1
+2. Play demo0001 from the UI
+3. Load the map (sv_pure 0)
+4. Spectator mode
+5. Move into position
+6. Console: "ghost #1 play demo0001; ghost #2 record camera_demo0001"
+7. Move around - worry about position, not angles.  When the ghost stops playing, type "ghost #2 stop"
+8. Rename demo0001.boo_01 to target-demo0001.boo_01
+9. Copy the camera_demo0001.boo_01 file.  Rename the copy of the file to demo0001.boo_01
+10. df_ghosts_AutoMode 2
+11. df_ghost1_PlayCameraMode 14
+12. Play demo0001 from the UI
+
+-----------------------------------------------------------
+3. Walkthrough #2 - Player in trick demo is not the subject
+-----------------------------------------------------------
+In this example, we want to create a moving target, similar to Walkthrough #1.  However, instead of tracking the player, we want to track a moving target.  This could be used to do something like, view the demo, but instead of looking exactly at the player in the demo (where the player is always in the center of the screen), we will have the camera look slightly off-target.
+
+This example is similar to Walkthrough #1, but has additional steps and ghosts, since we need to create our own target, different from the trick demo.
+
+1. Record a ghost from the demo.  Set df_ghosts_AutoMode 1.  Play the demo (must be from the UI, not from the console).  This creates a ghost with the same name as the demo filename.  This is first target ghost.
+
+Now, we need to create a new target demo.  Essentially, what we're going to do is play the first ghost we made, and move around while this ghost is playing.  Where we move is where we'd like the camera to actually look.  So, we're going to enter spectator mode, play the first ghost, and move around.  We'll stay close to the original ghost, but not directly on top of the ghost.  If, say we wanted the camera to look at a position below the original player, we'd stay just below the ghost while we move along with the ghost.  So:
+
+2. Enter the map.  Go to spectator mode, and move into the proper position.  In the console, type: "ghost #1 play demo0001; record demo0002".
+
+Note that we are recording a demo, not a ghost.  Now move around, follow the ghost, and try to be smooth with your movements.  Your position is where the camera will actually look (this is not where the camera will be, position-wise).  When the ghost stops playing, type "stoprecord".  Ok, now we have a second demo (demo0002) - which is our new target demo.
+
+3. Ok, now we need to create a new ghost (our second target ghost) from the 2nd demo.  Make sure df_ghosts_AutoMode is set to 1.  Play demo0002 (from the UI).  When the demo is finished playing, we should have a new ghost, called demo0002.boo_01.  This is our second target ghost.
+
+4. Our next step is to create the first camera ghost (we have to create 2 in total).  Load the map.  Spectate, and get into position.  In the console, type: "ghost #1 play demo0002; ghost #2 record camera1_demo0002".  As the ghost plays, move around.  You are creating your camera position ghost, so make sure your movements are smooth.  Do not worry about the camera angles.
+
+5. Time to rename and copy some files. Rename demo0001.boo_01 to target_demo0001.boo_01.  Copy camera1_demo0002.boo_01 and rename this copy to demo0002.boo_01.
+
+6. Now, things get a bit tricky.  We need to play our first camera ghost, and record a new camera ghost (our 2nd camera ghost).  The first camera ghost will get played automatically, but the second ghost we will have to start the recording of this ghost manually.  Set df_ghosts_AutoMode 2.  Set df_ghost1_PlayCameraMode 14.  Set df_ghost2_RecordView 1.  Play demo0002 from the ui.  As soon as the demo starts playing, type "ghost #2 record camera2_demo0002".  You may wish to make a bind for this (use one of the function keys on the keyboard, so the demo does not exit when you press the key).
+
+What is happening here is that we are playing demo0002 (our 2nd target demo).  Ghost #1 is playing our first camera ghost, and tracking the subject in demo0002.  Ghost #2 is actually recording our 2nd camera ghost, as ghost #1 is playing and tracking the subject in demo0002.
+
+7.  Delete demo0001.boo_01. Copy camera2_demo0002.boo_01, and rename the copy to demo0001.boo_01 (note demo0001, not demo0002).
+
+8. Now, the last step is to play the original demo, and use the second camera ghost.  Make sure df_ghosts_AutoMode is set to 2.  Change df_ghost1_PlayCameraMode to 13 (this is NOT the player tracking camera, but just a regular camera mode for the ghost).  Play demo0001 from the UI.
+
+You should see the original (demo0001) trick demo playing.  The second camera ghost should be playing.  The camera should be moving along our camera path, but not looking directly at our subject - but at our positions that we recorded in demo0002. 
+
+Here's the steps again, with just the commands:
+
+1. df_ghosts_AutoMode 1
+2. Play demo0001 from the UI
+3. Load the map (sv_pure 0)
+4. Spectator mode, move into position
+6. Console: "ghost #1 play demo0001; record demo0002"
+7. Move around.  Stay close to the original ghost - your position will be where the final camera will be looking.  When the ghost stops playing, type "stoprecord"
+8. Play demo0002 from the UI
+9. Load the map
+10. Spectator mode, move into position.
+11. Console: "ghost #1 play demo0002; ghost #2 record camera1_demo0002"
+12. Move around, looking at the first ghost.  Concerns are your position/movement - these movements will be your camera position.  When the ghost stops, type "ghost #2 stop"
+13. Rename demo0001.boo_01 to target_demo0001.boo_01.
+14. Copy camera1_demo0002.boo_01.  Rename the copy to demo0002.boo_01.
+15. df_ghosts_AutoMode 2
+16. df_ghost1_PlayCameraMode 14
+17. df_ghost2_RecordView 1
+18. Play demo0002 from the UI.  As soon as the demo starts playing, type "ghost #2 record camera2-demo0002" (maybe make a bind for this).
+19. Delete demo0001.boo_01.  Copy camera2-demo0002.boo_01.  Rename the copy to demo0001.boo_01 (note demo0001, not demo0002)
+20. df_ghost1_PlayCameraMode 13
+21. Play demo0001 from the UI

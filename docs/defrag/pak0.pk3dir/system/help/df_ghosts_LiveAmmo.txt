@@ -1,0 +1,7 @@
+\df_ghosts_LiveAmmo [ DEFAULT: 1 RANGE: 0 TO 4 ] - makes ghost fire real missiles (rockets, grenades, plasma, or bfg shots) if cheats are enabled.  Nice for practicing multiplayer tricks by oneself.
+
+ 0 = off
+ 1 = on
+ 2 = on - quaded missiles
+ 3 = on - self-style missiles - missiles that do not explode when hitting player
+ 4 = on - self-style quaded missiles - quaded missiles that do not explode when hitting the player

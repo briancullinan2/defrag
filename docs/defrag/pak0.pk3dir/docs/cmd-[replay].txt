@@ -1,0 +1,136 @@
+=======================
+CONSOLE COMMAND: replay
+=======================
+
+1. Information
+2. History
+
+--------------------------------------------------
+replay [ FORMAT: subcommand_name <...> ]
+--------------------------------------------------
+
+--------------
+1. Information
+--------------
+
+The Replay console command is used for replay script file loading and saving, as well as replay data manipulation.
+
+For help ingame, type: \replay ?
+
+To use the command, type: \replay subcommand_name <...>
+substituting "command_name" from one of the commands listed below.
+
+--------------------------------------------------
+READ/LOAD <filename>
+--------------------------------------------------
+
+Loads a replay script file.  When the script file is read, it is automatically validated.  Make sure to be in one of the replay debug modes to see the results of the script validation.  If no filename is specified, the replay script with the same name as the current map name is loaded, unless df_demos_ReplayFilename is not empty, in which case the filename specified by this var will be loaded.
+
++ Example: \replay load // loads the replay script file with the same filename as the map
+
++ Example: \replay load q3dm17 // loads the q3dm17 replay script file
+
+--------------------------------------------------
+WRITE/SAVE filename
+--------------------------------------------------
+
+Saves a replay script file.  A filename must be specified.  When the file is saved, it is automatically formatted (including FORMAT comments, etc.).
+
++ Example: \replay save q3dm17 // saves the q3dm17 replay script file
+
+--------------------------------------------------
+VALIDATE
+--------------------------------------------------
+
+Validates a script.  Checks the script for errors, such as unreferenced VAR or CAM objects, as well as invalid ID references within TRANS and LINKS.
+
+Note that when creating a new replay script ingame (when a replay script file does not exist yet), you must type "replay validate" as soon as you have created your first script entity, otherwise the entity will not be visible onscreen in the debug modes.
+
++ Example: \replay validate  // validates the current replay script data
+
+--------------------------------------------------
+ACTIVATE ActID
+--------------------------------------------------
+
+Used to manually activate an activator.  Basically, you may create an activator that can be manually triggered during replays.  This is useful when you would like to trigger a replay script event manually.
+
++ Example: \replay activate 3 // activates ACT # 3
+
+--------------------------------------------------
+CLEAR DataType DataID
+--------------------------------------------------
+
+Clears (deletes) a replay data item of the DataType specified.  If "-1" is specified, all the date for that DataType is cleared.
+
++ Example: \replay clear var 2  // clears VAR # 2
+
++ Example: \replay clear cam -1 // clears all CAM data
+
+--------------------------------------------------
+CLEAR all
+--------------------------------------------------
+
+Clears all the replay data.
+
++ Example: \reaply clear all // clears all replay data
+
+*** NOTE: Clearing replay data does not delete a replay script file.  
+
+*** WARNING: If you clear the replay data and then do replay save to an existing replay script, you will effectively destroy the old replay file.
+
+--------------------------------------------------
+GET DataType DataID <format>
+--------------------------------------------------
+
+Displays to the console the  replay data of the type and id specified.  If "-1" is specified for the DataID, all the data of that DataType is retrieved.  There are 4 different formats that the data can be displayed in:
+
+0 = EXPANDED (shows data names and data values)
+1 = CHAIN    (shows data references)
+2 = SHORT    (list style - shows data values, no names)
+3 = FORMAT   (shows format of DataType specified)
+
++ Example: \replay get var 3  // display VAR # 3
+
++ Example: \replay get cam -1 // displays all the CAM data in list format
+
+--------------------------------------------------
+GET all DataID <format>
+--------------------------------------------------
+
+Displays all data for the DataID specified.
+
++ Example: \replay get all 3 // displays VAR, CAM, TRAN, ACT, and LINK # 3
+
+--------------------------------------------------
+SET DataType DataID <...>
+--------------------------------------------------
+
+Sets the replay data for the DataType and DataID specified.  Note that you must supply all the data items for the datatype specified.  So for a CAM, you must supply the ID, X, Y, Z, P, Y, R values.  Note that you may use string subtitutions.
+
++ Example: \replay set CAM 1 100 200 50 -40 120 0 // sets CAM # 1 to the X, Y, Z, P, Y, R values specified
+
++ Example: \replay set CAM 1 $ 400 $ $ $ $        // sets CAM # 1 Y value to 400, while leaving the rest of the values as they are
+
++ Example (using string substitutions):
+
+\set user_CurrentCamID 2 // sets CurrentCamID vstr to 2
+\replay set CAM $user_CurrentCamID $viewposX $viewposY $viewposZ $angX $angY $angZ // sets CAM # 2 to the player's current position and angles
+
+*** NOTE: When creating CAMs and ACTs, the following are useful binds:
+
+\bind <key> "varMath user_CurrentCamID - 1"
+\bind <key> "varMath user_CurrentCamID + 1"
+\bind <key> "replay set CAM $user_CurrentCamID $viewposX $viewposY $viewposZ $angX $angY $angZ"
+
+\bind <key> "varMath user_CurrentActID - 1"
+\bind <key> "varMath user_CurrentActID + 1"
+\bind <key> "replay set ACT $user_CurrentActID $viewposX $viewposY $viewposZ $ $ $"
+\bind <key> "replay set ACT $user_CurrentActID $ $ $ $viewposX $viewposY $viewposZ"
+
+See the "DF-[Replay-Editing].cfg" file for useful replay script editing binds.
+
+----------
+2. History
+----------
+1.9
+- Feature introduced

@@ -1,0 +1,6 @@
+/df_hud_scoreboard_size [0-1] (default: 0)
+
+Selects the scoreboard display size.
+
+  0: 8/10 fonts
+  1: 10/12 fonts

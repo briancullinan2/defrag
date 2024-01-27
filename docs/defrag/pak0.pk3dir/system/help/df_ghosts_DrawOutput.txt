@@ -1,0 +1,7 @@
+\df_ghosts_DrawOutput [ DEFAULT: 4 RANGE: 0 To 4 ] - changes the ghost information format that is drawn to the console.
+
+ O = GHOSTS_OUTPUT_OFF: off
+ 1 = GHOSTS_OUTPUT_STYLE1_NORMAL: All white output
+ 2 = GHOSTS_OUTPUT_STYLE1_CHS0: Uses crosshair stats CHS0 FontColor and LabelColor
+ 3 = GHOSTS_OUTPUT_STYLE1_CHS1: Uses crosshair stats CHS1 FontColor and LabelColor
+ 4 = GHOSTS_OUTPUT_STYLE1_CHS2: Uses crosshair stats CHS2 FontColor and LabelColor

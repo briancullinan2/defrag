@@ -1,0 +1,5 @@
+/dmq_clear
+
+Resets the Demo Queue.
+
+Related commands are: dmq_add, dmq_play, dmq_stop.

@@ -1,0 +1,75 @@
+=====================
+CONSOLE COMMAND: info
+=====================
+
+1. Information
+2. Usage Examples
+3. Additional Information
+4. History
+
+---------------------------
+info [ FORMAT: <#|string> ]
+---------------------------
+
+--------------
+1. Information
+--------------
+Performs an info lookup through the crosshair stats display system, and displays the information in the console.  If no # is specified (\info), then the entire CHS info list is generated.  If a number is specified (\info #), then that individual info # is looked up and displayed in the console.  \info is useful for findind a desired info stat that you may wish to assign to one of the crosshair stats info slots.
+
+Also, the info command has special strings it recognizes.  These special strings provide special information.
+
+The following are the special strings the info command recognizes:
+
+players
+stringsubs
+
+In the console, ingame, typing:
+
+\info players
+
+will list the current players in the game, their team, and their ID#.  This is useful for determining the player ID when using the democams that allow tracking of other players.  Also, the miniview (PIP) can be used to spectate other players while maintaining the normal (main) view.
+
+\info stringsubs
+
+will list all the special strings that the system recognizes, in order to perform string substitution.
+
+The info command may be used to get the value of any var, including special strings, by prefixing the varname with $.
+
+\info $posXYZ
+
+-----------------
+2. Usage Examples
+-----------------
+\info         // displays all crosshair stats info items in the console
+\info #       // displays the crosshair stats info item specified by the #
+
+\info ?       // display ingame help
+
+\info players // displays player id, team, name information
+
+\info stringsubs // display all the special substitution strings
+
+\info $posXYZ    // does a special string lookup, shows the players XYZ position
+
+-------------------------
+3. Additional Information
+-------------------------
+The crosshair stats information may be accessed and used for special purposes by using the $SpecialStrings $chsInfo(#) and $chsLabel(#).  To use the $SpecialStrings, just specify the desired crosshair stats information item in place of the #.
+
+Examples:
+$chsInfo(23)  // would retrieve the player's XY speed
+$chsLabel(23) // would retrieve the text label "speed"
+
+This essentially allows one to use any of the CHS info items wherever $SpecialStrings are permitted (varCommand, varMath, etc.)
+
+----------
+4. History
+----------
+1.90
+- Added ingame help
+- Added Info Cmd: "info players" shows player ID, team, name (useful for democam player tracking)
+- Added Info Cmd: "info stringsubs" shows the entire special substitution strings list
+- Added special string vstr lookup (example: \info $posXYZ)
+
+1.80
+- Feature introduced

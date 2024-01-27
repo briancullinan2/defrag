@@ -1,0 +1,15 @@
+\df_mp_TrackPlayerNum [ DEFAULT: -1 (main player) RANGE: -1 to MAX_CLIENTS (63) ] - allows democams to track different players, as well as allowing the ghost miniview (PIP) to spectate other players.
+
+Set the variable to the desired player to track.  If you are using democams, the democams will track this player.  If you are ingame, using the ghost miniview, the PIP will spectate the player specified.
+
+*** NOTE: To get player ID information, in the console, type:
+
+\info players
+
+To spectate other players using the ghost miniview (PIP), set the df_mp_TrackPlayerNum to the proper player, and set the df_ghosts_MiniviewDraw var to 7 or 8.
+
+Useful binds for tracking:
+
+bind LEFTARROW  "varMath df_mp_TrackPlayerNum = $PreviousTeamPlayerNum"
+bind RIGHTARROW "varMath df_mp_TrackPlayerNum = $NextTeamPlayerNum"
+

@@ -1,0 +1,6 @@
+\df_ob_KillOBs [ DEFAULT: 0 RANGE: 0 TO 1 ] - physics - disables OBs
+
+ 0 = OBs are on
+ 1 = OBs are off
+
+*** requires map_restart to take effect

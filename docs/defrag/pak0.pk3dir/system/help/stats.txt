@@ -1,0 +1,3 @@
+/stats (client command)
+	Outputs player stats within the console.
+	Stats are reseted at timer start, and each time the player respawns. Since these are processed client-side, this command can be used during demo playback. Stats are automatically displayed at end of run, with additionnal information about cvars related to physics and Defrag settings.

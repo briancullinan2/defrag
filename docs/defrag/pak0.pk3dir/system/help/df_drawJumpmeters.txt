@@ -1,0 +1,10 @@
+/df_drawJumpmeters [0-7] (default: 3)
+
+Sets up the jump meters on the HUD.
+
+  1: draw jump height
+  2: draw jump distance
+  3: draw both
+  5: draw jump height, high values only
+  6: draw jump distance, high values only
+  7: draw both, high values only

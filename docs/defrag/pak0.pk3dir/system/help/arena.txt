@@ -1,0 +1,36 @@
+======================
+CONSOLE COMMAND: arena
+======================
+
+1. Information
+2. Using The Supplied .arena Files
+3. History
+
+---------------------------
+arena [ FORMAT: arena_num ]
+---------------------------
+
+Used for multiarena maps.  Allows an arena to be selected.
+
+--------------
+1. Information
+--------------
+This command allows an arena to be selected in multiarena maps, such as rocket arena 3 maps. The command can only be used ingame.
+
+Examples:
+
+\arena 1  // player will enter arena 1
+
+----------------------------------
+2. Using The Supplied .arena Files
+----------------------------------
+.arena files are provided, which will allow for the rocket arena 3 maps to appear in the map selection screen in tricks mode.
+
+----------
+3. History
+----------
+1.91
+- Change: Remove 5 second minimum team switch
+
+1.90
+- Feature introduced

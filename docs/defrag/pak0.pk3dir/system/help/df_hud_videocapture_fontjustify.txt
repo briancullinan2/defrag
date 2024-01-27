@@ -1,0 +1,6 @@
+/df_hud_videocapture_fontjustify [0-2] (default: 0)
+	Sets the font alignment:
+	0 : center justify
+	1 : left justify
+	2 : right justify
+

@@ -1,0 +1,138 @@
+*** DOCUMENTATION INCOMPLETE: CHECK www.planetquake.com/defrag FOR UPDATES ***
+
+=========================
+Ghosts - Demo FreeCamming
+=========================
+
+1. Information
+2. Walk through
+
+--------------
+1. Information
+--------------
+
+Freecamming of demos allows to view demos from outside of the first person view.  You can move around inside the demo, changing your view and position.  When creating quake3 movies, this allows for some nice effects, as you can freecam during a demo, and record the screenshots, which can be used to create .avi files, etc.
+
+While freecamming of demos is useful, quite often the results do not look so good.  This is due to the fact that you are manually moving around inside the demo, while trying to continuously look at and focus on a subject (usually one of the players).  There is a way to resolve this problem.  While viewing a demo, you can record your freecamming movements to a ghost.  Then you can replay the demo, and at the same time have the ghost that you just recorded play at the same time.  Now, the key here is, during the demo, the view is positioned where the ghost is (your position during the freecamming), BUT, the angles focus on the main player.  This is done by using a special ghost cam (df_ghost1_PlayCameraMode 14 (1P_CAMVIEW_LOOK_PLAYER)).  This allows for smooth, curved camera paths, with nice camera angle movements.  In addition, camera roll can be applied by peforming a second ghost recording pass (recamming a freecam ghost).
+
+---------------
+2. Walk Through
+---------------
+
+This walk through will take you through 4 different stages.  The stages will be:
+
+1. Setting up and performing a freecam during a demo.
+2. Playing a demo, and recording your freecamming to a ghost.
+3. Playing the demo a second time, and using your freecam ghost with the special ghost camera mode.
+4. Performing an advanced techique: Recamming the freecam ghost, to apply some camera roll effects.
+
+----------------------------------------------------------
+STAGE 1. Setting up and performing a freecam during a demo
+----------------------------------------------------------
+
+1. The first thing we need to do is setup some binds so that we can actually perform the freecamming during the demo.  We need to create some binds that will allow us to move around inside the demo, without actually exiting the demo (pressing most keys on the keyboard, during a demo, will cause q3 to exit the demo.  The numberpad, arrow keys, and function keys are safe to use).
+
+bind UPARROW    "+forward"
+bind DOWNARROW  "+back"
+bind LEFTARROW  "+moveleft"
+bind RIGHTARROW "+moveright"
+
+bind INS        "+moveup"
+bind DEL        "+movedown"
+
+bind LSHIFT     "+speed"     // this is the walk command - we'll need this for stage 4 (camera rolls)
+
+2. Next, we'll set up the democam system.  We need to set up the democam for freecamming.
+
+df_demos_CameraMode 1
+df_demos_CameraTransitionSpeed 180 // this is the speed that we will move at inside the demo
+
+3. Now, let's do a quick freecam test.
+
+- Select and play a demo
+- During the demo, use our binds to move around during the demo.  Success?  Good. :)
+
+------------------------------------------------------------------
+STAGE 2. Playing a demo, and recording your freecamming to a ghost
+------------------------------------------------------------------
+
+Now that we've actually done a freecam during a demo, let's try recording the freecamming movements to a ghost.
+
+1. First we need to set up the ghost system properly:
+
+df_ghosts_AutoMode 1 // starts recording a ghost as soon as a demo starts
+
+2. Ok, let's do some more freecamming, but this time recording our actions to a ghost.
+
+- Select and play a demo
+- During the demo, use our binds to move around during the demo.  Hey, this is easy!!! :)
+- If you don't like your freecamming that you did, just play the demo again, and do your freecamming again.  The old (lame) ghost will get recorded over.
+
+--------------------------------------------------------------------------------------------------------
+STAGE 3. Playing the demo a second time, and using your freecam ghost with the special ghost camera mode
+--------------------------------------------------------------------------------------------------------
+
+Ok, if we performed STAGE 2 correctly, we should now have a ghost that holds our demo freecamming. The ghost filename should be the same name as the demo name, but with a different extension.  The ghost should be in your system/ghosts folder.
+
+1. First, we need to turn off the democam system.
+
+df_demos_CameraMode 0
+
+2. We need to tell the ghost system to play the ghost during the demo.  Also, we need to tell ghost #1 (the ghost that will be played during the demo, to use our special ghost camera mode (the camera mode that ignores our freecamming angles, and instead tracks the player).  Just as a side note, if you wanted to play back the ghost (and hence, your freecamming) exactly as it was recorded (the same positions AND THE SAME ANGLES, you could use df_ghost1_PlayCameraMode 13 instead of 14.)
+
+df_ghosts_AutoMode 2        // play the ghost (with the same name as the demoname) during the demo
+df_ghost1_PlayCameraMode 14 // our super-cool player tracking ghost cam!
+
+3. Lastly, we need to set cg_thirdPerson to 1 (the ghost system does NOT set this for you automatically, unlike the democam and replay system).
+
+cg_thirdperson 1
+
+4. Play the same demo.  Hey, cool. :P
+
+--------------------------------------------------------------------------------------------------------
+STAGE 4. Performing an advanced techique: Recamming the freecam ghost, to apply some camera roll effects
+--------------------------------------------------------------------------------------------------------
+
+Ok, here's where things get FUNKY.  What we're going to do is use our existing freecam ghost, but add some camera roll effects!
+
+Our special ghost camera mode (df_ghost1_PlayCameraMode 14 - 1P_CAMVIEW_LOOK_PLAYER) has a special feature - it allows you to change the camera roll using the mouse, but only when walk is being pressed ().  When walk is released, if the view returns to normal (no camera roll).  Pressing walk again allows camera rolls again.  Move the mouse left and right (while pressing walk) to roll the camera.
+
+The complicated part of this stage really is just proper ghost file management.  The ghost automode system only automatically plays or records one ghost at a time.  The ghost system itself can record and/or play up to 5 ghosts, but the automode will only handle one ghost.  We need to work around this.
+
+1. Since we have a good, working freecam ghost (but without the roll), we're gonna rename this ghost file.  Go to your system/ghosts folder, and find the ghost file (it should be the same name as the demo, but with a different extension).  Rename the file to FreecamGhost1 (maintain the ghost file extension).  Alternatively, if you plan on doing a lot of freecam ghosting, it might be better to rename the ghost to something more memorable.  If the demoname/ghostfilename was CeTuS_1337trix_27, let's rename the ghost to
+CeTuS_1337trix_27_freecam.  The remaining part of this example will assume you named the file FreecamGhost1.
+
+2. We will continue to use the ghost auto system to record a ghost during the demo playback.  But, we need to create a bind to play our 1st freecam ghost - because this one we will be playing MANUALLY (omg!!!).
+
+bind KP_INS "ghost #2 play FreecamGhost1" // will play our first freecam ghost, using ghost slot #2
+
+3. From stage 1, you should already have some keyboard binds that allow movement during demos.  The important one for this stage is:
+
+bind LSHIFT     "+speed"     // this is the walk command
+
+4. Set the ghost automode to record a ghost during a demo
+
+df_ghosts_AutoMode 1
+
+5. We need to set ghost #2 to use our special camera mode.
+
+df_ghost2_CameraMode 14
+
+6. We need to set our ghost #1 to a different camera mode (mode 13), so when we watch our 2nd freecammed ghost, it will use our freecam position AND angles from our first freecam ghost.
+
+df_ghost1_CameraMode 13
+
+7.  Ok, we're ready.  What we're going to do is select and play the demo.  As soon as the demo starts playing (after it's loaded, we're going to manually play our first freecam ghost (in ghost slot #2).  The second freecam ghost (the one we're going to make now) will start recording automatically (since we set df_ghosts_AutoMode 1).
+
+- Start the demo
+- Once the demo is loaded, press the 0 (insert) button on the numberpad.
+- As the demo is playing, press shift on the keyboard, and move your mouse left or right.  The mouse roll should change.
+
+8. Once the demo has ended, we can either redo the 2nd freecam ghost (if we didn't like the camera rolling we applied), or we can watch what we did.  If we want to re-record the camera rolls, just follow step #7 again.  If we want to test our handiwork, set
+
+df_ghosts_AutoMode 2
+
+and play the demo.
+
+9. That's it.  Have fun!
+

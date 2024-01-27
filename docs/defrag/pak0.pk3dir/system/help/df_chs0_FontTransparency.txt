@@ -1,0 +1,1 @@
+\df_chs0_FontTransparency [ DEFAULT: 1 (no transparency) RANGE: 0 TO 1 (.xx) ] - changes font transparency

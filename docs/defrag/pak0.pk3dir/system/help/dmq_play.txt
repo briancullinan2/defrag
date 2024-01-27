@@ -1,0 +1,5 @@
+/dmq_play
+
+Starts playing the Demo Queue.
+
+Related commands are: dmq_add, dmq_clear, dmq_stop.

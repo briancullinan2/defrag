@@ -1,0 +1,8 @@
+{
+map		"Ujump"
+longname	"U jump Training"
+style		"training"
+cpm             "1"
+author		"Noskey"
+revision
+}

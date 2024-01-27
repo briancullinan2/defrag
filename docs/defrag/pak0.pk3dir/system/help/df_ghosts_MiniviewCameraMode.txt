@@ -1,0 +1,4 @@
+\df_ghosts_MiniviewCameraMode [ DEFAULT: 1 RANGE: 0 TO 12 ] - sets the miniview camera mode.
+
+ 0 = Non ghost camera mode
+ 1 through 12 = ghost camera mode (see df_ghost1_PlayCameraMode for information) if a ghost is playing.

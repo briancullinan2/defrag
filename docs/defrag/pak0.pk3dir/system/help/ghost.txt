@@ -1,0 +1,67 @@
+======================
+CONSOLE COMMAND: ghost
+======================
+
+1. Information
+2. Usage Examples
+3. Sample Binds
+4. History
+
+---------------------------------------------------
+ghost [ FORMAT: #slot record|stop|play <filename> ]
+---------------------------------------------------
+
+--------------
+1. Information
+--------------
+The ghost console commands, is used for issuing commands to the ghost system, such as record, play, stop.  In maps that have timers or flags, the ghost will start/stop automatically (if you are using one of the df_ghosts_AutoMode settings).  However, for general tricking and in-game trick review, will use a console command (bind to a key of course) to start recording a ghost, play back a ghost, etc.
+
+The command is "ghost", and is followed by additional information, telling the ghost system what to do.
+
+Valid commands: record, play, stop
+
+For the ghost #slot, either a number, or "all" may be used.
+
+-----------------
+2. Usage Examples
+-----------------
+
+\ghost #1 record $mapname_ghostnum - will start recording a ghost using ghost #1.  A filename will be generated for you automatically, based on the mapname and the ghost number (mapname_01)
+
+\ghost #2 record $mapname_ghostnum - peforms a similar action (recording a ghost), but uses ghost #2.  Filename will be "mapname_02"
+
+\ghost #1 record MyFileName - will start recording a ghost using ghost #1, but name the file using the name you supplied.
+
+\ghost #1 play MyFileName - plays MyFileName using ghost #1.
+
+\ghost #1 stop - stops recording of ghost #1 if ghost is recording; stops playing ghost #1 if ghost is playing.
+
+\ghost #all stop - stops all ghosts
+
+\ghost #all play - plays all ghosts (all that exist for a mapname_ghostnum)
+
+---------------
+3. Sample binds
+---------------
+bind 1 "ghost #1 record $mapname_ghostnum "
+bind 2 "df_ghost1_PlayTimescale 1.00; ghost #1 stop"
+bind 3 "df_ghost1_PlayTimescale 1.00; ghost #1 play"
+
+bind 4 "ghost #2 record $mapname_ghostnum "
+bind 5 "df_ghost2_PlayTimescale 1.00; ghost #2 stop"
+bind 6 "df_ghost2_PlayTimescale 1.00; ghost #2 play"
+
+bind 7 "ghost #1 stop; ghost #2 stop"
+-------------
+Pressing 1 will record ghost #1, 2 will stop, 3 will play
+Pressing 4 will record ghost #2, 5 will stop, 6 will play
+Pressing 7 will stop both ghosts
+
+----------
+4. History
+----------
+1.90
+- Allow #all for ghost slot #
+
+1.80
+- Feature introduced with the ghost feature

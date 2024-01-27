@@ -1,0 +1,2 @@
+/df_hud_forceteamcolors [0-1] (default: 1, CTF Fast caps only)
+	Sets hud color to match player's team.

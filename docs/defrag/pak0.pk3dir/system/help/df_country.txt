@@ -1,0 +1,3 @@
+/df_country "" (default: "CountryHere")
+
+The Demo Autorecord feature will use this setting to generate filenames for your demos. Many websites use this piece of information in their score tables.

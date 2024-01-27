@@ -1,0 +1,111 @@
+{
+map		"ra3map1"
+longname	"High Noon"
+type		"tourney ffa team ra3"
+revision
+}
+
+{
+map		"ra3map2"
+longname	"Liquid Blue"
+type		"tourney ffa team ra3"
+revision
+}
+
+{
+map		"ra3map3"
+longname	"Tranquility Arena"
+type		"tourney ffa team ra3"
+revision
+}
+
+{
+map		"ra3map4"
+longname	"The Citadels"
+type		"tourney ffa team ra3"
+revision
+}
+
+{
+map		"ra3map5"
+longname	"Suicide20's Lost Faith"
+type		"tourney ffa team ra3"
+revision
+}
+
+{
+map		"ra3map6"
+longname	"Manic"
+type		"tourney ffa team ra3"
+revision
+}
+
+{
+map		"ra3map7"
+longname	"The Houses Of Infliction"
+type		"tourney ffa team ra3"
+revision
+}
+
+{
+map		"ra3map8"
+longname	"Hal's base arena"
+type		"tourney ffa team ra3"
+revision
+}
+
+{
+map		"ra3map9"
+longname	"G1zbang2"
+type		"tourney ffa team ra3"
+revision
+}
+
+{
+map		"ra3map10"
+longname	"Europa Rendezvous"
+type		"tourney ffa team ra3"
+revision
+}
+
+{
+map		"ra3map11"
+longname	"All The Aces"
+type		"tourney ffa team ra3"
+revision
+}
+
+{
+map		"ra3map12"
+longname	"Frag Like An Egytian"
+type		"tourney ffa team ra3"
+revision
+}
+
+{
+map		"ra3map13"
+longname	"Home Base Of The Assassins"
+type		"tourney ffa team ra3"
+revision
+}
+
+{
+map		"ra3map14"
+longname	"Mid Night"
+type		"tourney ffa team ra3"
+revision
+}
+
+{
+map		"ra3map15"
+longname	"Stormator Complex"
+type		"tourney ffa team ra3"
+revision
+}
+
+{
+map		"ra3map16"
+longname	"q2dm1-ish"
+type		"tourney ffa team ra3"
+revision
+}

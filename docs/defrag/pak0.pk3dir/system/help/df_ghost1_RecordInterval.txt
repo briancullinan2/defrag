@@ -1,0 +1,15 @@
+\df_ghost1_RecordInterval [ DEFAULT: 50 RANGE: 0 to 1000 ] - sets the frequency that the ghost system records a snapshot to the ghost file.
+
+This may be used for a few different reasons.  One reason may be a desire to reduce ghost file size.  Another reason may be to actually record more ghost data then the default (making ghost stats data more accurate), at the sacrifice of having a larger ghost file.  The default of 50 provides a very decent balance of the effective playback characteristics.
+
+Changing the ghost recording interval has the following effects:
+
+- Decreasing the interval increases ghost file size.
+
+- Decreasing the interval increases the ghost data.  Increasing the interval to a significantly larger number (over 200) will have a more profound negative effect visually on the ghost animations, as well as ghost walk/running paths (curves paths become a series of connecting straight lines).
+
+- Decreasing the interval increases the ghost's statistical data displayed through the crosshair stats system (when switched to a first person ghost camera mode) is more accurate.  (You can view the ghost's speed, angles, etc. through the CHS during ghost playback).
+
+- Decreasing the interval makes the ghost playback timescales LESS accurate.  Setting the record interval to 0 results in a ghost playback timescale sensitivity of X.X.  This means that a timescale of 1.1 is the same as 1.15.  Or even that 1.01 = 1.1.  So, if you wish to adjust the ghost timescale playback very minutely (X.XX or even X.XXX) is is actually beter to record the ghost at the default value (50), or slightly higher (100).
+
+- Increasing the interval allow more seconds of rewind (accomplished throught the df_ghost1_PlayTimescale variable).

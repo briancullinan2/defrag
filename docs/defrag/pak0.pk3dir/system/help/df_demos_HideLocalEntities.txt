@@ -1,0 +1,21 @@
+\df_demos_HideLocalEntities [ DEFAULT: 0 RANGE: 0 TO N (mask) ] - hides local entities
+
+Add the following values to hide the desired entities:
+
+LE_MARK              1
+LE_EXPLOSION         2
+LE_SPRITE_EXPLOSION  4
+LE_FRAGMENT          8    // gibs and brass
+LE_MOVE_SCALE_FADE   16   // water bubbles
+LE_FALL_SCALE_FADE   32   // gib blood trails
+LE_FADE_RGB          64   // teleporters, railtrails
+LE_SCALE_FADE        128  // rocket trails
+LE_SCOREPLUM         256  
+
+// team arena - not used
+LE_KAMIKAZE          512
+LE_INVULIMPACT       1024
+LE_INVULJUICED       2048
+LE_SHOWREFENTITY     4096
+
+511 = all (1+2+4+8+16+32+64+128+256) (not including team arena items)

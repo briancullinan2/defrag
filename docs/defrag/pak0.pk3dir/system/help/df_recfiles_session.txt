@@ -1,0 +1,10 @@
+/df_recfiles_session [string] (default: "")
+
+Makes the client load checkpoints times (.rec files) from a subdirectory of system/records/
+
+E.g.: df_recfiles_session "dfwc" loads .rec files from system/records/dfwc/
+
+Pre-configured (system) subdirectories are:
+system/records/        keeps the best times of the user.
+system/records/demos/  keeps the best times generated automatically from demos.
+system/records/latest/ keeps the previous times from either gameplay or demos, provided that df_recfiles_keepLatest is on.

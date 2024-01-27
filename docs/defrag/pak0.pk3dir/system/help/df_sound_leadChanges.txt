@@ -1,0 +1,1 @@
+\df_sound_leadChanges [ DEFAULT: 1 (on) RANGE: 0 to 1 ] - Turns on/off the audible lead changes (You have taken the lead)

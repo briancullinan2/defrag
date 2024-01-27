@@ -1,0 +1,35 @@
+// Defrag map definition file template
+
+// Defrag uses its own equivalent of the .arena files, whose extension is .defi.
+// Those files feed the proper information to the maps menu about each map.
+// .defi files go into the \scripts directory.
+
+// Save as "[bsp file name(no extension)].defi" in the scripts folder
+// All answers are to be enclosed in inverted commas ""
+// Options are listed in between square brackets [] and seperated by slashes /
+// Notes on options are in round brackets ()
+// Remove unused options, notes and brackets when saving
+
+// Marks the start of the defi file (don't delete this bracket!)
+{
+
+// What is the bsp file name?
+map		"[bsp file name(no extension)]"
+
+// What is the full name or description of the map?
+longname	"[long description(can have spaces)]"
+
+// What type of map is it?
+style		"[training/run/accuracy/level]"
+
+// Is the map for cpm physics?
+cpm		"[0(no)/1(yes)]"
+
+// Is the map for vq3 physics?
+vq3		"[0(no)/1(yes)]"
+
+// Who made the map?
+author	"[your name/your nick]"
+
+// Marks the end of the defi file (don't delete this bracket!)
+}

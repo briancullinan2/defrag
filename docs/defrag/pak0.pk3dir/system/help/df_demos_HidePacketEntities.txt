@@ -1,0 +1,20 @@
+\df_demos_HidePacketEntities [ DEFAULT: 0 RANGE: 0 TO N (mask) ] - hides packet entities
+
+Add the following values to hide the desired entities:
+
+ET_GENERAL           1
+ET_PLAYER            2
+ET_ITEM              4
+ET_MISSILE           8
+ET_MOVER             16
+ET_BEAM              32
+ET_PORTAL            64
+ET_SPEAKER           128
+ET_PUSH_TRIGGER      256
+ET_TELEPORT_TRIGGER  512
+ET_INVISIBLE         1024
+ET_GRAPPLE           2048   // grapple hooked on wall
+ET_TEAM              4096
+ET_EVENTS            8192   // any of the EV_* events can be added freestanding
+
+16383 = all (1+2+4+8+16+32+64+128+256+512+1024+2048+4096+8192)

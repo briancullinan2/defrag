@@ -1,0 +1,1 @@
+\df_ui_DisplayCVarName [ DEFAULT: 1 RANGE: 0 to 1 ] - turns the display of cvar names onscreen in the custom menu system on/off

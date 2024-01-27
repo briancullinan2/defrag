@@ -1,0 +1,328 @@
+--------------------------
+CHS Information Types List
+--------------------------
+  
+////////// Q3 START SET #1 //////////	
+
+ 000 CH_INFO_EMPTY,	// 0
+
+// start: 1 - player info
+ 001 CH_INFO_SPEED,             // speed / defrag speed (uses speed unit setting)
+ 002 CH_INFO_HEALTH,            // player health
+ 003 CH_INFO_ARMOR,             // player armor
+ 004 CH_INFO_AMMO,              // player ammo for currently selected weapon
+ 005 CH_INFO_HEALTH_ARMOR,      // player health/armor
+ 006 CH_INFO_HEALTH_ARMOR_AMMO, // player health/armor/ammo
+ 007 CH_INFO_007,               // empty
+ 008 CH_INFO_008,               // empty
+ 009 CH_INFO_009,               // empty
+
+// start: 10 - plane distances (that player is looking at)
+ 010 CH_INFO_DISTANCE_XY,           // horizontal distance to plane
+ 011 CH_INFO_DISTANCE_Z,            // vertical distance to plane
+ 012 CH_INFO_DISTANCE_XYZ,          // true distance to plane
+ 013 CH_INFO_DISTANCE_VIEWXYZ,      // true distance to plane from view point
+ 014 CH_INFO_DISTANCE_XY_Z_XYZ,     // horizontal/verical/true distance to plane
+ 015 CH_INFO_DISTANCE_XY_Z_VIEWXYZ, // horizontal/verical/true(view) distance to plane
+ 016 CH_INFO_LOOK_XYZ,              // world x y z location of plane
+ 017 CH_INFO_017,                   // empty
+ 018 CH_INFO_018,                   // empty
+ 019 CH_INFO_019,                   // empty
+
+// start: 20 - player speed (uses ups)
+ 020 CH_INFO_SPEED_X,                   // speed along world x axis
+ 021 CH_INFO_SPEED_Y,                   // speed along world y axis
+ 022 CH_INFO_SPEED_Z,                   // speed along world z axis
+ 023 CH_INFO_SPEED_XY,                  // horizontal speed
+ 024 CH_INFO_SPEED_XYZ,                 // true speed
+ 025 CH_INFO_SPEED_FORWARD,             // speed relative to forward
+ 026 CH_INFO_SPEED_SIDEWAYS,            // speed relative to side
+ 027 CH_INFO_SPEED_FORWARD_SIDEWAYS,    // speed relative to forward/side
+ 028 CH_INFO_SPEED_XY_FORWARD_SIDEWAYS, // horizontal speed/speed relative to forward/side
+ 029 CH_INFO_029,                       // empty
+
+// start: 30 - player position, player angles, view position - singles
+ 030 CH_INFO_PITCH,                      // player pitch
+ 031 CH_INFO_YAW,                        // player yaw
+ 032 CH_INFO_ROLL,                       // player roll
+ 033 CH_INFO_POSITION_X,                 // player X position
+ 034 CH_INFO_POSITION_Y,                 // player Y position
+ 035 CH_INFO_POSITION_Z,                 // player Z position
+ 036 CH_INFO_VIEWPOSITION_X,             // view X position
+ 037 CH_INFO_VIEWPOSITION_Y,             // view Y position
+ 038 CH_INFO_VIEWPOSITION_Z,             // view Z position
+ 039 CH_INFO_039,                        // empty
+
+// start: 40 - position and angle combos
+ 040 CH_INFO_PITCH_YAW,                  // player pitch/yaw
+ 041 CH_INFO_PLAYER_XYZ,                 // player position in the world
+ 042 CH_INFO_PLAYER_XYZ_PITCH_YAW,       // player position in the world and pitch/yaw
+ 043 CH_INFO_VIEWPOSITION_XYZ_PITCH_YAW, // view position in the world and pitch/yaw
+ 044 CH_INFO_POSITION_XYZ,               // position x y z
+ 045 CH_INFO_VIEWPOSITION_XYZ,           // view position x y z
+ 046 CH_INFO_ANGLES_XYZ,                 // angles x y z
+ 047 CH_INFO_VELOCITY_XYZ,               // velocity x y z
+ 048 CH_INFO_048,                        // empty
+ 049 CH_INFO_049,                        // empty
+
+// start: 50 - overbounce - combos
+ 050 CH_INFO_OVERBOUNCE_MOVE,           //   OB Combo Movement        (JGB)
+ 051 CH_INFO_OVERBOUNCE_STICKY_MOVE,    //  SOB Combo Sticky Movement (SJSG)
+ 052 CH_INFO_OVERBOUNCE_WEAPONS,        //  WOB Combo Weapon          (pPrR)
+ 053 CH_INFO_OVERBOUNCE_STICKY_WEAPONS, // SWOB Combo Sticky Weapon   (SpSPSrSR)
+ 054 CH_INFO_OVERBOUNCE_QUADED_WEAPONS, // QWOB Combo Quaded Weapon   (QpQPQrQR)
+ 055 CH_INFO_OVERBOUNCE_ALL_NOQUAD,     //  xOB Combo (JGB pPrR SJSG SpSPSrSR)
+ 056 CH_INFO_OVERBOUNCE_ALL,            //  xOB Combo (JGB pPrR SJSG SpSPSrSR QpQPQrQR)
+ 057 CH_INFO_OVERBOUNCE_O3J_CUSTOM1,    //  xOB Combo (Custom 1) (JGB PrR)
+ 058 CH_INFO_OVERBOUNCE_O3J_CUSTOM2,    //  xOB Combo (Custom 2) (JGB PrR SJSG SPSrSR)
+ 059 CH_INFO_OVERBOUNCE_O3J_CUSTOM3,    //  xOB Combo (Custom 3) (JGB SJSG)
+
+// start: 60 - overbounce - singles
+ 060 CH_INFO_OVERBOUNCE_GO_BELOW,    //  OB Movement (GB) Go, Below
+ 061 CH_INFO_OVERBOUNCE_BELOW,       //  OB Movement (B) Below
+ 062 CH_INFO_OVERBOUNCE_GO,          //  OB Movement (G) Go
+ 063 CH_INFO_OVERBOUNCE_JUMP,        //  OB Movement (J) Jump
+ 064 CH_INFO_OVERBOUNCE_STICKY_GO,   // SOB Sticky Movement (SG) Sticky Go
+ 065 CH_INFO_OVERBOUNCE_STICKY_JUMP, // SOB Sticky Movement (SJ) Sticky Jump
+ 066 CH_INFO_OVERBOUNCE_PLASMA,      // WOB Weapon (p) plasma
+ 067 CH_INFO_OVERBOUNCE_PLASMAJUMP,  // WOB Weapon (P) Plasmajump
+ 068 CH_INFO_OVERBOUNCE_ROCKET,      // WOB Weapon (r) rocket
+ 069 CH_INFO_OVERBOUNCE_ROCKETJUMP,  // WOB Weapon (R) Rocketjump
+
+// start: 70 - overbounce - singles
+ 070 CH_INFO_OVERBOUNCE_STICKY_PLASMA,     // SWOB Sticky Weapon (Sp) Sticky plasma
+ 071 CH_INFO_OVERBOUNCE_STICKY_PLASMAJUMP, // SWOB Sticky Weapon (SP) Sticky Plasmajump
+ 072 CH_INFO_OVERBOUNCE_STICKY_ROCKET,     // SWOB Sticky Weapon (Sr) Sticky rocket
+ 073 CH_INFO_OVERBOUNCE_STICKY_ROCKETJUMP, // SWOB Sticky Weapon (SR) Sticky Rocketjump
+ 074 CH_INFO_OVERBOUNCE_QUADED_PLASMA,     // QWOB Quaded Weapon (Qp) Quaded plasma
+ 075 CH_INFO_OVERBOUNCE_QUADED_PLASMAJUMP, // QWOB Quaded Weapon (QP) Quaded PlasmaJump
+ 076 CH_INFO_OVERBOUNCE_QUADED_ROCKET,     // QWOB Quaded Weapon (Qr) Quaded rocket
+ 077 CH_INFO_OVERBOUNCE_QUADED_ROCKETJUMP, // QWOB Quaded Weapon (QR) Quaded RocketJump
+ 078 CH_INFO_078,                          // empty
+ 079 CH_INFO_OVERBOUNCE_VOFFSETS,          // user vertical offset amounts (start and stop)
+
+// start: 80 - ghost settings
+ 080 CH_INFO_ALL_GHOSTS_SETTINGS,    // all ghosts - settings
+ 081 CH_INFO_GHOST1_MODE,            // ghost #1 mode
+ 082 CH_INFO_GHOST1_SETTINGS_RECORD, // ghost #1 record settings
+ 083 CH_INFO_GHOST1_SETTINGS_PLAY,   // ghost #1 play settings
+ 084 CH_INFO_GHOST2_MODE,            // ghost #2 mode
+ 085 CH_INFO_GHOST2_SETTINGS_RECORD, // ghost #2 record settings
+ 086 CH_INFO_GHOST2_SETTINGS_PLAY,   // ghost #2 play settings
+ 087 CH_INFO_087,                    // empty
+ 088 CH_INFO_088,                    // empty
+ 089 CH_INFO_089,                    // empty
+
+// start: 90 - closest ghost info
+ 090 CH_INFO_GHOST_XY_SPEED,          // speed of nearest ghost
+ 091 CH_INFO_GHOST_DISTANCE_XY,       // horizontal distance to nearest ghost
+ 092 CH_INFO_GHOST_DISTANCE_Z,        // vertical distance to nearest ghost
+ 093 CH_INFO_GHOST_DISTANCE_XYZ,      // absolute distance to nearest ghost
+ 094 CH_INFO_GHOST_DISTANCE_XY_Z_XYZ, // horizontal/vertical/absolute distance to nearest ghost
+ 095 CH_INFO_GHOST_POSITION_XYZ,      // world position of nearest ghost
+ 096 CH_INFO_GHOST_NUM_NEAREST,       // nearest ghost to player
+ 097 CH_INFO_097,                     // empty
+ 098 CH_INFO_GHOST_MEMORY_SIZE_DATA,  // ghost total memory size used
+ 099 CH_INFO_GHOST_VERSION,           // ghost version information
+
+// start: 100 - real life stuff
+ 100 CH_INFO_REAL_TIME_12,             // time (12 hour clock)
+ 101 CH_INFO_REAL_TIME_24,             // time (24 hour clock)
+ 102 CH_INFO_REAL_DATE_US,             // date (US date format)
+ 103 CH_INFO_REAL_DATE_US_TIME_12,     // date / time (US date format / 12 hour clock)
+ 104 CH_INFO_REAL_DATE_US_TIME_24,     // date / time (US date format / 24 hour clock)
+ 105 CH_INFO_REAL_DATE_EUROPE,         // date (European date format)
+ 106 CH_INFO_REAL_DATE_EUROPE_TIME_12, // date / time (European date format / 12 hour clock)
+ 107 CH_INFO_REAL_DATE_EUROPE_TIME_24, // date / time (European date format / 24 hour clock)
+ 108 CH_INFO_REAL_DATE_YYYYMMDD,       // date (YearMonthDay format)
+ 109 CH_INFO_REAL_TIME_HHMMSS,         // time (HoursMinutesSeconds format)
+
+// start: 110 - settings
+ 110 CH_INFO_FPS,                // frames per second
+ 111 CH_INFO_PING,				// ping
+ 112 CH_INFO_SETTINGS1,          // server settings: com_maxfps/sv_fps/g_synchronousclients/pmove_msec(if pmove_fixed is on)/timescale
+ 113 CH_INFO_SETTINGS2,          // server settings: com_maxfps/sv_fps/g_synchronousclients/pmove_msec(if pmove_fixed is on)/timescale
+ 114 CH_INFO_MAPNAME_SERVERNAME, // mapname servername
+ 115 CH_INFO_MAPNAME,            // mapname
+ 116 CH_INFO_SERVERNAME,         // servername
+ 117 CH_INFO_PLAYERNAME,         // empty
+ 118 CH_INFO_PLAYERNAME_NOCOLOR, // empty
+ 119 CH_INFO_119,                // empty
+
+// start: 120 - AccelMeter
+ 120 CH_INFO_ACCELMETER_STARTSPEED,               // speed before jump
+ 121 CH_INFO_ACCELMETER_SPEED,                    // speed on landing
+ 122 CH_INFO_ACCELMETER_MAXSPEED,                 // maximum possible speed on landing
+ 123 CH_INFO_ACCELMETER_TRUEMAXSPEED,             // true maximum possible speed - unadjusted
+ 124 CH_INFO_ACCELMETER_ACCEL_PERCENT,            // percentage of acceleration added on landing
+ 125 CH_INFO_ACCELMETER_SPEED_PERCENT,            // percentage of speed added on landing
+ 126 CH_INFO_ACCELMETER_ACCEL_PERCENT_HORIZONTAL, // percentage of acceleration added in the horizontal plane
+ 127 CH_INFO_ACCELMETER_SPEED_PERCENT_HORIZONTAL, // percentage of speed added in the horizontal plane
+ 128 CH_INFO_ACCELMETER_SPEED_HORIZONTAL,         // speed in the horizontal plane
+ 129 CH_INFO_ACCELMETER_MAXSPEED_HORIZONTAL,      // maximum possible speed in the horizontal plane
+
+// start: 130 - Accelmeter combos
+ 130 CH_INFO_ACCELMETER_ANGLES,                             // angle differences between wish direction and optimal direction
+ 131 CH_INFO_ACCELMETER_PERCENTAGES_ACCEL_SPEED,            // percentages of acceleration/speed added
+ 132 CH_INFO_ACCELMETER_SPEEDS,                             // speeds (start, speed, maxspeed)
+ 133 CH_INFO_ACCELMETER_PERCENTAGES_HORIZONTAL_ACCEL_SPEED, // percentages of acceleration/speed added, in the horizontal plane
+ 134 CH_INFO_ACCELMETER_SPEEDS_HORIZONTAL,                  // speeds (start, speed, maxspeed), in the horizontal plane
+ 135 CH_INFO_ACCELMETER_PERCENTAGES_ALL_ACCEL,              // percentages of acceleration added - all
+ 136 CH_INFO_ACCELMETER_PERCENTAGES_ALL_ACCEL_SPEED,        // percentages of acceleration/speed added - all
+ 137 CH_INFO_ACCELMETER_SPEEDS_ALL,                         // speeds (start, speed, maxspeed) - all
+ 138 CH_INFO_ACCELMETER_ANGLE_COUNTERCLOCKWISE,             // angle difference between wish direction and optimal direction, counterclockwise turning
+ 139 CH_INFO_ACCELMETER_ANGLE_CLOCKWISE,                    // angle difference between wish direction and optimal direction, clockwise turning
+
+// start: 140 - JumpMeter
+ 140 CH_INFO_JUMPMETER_HISTORY_SPEEDXY,      // JumpMeter - history - speed (horizontal)
+ 141 CH_INFO_JUMPMETER_HISTORY_ACCELPERCENT, // JumpMeter - history - acceleration percentage
+ 142 CH_INFO_JUMPMETER_HISTORY_DISTANCE,     // JumpMeter - history - distance (horizontal)
+ 143 CH_INFO_JUMPMETER_HISTORY_HEIGHT,       // JumpMeter - history - height
+ 144 CH_INFO_144,	                     // empty
+ 145 CH_INFO_JUMPMETER_MAX_SPEEDXY,          // JumpMeter - max - speed (horizontal)
+ 146 CH_INFO_JUMPMETER_MAX_ACCELPERCENT,     // JumpMeter - max - acceleration percentage
+ 147 CH_INFO_JUMPMETER_MAX_DISTANCE,         // JumpMeter - max - distance (horizontal)
+ 148 CH_INFO_JUMPMETER_MAX_HEIGHT,           // JumpMeter - max - height
+ 149 CH_INFO_149,                            // empty
+
+// start: 150 - User input indicators
+ 150 CH_INFO_CONTROL_INPUT_ARROWS1,  // player control input (keypresses) - arrows - style 1
+ 151 CH_INFO_CONTROL_INPUT_ARROWS2,  // player control input (keypresses) - arrows - style 2
+ 152 CH_INFO_CONTROL_INPUT_FLBR_JCA, // player control input (keypresses) - FLBR - JCA
+ 153 CH_INFO_CONTROL_INPUT_USER_JCA, // player control input (keypresses) - USER - JCA
+ 154 CH_INFO_154,                    // empty
+ 155 CH_INFO_155,                    // empty
+ 156 CH_INFO_156,                    // empty
+ 157 CH_INFO_157,                    // empty
+ 158 CH_INFO_158,                    // empty
+ 159 CH_INFO_159,                    // empty
+
+// start: 160 - SavedPosition distances
+ 160 CH_INFO_SAVEDPOS_DISTANCE_XY,       // horizontal distance to last saved position
+ 161 CH_INFO_SAVEDPOS_DISTANCE_Z,        // vertical distance to last saved position
+ 162 CH_INFO_SAVEDPOS_DISTANCE_XYZ,      // true distance to last saved position
+ 163 CH_INFO_SAVEDPOS_DISTANCE_XY_Z_XYZ, // horizontal/vertical/true distance to last saved position
+ 164 CH_INFO_164,                        // empty
+ 165 CH_INFO_165,                        // empty
+ 166 CH_INFO_166,                        // empty
+ 167 CH_INFO_167,                        // empty
+ 168 CH_INFO_168,                        // empty
+ 169 CH_INFO_169,                        // empty
+
+// start: 170 - timers
+ 170 CH_INFO_SERVERTIME,        // server time
+ 171 CH_INFO_CGTIME,            // client game time (cg.time)
+ 172 CH_INFO_LEVELSTARTTIME,    // level start time (cgs.levelStartTime)
+ 173 CH_INFO_CGMINUSLEVELTIME1, // client game time (cg.time) - level start time (cgs.levelStartTime) (min:sec:msec)
+ 174 CH_INFO_CGMINUSLEVELTIME2, // client game time (cg.time) - level start time (cgs.levelStartTime) (min.sec)
+ 175 CH_INFO_175,               // empty
+ 176 CH_INFO_176,               // empty
+ 177 CH_INFO_177,               // empty
+ 178 CH_INFO_178,               // empty
+ 179 CH_INFO_179,               // empty
+
+// start: 180 - View Vectors - FORWARD
+ 180 CH_INFO_VIEWVECTOR_FORWARD_X,     // view vector forward x
+ 181 CH_INFO_VIEWVECTOR_FORWARD_Y,     // view vector forward y
+ 182 CH_INFO_VIEWVECTOR_FORWARD_Z,     // view vector forward z
+ 183 CH_INFO_VIEWVECTOR_FORWARD_XYZ,   // view vector forward x y z
+ 184 CH_INFO_VIEWVECTOR_FORWARD_NOZ_X, // view vector forward (with z removed) x
+ 185 CH_INFO_VIEWVECTOR_FORWARD_NOZ_Y, // view vector forward (with z removed) y
+ 186 CH_INFO_186,                      // empty
+ 187 CH_INFO_187,                      // empty
+ 188 CH_INFO_188,                      // empty
+ 189 CH_INFO_189,                      // empty
+
+// start: 190 - Misc Info
+ 190 CH_INFO_DEMO_NAME,                   // demo - name     (if a demo is playing)
+ 191 CH_INFO_DEMO_FULLNAME,               // demo - fullname (if a demo is playing)
+ 192 CH_INFO_TRACKING_PLAYERNAME,         // player name tracked by df_mp_TrackPlayerNum
+ 193 CH_INFO_TRACKING_PLAYERNAME_NOCOLOR, // player name tracked by df_mp_TrackPlayerNum (no colors)
+ 194 CH_INFO_194,                         // empty
+ 195 CH_INFO_195,                         // empty
+ 196 CH_INFO_196,                         // empty
+ 197 CH_INFO_197,                         // empty
+ 198 CH_INFO_198,                         // empty
+ 199 CH_INFO_199,                         // empty
+
+////////// Q3 END SET #1 //////////	
+
+////////// DEFRAG START //////////
+
+// start: 200 - defrag timers
+ 200 CH_INFO_TIME,           // defrag - elapsed time
+ 201 CH_INFO_BESTTIME,       // defrag - best time for map
+ 202 CH_INFO_TIMEDIFFERENCE, // defrag - best time - elapsed time
+ 203 CH_INFO_203,            // empty
+ 204 CH_INFO_204,            // empty
+ 205 CH_INFO_205,            // empty
+ 206 CH_INFO_206,            // empty
+ 207 CH_INFO_207,            // empty
+ 208 CH_INFO_208,            // empty
+ 209 CH_INFO_209,            // empty
+
+// start: 210 - defrag stats
+ 210 CH_INFO_DF_HEIGHT,          // defrag stats - jump height
+ 211 CH_INFO_DF_DISTANCE,        // defrag stats - jump distance
+ 212 CH_INFO_DF_HIGHEST,         // defrag stats - highest jump
+ 213 CH_INFO_DF_LONGEST,         // defrag stats - longest jump
+ 214 CH_INFO_DF_OVERALLDISTANCE, // defrag stats - distance meter
+ 215 CH_INFO_DF_SPENT,           // defrag stats - health / armor spent
+ 216 CH_INFO_DF_SHOTS,           // defrag stats - shots fired
+ 217 CH_INFO_DF_HSPEED,          // defrag stats - highest speed
+ 218 CH_INFO_218,                // empty
+ 219 CH_INFO_DF_COUNTRY,         // defrag stats - country
+
+// start: 220 - defrag game settings
+ 220 CH_INFO_DF_DEFRAG,        // defrag - on/off
+ 221 CH_INFO_DF_VERSION,       // defrag - version
+ 222 CH_INFO_DF_GAMETYPE,      // defrag - gametype
+ 223 CH_INFO_DF_GAMETYPE_REAL, // defrag - gametype real
+ 224 CH_INFO_DF_GAMEMODE,      // defrag - gamemode
+ 225 CH_INFO_DF_MULTIPLAYER,   // defrag - multiplayer on/off
+ 226 CH_INFO_DF_PHYSICS,       // defrag - physics: vq3 or cpm
+ 227 CH_INFO_DF_OVERBOUNCES,   // defrag - overbounces on/off
+ 228 CH_INFO_DF_MAPNAME,       // defrag - mapname
+ 229 CH_INFO_DF_ROUTE,         // defrag - route
+
+// start: 230 - defrag server settings
+ 230 CH_INFO_DF_COMPETITION,        // defrag - competition string
+ 231 CH_INFO_DF_SERVER_NAME,        // defrag - server name
+ 232 CH_INFO_DF_SERVER_GAMENAME,    // defrag - server gamename
+ 233 CH_INFO_DF_SERVER_GAMEPATH,    // defrag - server gamepath
+ 234 CH_INFO_DF_CHEATS,             // defrag - cheats on/off
+ 235 CH_INFO_DF_SERVER_PURE,        // defrag - pure server on/off
+ 236 CH_INFO_DF_SERVER_FPS,         // defrag - server frames per second (sv_fps)
+ 237 CH_INFO_DF_SERVER_PMOVEPERIOD, // defrag - pmove frequency (pmove_msec)
+ 238 CH_INFO_DF_SERVER_CLIENTSYNC,  // defrag - clients synchronized (g_synchronousClients) on/off
+ 239 CH_INFO_DF_CLIENT_FPS,         // defrag - client max fps (com_maxfps)
+ 
+////////// DEFRAG END //////////
+ 
+////////// Q3 START SET #2 //////////
+
+// start: 300 - overbounce high/low offsets
+300 CH_INFO_OVERBOUNCE_OFFSETS_BELOW = 300, //  OB Movement (B) Below
+301 CH_INFO_OVERBOUNCE_OFFSETS_GO,          //  OB Movement (G) Go
+302 CH_INFO_OVERBOUNCE_OFFSETS_JUMP,        //  OB Movement (J) Jump
+303 CH_INFO_OVERBOUNCE_OFFSETS_STICKY_GO,   // SOB Sticky Movement (SG) Sticky Go
+304 CH_INFO_OVERBOUNCE_OFFSETS_STICKY_JUMP, // SOB Sticky Movement (SJ) Sticky Jump
+305 CH_INFO_OVERBOUNCE_OFFSETS_PLASMA,      // WOB Weapon (p) plasma
+306 CH_INFO_OVERBOUNCE_OFFSETS_PLASMAJUMP,  // WOB Weapon (P) Plasmajump
+307 CH_INFO_OVERBOUNCE_OFFSETS_ROCKET,      // WOB Weapon (r) rocket
+308 CH_INFO_OVERBOUNCE_OFFSETS_ROCKETJUMP,  // WOB Weapon (R) Rocketjump
+309 CH_INFO_309,                            // empty
+
+// start: 310 - overbounce high/low offsets
+310 CH_INFO_OVERBOUNCE_OFFSETS_STICKY_PLASMA,     // SWOB Sticky Weapon (Sp) Sticky plasma
+311 CH_INFO_OVERBOUNCE_OFFSETS_STICKY_PLASMAJUMP, // SWOB Sticky Weapon (SP) Sticky Plasmajump
+312 CH_INFO_OVERBOUNCE_OFFSETS_STICKY_ROCKET,     // SWOB Sticky Weapon (Sr) Sticky rocket
+313 CH_INFO_OVERBOUNCE_OFFSETS_STICKY_ROCKETJUMP, // SWOB Sticky Weapon (SR) Sticky Rocketjump
+314 CH_INFO_OVERBOUNCE_OFFSETS_QUADED_PLASMA,     // QWOB Quaded Weapon (Qp) Quaded plasma
+315 CH_INFO_OVERBOUNCE_OFFSETS_QUADED_PLASMAJUMP, // QWOB Quaded Weapon (QP) Quaded PlasmaJump
+316 CH_INFO_OVERBOUNCE_OFFSETS_QUADED_ROCKET,     // QWOB Quaded Weapon (Qr) Quaded rocket
+317 CH_INFO_OVERBOUNCE_OFFSETS_QUADED_ROCKETJUMP, // QWOB Quaded Weapon (QR) Quaded RocketJump
+318 CH_INFO_318,                                  // empty
+319 CH_INFO_319,                                  // empty
+	
+////////// Q3 END SET #2 //////////	

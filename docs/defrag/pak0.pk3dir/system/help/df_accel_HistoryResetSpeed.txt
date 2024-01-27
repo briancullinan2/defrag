@@ -1,0 +1,1 @@
+\df_accel_HistoryResetSpeed [ DEFAULT: 100 RANGE: 0 TO N ] - resets the Jumpmeter history if the player's ground speed falls below the value specified.

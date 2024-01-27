@@ -1,0 +1,7 @@
+\df_ghosts_FileExtension [ DEFAULT: <empty> ] - allows the ghost files extension to be changed.
+
+ default <empty>: Uses .BOO_## format
+ 
+ user-defined: Uses user-defined format.  Do not supply a ".", it is created automatically (to use .cfg extenstion, change df_ghosts_FileExtension to "cfg")
+
+This is mainly only needed if you are playing on a multiplayer server, that is set to sv_pure 1.  With sv_pure 1, quake3 does not allow you to open a file, unless the file extension is .cfg or .menu.  Therefore, if necessary, you can change the ghost file extension.  "." should NOT be included.

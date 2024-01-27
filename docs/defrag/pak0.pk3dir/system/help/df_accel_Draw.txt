@@ -1,0 +1,7 @@
+\df_accel_Draw [ DEFAULT: 0 (off) RANGE: 0 TO 4 ] - turns display on/off
+
+ 0 = off
+ 1 = always on
+ 2 = on for demos only
+ 3 = on for non-demos only (off for demos)
+ 4 = always on (even if 2d drawing is off, scoreboard is displayed, etc.)

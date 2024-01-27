@@ -1,0 +1,1 @@
+\df_sv_script_idleDelay [ TYPE: Integer DEFAULT: 50 ] - When the server idles, set the period of time before the idle script is executed. (see df_sv_script_idleCfg)

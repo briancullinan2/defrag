@@ -1,0 +1,9 @@
+\df_chs1_DisplayType [ DEFAULT: 0 (crosshair style) RANGE: 0 TO 4 ] - changes the display type of the CHS set
+
+ 0 = crosshair
+ 1 = 1 column, left aligned
+ 2 = 1 column, center aligned
+ 3 = 1 column, right aligned
+ 4 = 2 column, split
+
+* use DisplayType along with LabelType to create a display/label set to your liking

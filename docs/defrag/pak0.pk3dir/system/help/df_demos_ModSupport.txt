@@ -1,0 +1,6 @@
+\df_demos_ModSupport [ DEFAULT: 0 (off) RANGE: 0 TO 3 ] 
+
+ 0 = Off
+ 1 = General 1 (unrecognized data, events, etc. don't cause demo exit)
+ 2 = General 2 (General 1, plus additional data checking/clearing)
+ 3 = Orange Smoothie Productions (OSP) (Specific setting for OSP - so other players are visible)

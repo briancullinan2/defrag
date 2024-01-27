@@ -1,0 +1,16 @@
+\df_mp_InterferenceOff [ DEFAULT: 0 (off) RANGE: 0 TO 7 (bitmask) ] - SERVERSIDE VAR - allows servers to turn player-to-player interference off, as well as missile interference (for non-teammates, or for everyone).
+
+ 0 = Normal Q3 Inteference
+ 1 = Player2Player Interference Off
+ 2 = Missile Interference Off
+ 4 = Inteference Off - Enemies Only (teammates still intefere)
+
+This var is a bitmask.  Add the options you want to get the desired inteference settings.
+
+ 3 = 1 + 2 = Player2Player And Missile Inteference Off
+*5 = 1 + 4 = Player2Player Interference Enemies Only Off (* PARTIALLY IMPLEMENTED)
+*7 = 1 + 2 + 4 = Player2Player And Missile Enemies Only Off (* PARTIALLY IMPLEMENTED)
+
+*** NOTE ***
+"Player2Player Interference Off" currently only works for everyone (teammates and enemies).
+"Player2Player Interference Enemies Only Off" is not currently implemented, and therefore defaults to "Player2Player Inteference Off" for all forms of Player2Player interference.

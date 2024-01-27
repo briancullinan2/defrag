@@ -1,0 +1,5 @@
+\df_demos_validation [ DEFAULT: 0 (off) RANGE: 0 TO 2 ] - outputs demo info in system\reports. (works only with defrag demos)
+
+ 0 = off
+ 1 = summary
+ 2 = full report

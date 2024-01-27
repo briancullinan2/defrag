@@ -1,0 +1,259 @@
+/*QUAKED target_startTimer (1 0 0) (-8 -8 -8) (8 8 8)
+Timer Start
+*/
+
+//=============================================================================
+
+/*QUAKED target_stopTimer (1 0 0) (-8 -8 -8) (8 8 8)
+Timer Stop
+-------- KEYS --------
+target: stopTimer triggers its targets when a best time occurs.
+*/
+
+//=============================================================================
+
+/*QUAKED target_checkpoint (1 0 0) (-8 -8 -8) (8 8 8)
+Checkpoint
+*/
+
+//=============================================================================
+
+/*QUAKED target_fragsFilter (1 0 0) (-8 -8 -8) (8 8 8) REMOVER RUNONCE SILENT RESET MATCH
+Frags Filter
+-------- KEYS --------
+frags: (default is 1) number of frags required to trigger the targeted entity.
+target: targeted entity.
+-------- SPAWNFLAGS --------
+REMOVER: removes from player's score the number of frags that was required to trigger the targeted entity.
+RUNONCE: no longer used, kept for compatibility.
+SILENT: disables player warnings. ("x more frags needed" messages)
+RESET: resets player's score to 0 after the targeted entity is triggered.
+MATCH: the player's score must be exactly equal to the frags value.
+-------- NOTES --------
+If the Frags Filter is not bound from a trigger, it becomes independant and is so always active.
+Defrag is limited to 10 independant target_fragsFilter.
+*/
+
+//=============================================================================
+
+
+/*QUAKED trigger_teleport (.5 .5 .5) ? SPECTATOR KEEP_SPEED
+Allows client side prediction of teleportation events.
+-------- KEYS --------
+target: The name of a misc_teleporter_dest or target_position entity.
+-------- SPAWNFLAGS --------
+SPECTATOR: If spectator is set, only spectators can use this teleport. Spectator teleporters are not normally placed in the editor, but are created automatically near doors to allow spectators to move through them.
+KEEP_SPEED: Stores the speed at entering the teleporter and restore it at the destination.
+*/
+
+//=============================================================================
+
+/*QUAKED target_init (1 0 0) (-8 -8 -8) (8 8 8) KEEPARMOR KEEPHEALTH KEEPWEAPONS KEEPPOWERUPS KEEPHOLDABLE
+Removes various items from player.
+-------- SPAWNFLAGS --------
+KEEPARMOR
+KEEPHEALTH
+KEEPWEAPONS
+KEEPPOWERUPS
+KEEPHOLDABLE
+REMOVEMACHINEGUN
+-------- NOTES --------
+REMOVEMACHINEGUN has no effect if KEEPWEAPONS is ON.
+This target was originally settled for teleporters that lead back to the map starting point.
+target_init fires its target when activated.
+*/
+
+//=============================================================================
+
+/*QUAKED target_smallprint (0 .5 0) (-8 -8 -8) (8 8 8) NULL NULL NULL BROADCAST
+This will print a message on the center of the screen when triggered. In Defrag, by default, only the activating client will see the message.
+-------- KEYS --------
+message : text string to print on screen.
+targetname : the activating trigger points to this.
+-------- SPAWNFLAGS --------
+NULL: Those spawnflags were removed from Defrag.
+BROADCAST: When set, the message will be broadcast to all connected players.
+*/
+
+//=============================================================================
+
+/*QUAKED target_print (0 .5 0) (-8 -8 -8) (8 8 8) NULL NULL NULL BROADCAST
+This will print a message on the center of the screen when triggered. In Defrag, by default, only the activating client will see the message.
+-------- KEYS --------
+message : text string to print on screen.
+targetname : the activating trigger points to this.
+-------- SPAWNFLAGS --------
+NULL: Those spawnflags were removed from Defrag.
+BROADCAST: When set, the message will be broadcast to all connected players.
+*/
+
+//=============================================================================
+
+/*QUAKED shooter_grenade_targetplayer (1 0 .5) (-8 -8 -8) (8 8 8) TARGETPLAYER PREDICT_XY PREDICT_Z QUAD
+This will shoot a grenade each time it's triggered. Aiming is done by setting the "angles" key or by targeting an info_notnull or target_position entity.  It may also target the player, and predict the player's velocity.
+-------- KEYS --------
+angles: this sets the pitch and yaw aiming angles of shooter (default 0 0). The roll angle does not apply.
+targetname : activating trigger points to this.
+target : this points to a target_position entity for aiming the grenades.
+random : random aiming variance in degrees from the straight line to the targeted entity (default 0 - see Notes).
+notfree : when set to 1, entity will not spawn in "Free for all" and "Tournament" modes.
+notteam : when set to 1, entity will not spawn in "Teamplay" and "CTF" modes.
+notsingle : when set to 1, entity will not spawn in Single Player mode (bot play mode).
+speed: adjusts XY leading of player target.
+count: adjusts Z leading of player target.
+-------- SPAWNFLAGS --------
+TARGETPLAYER: If set, will aim at player instead of normal target.
+PREDICT_XY: If set, will attempt to predict player's horizontal position.
+PREDICT_Z: If set, will attempt to predict player's vertical position.  Only should use this if player will be in freefall, as it does not account for the player touching the ground.
+QUAD: If set, the shooter will use quad damage modificator.
+-------- NOTES --------
+When the random key is set, its value is used to calculate a maximum angle deviation from the normal trajectory formed by a straight line between the shooter and the aiming entity it targets. The final trajectory will be a random value anywhere between no deviation at all (0) to maximum deviation (value of the random key).
+
+Both the setting "angles" key or "targeting a target_position" methods can be used to aim the shooter. However, the target_position method is simpler.*/
+
+//=============================================================================
+
+/*QUAKED shooter_plasma_targetplayer (1 0 .5) (-8 -8 -8) (8 8 8) TARGETPLAYER PREDICT_XY PREDICT_Z QUAD
+This will shoot a plasma ball each time it's triggered. Aiming is done by setting the "angles" key or by targeting an info_notnull or target_position entity.  It may also target the player, and predict the player's velocity.
+-------- KEYS --------
+angles: this sets the pitch and yaw aiming angles of shooter (default 0 0). The roll angle does not apply.
+targetname : activating trigger points to this.
+target : this points to a target_position entity for aiming the plasma balls.
+random : random aiming variance in degrees from the straight line to the targeted entity (default 0 - see Notes).
+notfree : when set to 1, entity will not spawn in "Free for all" and "Tournament" modes.
+notteam : when set to 1, entity will not spawn in "Teamplay" and "CTF" modes.
+notsingle : when set to 1, entity will not spawn in Single Player mode (bot play mode).
+speed: adjusts XY leading of player target.
+count: adjusts Z leading of player target.
+-------- SPAWNFLAGS --------
+TARGETPLAYER: If set, will aim at player instead of normal target.
+PREDICT_XY: If set, will attempt to predict player's horizontal position.
+PREDICT_Z: If set, will attempt to predict player's vertical position.  Only should use this if player will be in freefall, as it does not account for the player touching the ground.
+QUAD: If set, the shooter will use quad damage modificator.
+-------- NOTES --------
+When the random key is set, its value is used to calculate a maximum angle deviation from the normal trajectory formed by a straight line between the shooter and the aiming entity it targets. The final trajectory will be a random value anywhere between no deviation at all (0) to maximum deviation (value of the random key).
+
+Both the setting "angles" key or "targeting a target_position" methods can be used to aim the shooter. However, the target_position method is simpler.*/
+
+//=============================================================================
+
+/*QUAKED shooter_rocket_targetplayer (1 0 .5) (-8 -8 -8) (8 8 8) TARGETPLAYER PREDICT_XY PREDICT_Z QUAD
+This will shoot a rocket each time it's triggered. Aiming is done by setting the "angles" key or by targeting an info_notnull or target_position entity.  It may also target the player, and predict the player's velocity.
+-------- KEYS --------
+angles: this sets the pitch and yaw aiming angles of shooter (default 0 0). The roll angle does not apply.
+targetname : activating trigger points to this.
+target : this points to a target_position entity for aiming the rockets.
+random : random aiming variance in degrees from the straight line to the targeted entity (default 0 - see Notes).
+notfree : when set to 1, entity will not spawn in "Free for all" and "Tournament" modes.
+notteam : when set to 1, entity will not spawn in "Teamplay" and "CTF" modes.
+notsingle : when set to 1, entity will not spawn in Single Player mode (bot play mode).
+speed: adjusts XY leading of player target.
+count: adjusts Z leading of player target.
+-------- SPAWNFLAGS --------
+TARGETPLAYER: If set, will aim at player instead of normal target.
+PREDICT_XY: If set, will attempt to predict player's horizontal position.
+PREDICT_Z: If set, will attempt to predict player's vertical position.  Only should use this if player will be in freefall, as it does not account for the player touching the ground.
+QUAD: If set, the shooter will use quad damage modificator.
+-------- NOTES --------
+When the random key is set, its value is used to calculate a maximum angle deviation from the normal trajectory formed by a straight line between the shooter and the aiming entity it targets. The final trajectory will be a random value anywhere between no deviation at all (0) to maximum deviation (value of the random key).
+
+Both the setting "angles" key or "targeting a target_position" methods can be used to aim the shooter. However, the target_position method is simpler.*/
+
+//=============================================================================
+
+/*QUAKED trigger_push_velocity (.5 .5 .5) ? PLAYERDIR_XY ADD_XY PLAYERDIR_Z ADD_Z BIDIRECTIONAL_XY BIDIRECTIONAL_Z CLAMP_NEGATIVE_ADDS
+This is used to create jump pads and launch ramps. It MUST point to a target_position or info_notnull entity to work. Unlike target_push, this is client side predicted.  This is similar to a jumppad, however, it may be configured to add to the player's velocity, as opposed to just setting it.
+-------- KEYS --------
+target : this points to the target_position to which the player will jump.
+notfree : when set to 1, entity will not spawn in "Free for all" and "Tournament" modes.
+notteam : when set to 1, entity will not spawn in "Teamplay" and "CTF" modes.
+notsingle : when set to 1, entity will not spawn in Single Player mode (bot play mode).
+speed: XY speed for player-directional velocity pads - either sets or adds to the player's horizontal velocity.
+count: Z speed for player-directional velocity pads - either sets or adds to the player's vectical velocity.
+-------- SPAWNFLAGS --------
+PLAYERDIR_XY: if set, trigger will apply the horizontal speed in the player's horizontal direction of travel, otherwise it uses the target XY component.
+ADD_XY: if set, trigger will add to the player's horizontal velocity, otherwise it set's the player's horizontal velociy.
+PLAYERDIR_Z: if set, trigger will apply the vertical speed in the player's vertical direction of travel, otherwise it uses the target Z component.
+ADD_Z: if set, trigger will add to the player's vertical velocity, otherwise it set's the player's vectical velociy.
+BIDIRECTIONAL_XY: if set, non-playerdir velocity pads will function in 2 directions based on the target specified.  The chosen direction is based on the current direction of travel.  Applies to horizontal direction.
+BIDIRECTIONAL_Z: if set, non-playerdir velocity pads will function in 2 directions based on the target specified.  The chosen direction is based on the current direction of travel.  Applies to vertical direction.
+CLAMP_NEGATIVE_ADDS: if set, then a velocity pad that adds negative velocity will be clamped to 0, if the resultant velocity would bounce the player in the opposite direction.
+-------- NOTES --------
+To make a jump pad or launch ramp, place the target_position/info_notnull entity at the highest point of the jump and target it with this entity.*/
+
+//=============================================================================
+
+/*QUAKED target_speed (1 1 0) (-8 -8 -8) (8 8 8) PERCENTAGE ADD +X -X +Y -Y +Z -Z LAUNCHER
+Sets the speed of the player.
+If ADD is speficied, negative values will reduce the speed.
+-------- KEYS --------
+targetname: Activating trigger points to this.
+speed: Speed value to set (default: 100).
+-------- SPAWNFLAGS --------
+PERCENTAGE: value is treated as percentage of current speed
+ADD: adds the speed instead of setting it
++X: takes positive X-direction into account
+-X: takes negative X-direction into account
++Y: takes positive Y-direction into account
+-Y: takes negative Y-direction into account
++Z: takes positive Z-direction (up) into account
+-Z: takes negative Z-direction (down) into account
+LAUNCHER: will accelerate the player into the given direction (spawnflags)
+-------- NOTES --------
+If LAUNCHER isn't specified the player will only be accelerated if he is moving
+while the target_speed is triggered, as the player needs a moving direction and this is
+only given when he moves. LAUNCHER will split the given speed value to the given
+directions. Note that only one of the spawnflags for each coordinate must be set. For
+example if +X and -X is active the x-direction will be ignored. The same is the case
+if whether +X nor -X is active. So if you want to accelerate the player up with 900u
+you have to set the speed value to 900 and activate the spawnflags +Z and LAUNCHER.*/
+
+//=============================================================================
+
+/*QUAKED target_multimanager (.8 .7 .8) (-8 -8 -8) (8 8 8) RED_ONLY BLUE_ONLY ADD_WAIT WAIT_OFFSET
+Triggers a bunch of targets with unique delays.
+-------- KEYS --------
+targetname: Name of this entity.
+target01: First target to trigger.
+target02: Second target to trigger.
+...
+target40: 40th (max) target to trigger.
+random: Additional random delay for all targets.
+count: If this is set only a given amount of targets is triggered in a random way (e.g. 5 of 10 targets).
+wait: Delay that is used by targets without an explicit delay or if either the ADD_WAIT or WAIT_OFFSET flag is set.
+-------- SPAWNFLAGS --------
+RED_ONLY: Only red team can trigger.
+BLUE_ONLY: Only blue team can trigger.
+ADD_WAIT: Adds the value of the wait key to all delays. Is ignored if WAIT_OFFSET is set.
+WAIT_OFFSET: Adds the value of "target_number * wait_delay" to all delays. See notes.
+-------- NOTES --------
+The keys for the targets have to contain 2 digits for the target number.
+So "target1" won't work while "target01" is correct.
+Target values should look like one of the following:
+	delay_in_seconds:targetname
+	targetname
+Examples:
+	1.5:my_target_door
+	my_other_target_door
+	
+The first version will use the given delay while the second version will use the delay that is given
+by the wait key of the multimanager entity. For those targets the wait delay is not added twice if
+ADD_WAIT is set!
+	
+The multimanager can only be triggered again after all of its targets
+were triggered! So the maximum of the delays is also the cooldown time.
+
+Example for using the WAIT_OFFSET spawnflag:
+
+target01: my_target1
+target02: my_target2
+target03: my_target3
+target04: 2:my_target4
+
+With a wait value of 0.5 the targets will have the following trigger delays:
+target01: triggers my_target1 after 0.5 seconds
+target02: triggers my_target2 after 1.0 seconds
+target03: triggers my_target3 after 1.5 seconds
+target04: triggers my_target4 after 4.0 seconds (special delay for this target is 2)
+...
+*/

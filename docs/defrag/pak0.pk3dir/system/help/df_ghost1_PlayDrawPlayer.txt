@@ -1,0 +1,11 @@
+\df_ghost1_PlayDrawPlayer [ DEFAULT: 3 RANGE: 0 TO 4 ] - changes the rendering of the ghost player.
+
+ 0 = DRAW_PLAYER_OFF: Turns off rendering (drawing) of the ghost player.
+ 
+ 1 = DRAW_PLAYER_NORMAL: The ghost player is drawn normally.
+ 
+ 2 = DRAW_PLAYER_INVIS: The ghost player is drawn using the invisibility powerup.
+ 
+ 3 = DRAW_PLAYER_INVIS_USE_RADIUS: The ghost player is drawn normally, unless the ghost player is within the df_ghosts_NoDrawRadius distance to the player (you), in which case the ghost player is drawn using the invisibility powerup.
+ 
+ 4 = DRAW_PLAYER_ICON: The ghost player is drawn not as a quake3 player, but instead as the guantlet icon.

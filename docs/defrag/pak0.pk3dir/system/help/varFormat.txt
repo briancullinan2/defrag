@@ -1,0 +1,72 @@
+==========================
+CONSOLE COMMAND: varFormat
+==========================
+
+1. Information
+2. Usage Examples
+3. Immediate Var Updates
+4. History
+
+---------------------------------------------------------------
+varFormat [ FORMAT: varname format1 value1 <format2> <value2> ]
+---------------------------------------------------------------
+
+--------------
+1. Information
+--------------
+
+Formats cvars and vstrs, using format strings.  Optionally joins 2 strings.
+
+Format:
+s = string
+i = integer number
+f = float number
+
+varFormat uses the "format specifiers" shown above (s, i, f) to change a string.  Format specifiers are used to indicate the variable type and variable length of the variable that you are changing.
+
+To use the format specifiers, indicate a number and a format type.  You can precede the number with a "0" to indicate that the variable you are changing should be prefixed with a "0"s to "fill out" the length of the string.
+
+So, using:
+6i  would mean that the variable you are formatting will be an integer, at most 6 characters long.
+06i would mean taht the variable you are formatting will be an integer, and will always be 6 characters long, and prefixed with 0s if necessary.
+
+-----------------
+2. Usage Examples
+-----------------
+
+\varFormat user_float1 2.2f 98.765 // sets var to 98.76
+
+\varFormat user_int1 06i 987 // sets var to 000987
+
+\varFormat user_string1 s Demo 06i 987 // sets var to Demo000987
+
+\set chInfoNum 108                       // sets chInfoNum to 108 (date in YYYYMMDD format)
+\varFormat user_string2 s Demo i $chInfo // sets var to DemoYYYYMMDD (today's date)
+
+------------------------
+3. Immediate Var Updates
+------------------------
+
+*** WARNING/IMPORTANT: There is a delay between issuing a console command to q3, and the actual command being executed.  This means that changing a var with varMath may be delayed.  There is a way around this issue: prefix all of your user created vars with "user_".  This will tell the system that these vars should be updated as soon as possible.
+
+Example of a delay (using varMath):
+-----------------------------------
+We want to create a string to contain the mapname and a number afterwards (q3dm17_1)
+
+\set MyNumber "0"     // MyNumber = 0
+\varMath MyNumber+ 1; varMath MyDemoNam = $mapname + _ + $MyNumber // MyDemoName = q3dm17_0, we wanted q3dm17_1
+
+Now, what we want is "q3dm17_1".  But, because of the delay in updating MyNumber, we get "q3dm17_0", since MyNumber is late in getting updated, the next call to varMath uses MyNumber with the value of "0", when we wanted "1" to be used.
+
+Solution:
+---------
+If we use the "user_" prefix for the vars we create, varMath will update these vars immediately (no delay) and we can use these values in subsequent calls to varMath, etc.
+
+\set user_MyNumber "0"     // user_MyNumber = 0
+\varMath user_MyNumber + 1; varMath user_MyDemoName = $mapname + _ + $user_MyNumber // user_MyDemoName = q3dm17_1, exactly what we wanted
+
+----------
+4. History
+----------
+1.90
+- Feature introduced

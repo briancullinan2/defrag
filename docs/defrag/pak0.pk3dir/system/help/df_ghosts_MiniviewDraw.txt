@@ -1,0 +1,20 @@
+\df_ghosts_MiniviewDraw [ DEFAULT: 3 RANGE: 0 TO 8 ] - turns on/off the Miniview (PIP)
+
+ 0 = Off
+ 1 = On during ghost playback
+ 2 = On for ghost playback, and for demos
+ 3 = On for demos only
+ 4 = Always On (1P/3P switching style - opposite of mainview)
+ 5 = Always On, 1st Person
+ 6 = Always On, 3rd Person
+ 7 = Always On, Player spectating/tracking (specified by df_mp_TrackPlayerNum).  PIP is main player's view if other player is outside of PVS
+ 8 = Always On (PVS), Player spectating/tracking (specified by df_mp_TrackPlayerNum).  PIP is off if other player is outside of PVS
+
+For mode 4 (always on), the miniview functions differently depending on if a ghost is playing or not.
+
+- If a ghost not playing, then the miniview will display the opposite of the mainview, in relation to cg_thirdperson 1.
+
+- If a ghost IS playing, and the df_ghosts_MiniviewCameraMode is set to 0, the miniview will show the player view (not the ghost view) in first person form.
+
+- If a ghost IS playing, and the df_ghosts_MiniviewCameraMode is not 0, the miniview will use one of the ghost camera modes (the same modes that are available in df_ghost*_PlayCameraMode.
+

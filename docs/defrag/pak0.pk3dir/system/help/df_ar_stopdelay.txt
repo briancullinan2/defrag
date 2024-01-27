@@ -1,0 +1,1 @@
+\df_ar_stopdelay [ TYPE: INTEGER - DEFAULT: 1800 ] - sets the period of time in milliseconds to be elapsed from the run completion before the autorecord stops recording.

@@ -1,0 +1,32 @@
+\df_demos_ReplayMode [ DEFAULT: 1 RANGE: 0 TO 4 ] - sets the Replay Mode
+
+ 0 = Off
+ 1 = On (used during demo playback for maps that have replay scripts) and turns on/off Replay/Autochase spectating
+ 2 = Debug mode, Level 1 (reports debug information during activations)
+ 3 = Debug mode, Level 2 (reports debug information during activations, shows activators and cams)
+ 4 = Debug mode, Level 3 (shows activators and cams, uses rail beams to show activator boxes, links and transitions)
+
+1 = On.  If on, and a replay script exists for a given map, the script will be used during a demo.  Also turns on/off replay/autochase spectating
+
+The debug modes are used for Replay Script creation, editing, and debugging.  The debug modes can be used inside and outside of demos.  General users (those not creating replay scripts) should only set the replay mode to 0 or 1 (off or on).
+
+Debug mode 1: will load the replay script inside or outside demos, and allow activation to take place.  It displays activation information onscreen.  Replay entities are NOT visually shown.
+
+Debug mode 2: will load the replay script inside or outside demos, and allow activation to take place.  It displays activation information onscreen.  Replay entities are visually shown using normal q3 entities such as rockets, etc.
+
+Debug mode 3: will load the replay script inside or outside demos, but no activation takes place.  Replay entities are visually shown using normal q3 entities.  In addition, rail beams are used in addition to the missiles, to show more information about the replay entities.
+
+For debug mode 2 and 3: replay entities are shown visually.  
+
+- Camera are shown as rockets
+- Activators are shown using BFG missiles in the corners of the activator volume
+- Activator control corners are shown with gauntlet icons
+- Activator centers are shown using a plasma shot
+- Activator and camera ID numbers float above the entities to indicate the ID number
+
+In debug mode 3:
+- Blue boxes are used to outline the activator volumes
+- Green rail beams show activator to camera links
+- Red rail beams show camera to camera transitions
+
+*** NOTE: enabling a demos camera mode (df_demos_CameraMode) automatically turns off the Replay Mode (df_demos_ReplayMode) during demos

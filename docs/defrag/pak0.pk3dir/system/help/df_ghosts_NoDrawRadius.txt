@@ -1,0 +1,3 @@
+\df_ghosts_NoDrawRadius	[ DEFAULT: 200 RANGE: 0 TO N ] - hides the ghost, the ghost missiles, and the ghost exlosions if a particular item is within the given radius (distance) to the player.
+
+Useful for map running, as it is a way to prevent the ghost from obstucting your view.  For general tricking, you may wish to set this value to "0" - then the ghost, and it's missiles/explosions will not be hidden.  Note that if you are using the ghost draw mode GHOST_PLAYSET_DRAW_PLAYER_INVIS_USE_RADIUS (df_ghost1_PlayDrawPlayer 4) then if the ghost is within the given distance, it is not hidden, but instead drawn with the invisiblity powerup shader.  Missiles and explosions that fall within the radius are still hidden.

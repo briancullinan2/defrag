@@ -1,0 +1,21 @@
+Instructions for mappers.
+
+1) copy noob.tga to \baseq3\textures\common - if the "common" folder doesn't exist, create it and copy the file into it then
+2) copy custinfoparms.txt to \baseq3\scripts
+3) add "-custinfoparms" to the q3map command line when compiling the map...example: ! "D:/q3/gtk/q3map2" -v # -game quake3 -fs_basepath "d:/q3//" -meta -custinfoparms $
+4) add this block to common.shader (\baseq3\scripts\common.shader). if that file doesn't exist, re-extract it from pak0.pk3 (scripts folder) to \baseq3\scripts\ and add the block to it then.
+ 
+textures/common/noob
+{
+ qer_trans 0.20
+ surfaceparm nodraw
+ surfaceparm nolightmap
+ surfaceparm nomarks
+ surfaceparm trans
+ surfaceparm noob
+}
+ 
+5) the no ob surface is now available in the texture package "common" and ready to be used.
+6) make sure you compile your map with -custinfoparms on when you compile for -meta or -light.
+
+w3sp

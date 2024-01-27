@@ -1,0 +1,54 @@
+========================
+CONSOLE COMMAND: varSave
+========================
+
+1. Information
+2. Usage Examples
+3. Additional Information
+4. History
+
+-------------------------------------
+varSave [ FORMAT: var_name filename ]
+-------------------------------------
+
+--------------
+1. Information
+--------------
+
+This allows variable or vstrs to be save to file.  This can be useful for saved positions - as they can be written to file and then later loaded and reused.
+
+When a variable is saved, it is appended to the end of the text file.
+
+-----------------
+2. Usage Examples
+-----------------
+
+example 1
+---------
+\varSave myvarname myfile.cfg // writes myvarname to the file myfile.cfg
+
+example 2
+---------
+\varJoin user_savepos_filename <0> $mapname _positions.cfg
+\varSave pos1 $user_savepos_filename; varSave pos2 $user_savepos_filename; varSave pos3 $user_savepos_filename
+
+// creates a filename based on the mapname, then saves 3 positions to that filename
+
+example 3
+---------
+\varMath user_savepos_filename = $mapname + _positions.cfg
+\varSave pos1 $user_savepos_filename; varSave pos2 $user_savepos_filename; varSave pos3 $user_savepos_filename
+
+// creates a filename based on the mapname, then saves 3 positions to that filename (same as example 2, but uses varMath instead of varJoin
+
+-------------------------
+3. Additional Information
+-------------------------
+
+See the saveposition documentation to see how to save positions to file.
+
+----------
+4. History
+----------
+1.90
+- Feature introduced

@@ -1,0 +1,5 @@
+\cg_drawDamage [ DEFAULT: 1 (on) RANGE: 0 TO 1 ] - turns on/off red marks display while taking damage
+
+ 0 = off
+ 1 = on
+ 

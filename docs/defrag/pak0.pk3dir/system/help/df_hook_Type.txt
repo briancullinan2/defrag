@@ -1,0 +1,8 @@
+\df_hook_Type [ DEFAULT: 0 RANGE: 0 TO 3 ] - physics - grappling hook type
+
+ 0 = Quake 3
+ 1 = Swinging
+ 2 = Pendulum
+ 3 = Quake 2
+
+*** requires map_restart to take effect

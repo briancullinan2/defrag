@@ -1,0 +1,5 @@
+\df_ui_TextColorDisabled [ DEFAULT: "0.50 0.50 0.50 1.00" ] - .r .g .b .t color
+
+FORMAT: RED (0.00 to 1.00) GREEN (0.00 to 1.00) BLUE (0.00 to 1.00) TRANSPARENCY (0.00 to 1.00) 
+
+Default: (gray). Leave empty for standard ID color (gray)

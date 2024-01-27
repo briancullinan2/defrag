@@ -1,0 +1,70 @@
+========================
+CONSOLE COMMAND: varJoin
+========================
+
+1. Information
+2. Usage Examples
+3. Immediate Var Updates
+4. Additional Information
+5. History
+
+------------------------------------------------
+varJoin [ FORMAT: varname <var1> <var2...> ]
+------------------------------------------------
+
+--------------
+1. Information
+--------------
+Joins up to 25 vstrs.
+
+Use <s> or $space to indicate a space.
+
+Use <0> to set the string to empty.  This is useful when you don't know what the current var value is (or don't care), and need to reset the string before you continue joining:
+
+\set user_stringthatmayhavetext "some text exists"      // put some text in a new vstr
+\varJoin user_stringthatmayhavetext <0> hello <s> there // reset the vstr and continue the join - user_string now contains "hello there", not "Some text existshello there"
+
+Note that varJoin can use $StringSubstitution - you can specify a vstr name instead of a value, and the value stored in the vstr will be used.
+
+-----------------
+2. Usage Examples
+-----------------
+\varJoin user_var1 hello <s> there     // user_var1 contains "hello there"
+\varJoin user_var2 my $space friend    // user_var2 contains "my friend"
+\varJoin user_var3 $MyVar1 <s> $MyVar2 // user_var3 contains "hello there my friend"
+\varJoin user_demoname $mapname _ $time _ $playername // user_demoname contains "q3dm17_2230125_o3j"
+
+\varJoin ? // displays ingame help
+
+------------------------
+3. Immediate Var Updates
+------------------------
+
+*** WARNING/IMPORTANT: There is a delay between issuing a console command to q3, and the actual command being executed.  This means that changing a var with varMath may be delayed.  There is a way around this issue: prefix all of your user created vars with "user_".  This will tell the system that these vars should be updated as soon as possible.
+
+Example of a delay (using varMath):
+-----------------------------------
+We want to create a string to contain the mapname and a number afterwards (q3dm17_1)
+
+\set MyNumber "0"     // MyNumber = 0
+\varMath MyNumber+ 1; varMath MyDemoNam = $mapname + _ + $MyNumber // MyDemoName = q3dm17_0, we wanted q3dm17_1
+
+Now, what we want is "q3dm17_1".  But, because of the delay in updating MyNumber, we get "q3dm17_0", since MyNumber is late in getting updated, the next call to varMath uses MyNumber with the value of "0", when we wanted "1" to be used.
+
+Solution:
+---------
+If we use the "user_" prefix for the vars we create, varMath will update these vars immediately (no delay) and we can use these values in subsequent calls to varMath, etc.
+
+\set user_MyNumber "0"     // user_MyNumber = 0
+\varMath user_MyNumber + 1; varMath user_MyDemoName = $mapname + _ + $user_MyNumber // user_MyDemoName = q3dm17_1, exactly what we wanted
+
+-------------------------
+4. Additional Information
+-------------------------
+See the documentation on StringSubs for more information on how to use the $StringSubs feature.
+
+----------
+5. History
+----------
+1.90
+- Feature introduced

@@ -1,0 +1,1 @@
+\df_vote_allow_mode [ DEFAULT: 1 RANGE: 0  TO 1 ] - enables/disables game mode votes

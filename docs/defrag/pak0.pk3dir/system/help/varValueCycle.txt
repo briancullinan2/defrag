@@ -1,0 +1,20 @@
+==============================
+CONSOLE COMMAND: varValueCycle
+==============================
+
+1. Information
+2. History
+
+--------------
+1. Information
+--------------
+This feature has been removed.  Use varCycle using $StringSubstitution instead.
+
+----------
+2. History
+----------
+1.90
+- Feature removed, replaced with varCycle using $StringSubstitution
+
+1.80
+- Feature introduced

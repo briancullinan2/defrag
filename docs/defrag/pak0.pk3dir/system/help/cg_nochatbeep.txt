@@ -1,0 +1,1 @@
+\cg_nochatbeep [ DEFAULT: 0 (off) RANGE: 0 to 1 ] - Turns on/off the chat beeps

@@ -1,0 +1,1 @@
+\df_vote_maxVotes [ DEFAULT: 5 RANGE: 0  TO ... ] - max callvotes per client (0: infinite)

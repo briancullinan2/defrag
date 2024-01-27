@@ -1,0 +1,1 @@
+\df_chs1_OffsetX [ DEFAULT: 0 RANGE: -320 TO 320 ] - changes the horizontal position of the CHS set relative to the center of the screen

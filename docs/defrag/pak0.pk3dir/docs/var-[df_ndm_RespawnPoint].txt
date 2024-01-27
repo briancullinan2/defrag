@@ -1,0 +1,45 @@
+*** NOTE: this cvar removed, and replaced with "respawnpoint" command in Defrag 1.91 ***
+
+=============================
+VARIABLE: df_ndm_RespawnPoint
+=============================
+
+1. Information
+2. Sample Binds
+3. History
+
+--------------
+1. Information
+--------------
+
+\df_ndm_RespawnPoint [ DEFAULT: <empty> RANGE: X Y Z (position) ]
+
+Specifies that the closest spawn point to the indicated X Y Z position should be used when a player respawns.  Requires a map restart.
+
+At any time, you may set the var to your current position (see sample binds section).  Once this is done, and a map restart is performed, the closest normal map spawn point will be used repeatedly.
+
+Any time the df_ndm_RespawnPoint var changes, a map_restart must be performed.
+
+The df_ndm_RespawnPoint is cleared (set to "") when a new (different) map is loaded.
+
+---------------
+2. Sample Binds
+---------------
+
+Use the following bind to set the var or clear the var:
+
+bind MyKey1 "varMath df_ndm_RespawnPoint = $posXYZ" // sets the spawnpoint to the current player position
+bind MyKey2 "varMath df_ndm_RespawnPoint = $empty"  // clears the spawn point
+
+To perform a map restart:
+
+bind MyKey3 "map_restart 0"
+
+----------
+3. History
+----------
+1.91
+- Change: Removed df_ndm_RespawnPoint, replaced with respawnpoint console command.  Uses separate respawn point per player.
+
+1.90
+- Feature introduced

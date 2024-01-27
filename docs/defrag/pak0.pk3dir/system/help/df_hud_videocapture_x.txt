@@ -1,0 +1,2 @@
+/df_hud_videocapture_x (default: 320)
+	Timer position from relative screen resolution 640x480.

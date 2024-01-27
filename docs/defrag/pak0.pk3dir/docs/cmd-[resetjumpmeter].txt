@@ -1,0 +1,35 @@
+===============================
+CONSOLE COMMAND: resetjumpmeter
+===============================
+
+1. Information
+2. Usage Examples
+3. Sample Binds
+4. History
+
+--------------
+resetjumpmeter--------------
+
+--------------
+1. Information
+--------------
+
+Resets the maximum values for the jumpmeter
+
+-----------------
+2. Usage Examples
+-----------------
+
+\resetjumpmeter
+
+---------------
+3. Sample binds
+---------------
+
+\bind <mykey> resetjumpmeter
+
+----------
+4. History
+----------
+1.9
+- Feature introduced

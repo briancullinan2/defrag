@@ -1,0 +1,7 @@
+\df_chs1_Draw [ DEFAULT: 0 (off) RANGE: 0 TO 4 ] - turns display on/off
+
+ 0 = off
+ 1 = on
+ 2 = on only for demos and spectating
+ 3 = on only ingame (off for demos and spectating)
+ 4 = always on (even if 2d drawing is off, scoreboard is displayed, etc.)

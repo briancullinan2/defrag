@@ -1,0 +1,10 @@
+Each CHS set has 8 positions (slots) available for information.
+
+\df_chs1_Info1 [ DEFAULT: 0 (empty) RANGE: 0 TO N ] - assigns an information type to the stat info slot1
+\df_chs1_Info2 [ DEFAULT: 0 (empty) RANGE: 0 TO N ] - assigns an information type to the stat info slot2
+\df_chs1_Info3 [ DEFAULT: 0 (empty) RANGE: 0 TO N ] - assigns an information type to the stat info slot3
+\df_chs1_Info4 [ DEFAULT: 0 (empty) RANGE: 0 TO N ] - assigns an information type to the stat info slot4
+\df_chs1_Info5 [ DEFAULT: 0 (empty) RANGE: 0 TO N ] - assigns an information type to the stat info slot5
+\df_chs1_Info6 [ DEFAULT: 0 (empty) RANGE: 0 TO N ] - assigns an information type to the stat info slot6
+\df_chs1_Info7 [ DEFAULT: 0 (empty) RANGE: 0 TO N ] - assigns an information type to the stat info slot7
+\df_chs1_Info8 [ DEFAULT: 0 (empty) RANGE: 0 TO N ] - assigns an information type to the stat info slot8

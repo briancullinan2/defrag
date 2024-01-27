@@ -1,0 +1,42 @@
+=====================
+CONSOLE COMMAND: read
+=====================
+
+1. Information
+2. Usage Examples
+3. Additional Information
+4. History
+
+----------------------------------------------------------------------------------------------
+read [ FORMAT: <foldername/>filename<extension> DEFAULT FOLDER: docs DEFAULT EXTENSION: .txt ]
+----------------------------------------------------------------------------------------------
+
+--------------
+1. Information
+--------------
+Reads a text file, and outputs the contents to the console.  Maximum output (file size that can be read) is 10k.  The default folder for the "read" command is the docs folder under the modfilename.  This means that you can read files in this folder without typing a path.  The default extension for the read command is .txt.  Ultimately, this means that you can type \read filename, and it will read /docs/filename.txt.  If the file you wish to read has a different extension than .txt, you must specify the extension (\read filename.cfg).  If the file resides in a different path, you must specify the path (\read /myfolder/myfilename).  And if the file resides in a different path and does not have a .txt extension, you must specify both the path and the extension (\read /myfolder/myfilename.rec).  If the path or the filename contains spaces, put the path/filename inside quotes (\read "/my folder with spaces/my file with spaces.wri")
+
+-----------------
+2. Usage Examples
+-----------------
+\read                          // does a dir of the /docs folder
+\read myfilename               // reads/outputs /docs/myfilename.txt
+\read myconfigname.cfg         // reads/outputs /docs/myfilename.cfg
+\read /myfolder/myfilename     // reads/outputs /myfolder/myfilename.txt
+\read /myfolder/myfilename.rec // reads/outputs /myfolder/myfilename.rec
+
+\read ?                        // displays ingame help
+
+-------------------------
+3. Additional Information
+-------------------------
+Also, use fdir or dir to list files in a folder (standard q3 console command)
+
+----------
+4. History
+----------
+1.90
+- Added ingame help
+
+1.80
+- Feature introduced

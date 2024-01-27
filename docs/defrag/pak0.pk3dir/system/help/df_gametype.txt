@@ -1,0 +1,16 @@
+/df_gametype [0-7] (default: 0)
+
+Defrag has a total of six different game types, plus a special automatic configuration mode. To set the game type through the console or a configuration file, set df_gametype to the appropriate value :
+
+  0: auto-config
+  1: defrag
+  2: tricks mode
+  3: fast caps
+  4: *** reserved ***
+  5: multiplayer defrag
+  6: multiplayer tricks mode
+  7: multiplayer fast caps
+
+The easiest way of running the game through the console or a script is to use the Automatic Configuration mode. In this mode, Defrag will decide itself which game type is the most appropriate for the map. A multiplayer game type will be automatically selected when Quake is running as a dedicated server.
+
+Note: Due to the nature of the Quake3 engine architecture, Defrag cannot detect a multiplayer game unless Quake3 is running as a dedicated server. If you are running your server as a non-dedicated server, you will need to set the appropriate game type manually.

@@ -1,0 +1,1 @@
+\df_chs1_FontSize [ DEFAULT: 10 RANGE: 4 TO 50 ] - changes font size

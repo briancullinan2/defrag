@@ -104,6 +104,7 @@ function getQueryCommands() {
 	if(!startup.includes('fs_basegame')) {
 		startup.push.apply(startup, [
 			'+set', 'fs_basegame', 'demoq3',
+			'+set', 'fs_game', 'defrag',
 		])
 		if(typeof FS.virtual['demoq3'] == 'undefined') {
 			FS.virtual['demoq3'] = {

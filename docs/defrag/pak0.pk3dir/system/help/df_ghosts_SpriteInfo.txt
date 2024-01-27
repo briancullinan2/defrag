@@ -1,0 +1,10 @@
+\df_ghosts_SpriteInfo [ DEFAULT: empty ] - allows information to be displayed above a playing ghost
+
+This can be used to display information above the ghost
+
+Examples:
+$ghostnum     // shows the ghostnumber above the ghost
+$chsinfo(200) // shows the defrag timer above the ghost (crosshair stats info item 200)
+Defrag Owns   // shows "Defrag Owns" above the ghost
+
+*** NOTE: Use in conjunction with df_ghosts_SpriteSize and df_ghosts_DrawOutput

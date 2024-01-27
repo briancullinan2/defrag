@@ -1,0 +1,1 @@
+\df_chs1_ComboSeparator [ DEFAULT: "/" (maxlength of 5 characters) ] - specifies the character string to use for CHS info combo items

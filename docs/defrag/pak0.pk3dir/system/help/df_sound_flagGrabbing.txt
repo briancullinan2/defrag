@@ -1,0 +1,1 @@
+\df_sound_flagGrabbing [ DEFAULT: 0 (off) RANGE: 0 TO 1 ] - turns on/off the sound event for the CTF flags pickup.

@@ -1,0 +1,63 @@
+==================
+Special VSTRS List
+==================
+
+----------
+Infomation
+----------
+
+Special Vstrs are vstrs that the system understands,
+but are not defined as cvars, but instead as vstrs.
+Check the documentation for usage information.
+
+Certain special vstrs are defined automatically, and can be used whever StringSubs can be used.  The Special Strings will automatically contain specific information, such as the player's position, the mapname, etc.
+
+----
+List
+----
+
+The list of Special Strings are:
+
+viewposX - player view's X world position (same value as posX)
+viewposY - player view's Y world position (same value as posY)
+viewposZ - player view's Z world position (posZ + viewheight)
+viewposXYZ - player view's X Y Z world position
+
+posX - player's X world position
+posY - player's Y world position
+posZ - player's Z world position
+posXYZ - player's X Y Z world position
+
+angX - player's X viewangle
+angY - player's Y viewangle
+angZ - player's Z viewangle
+angXYZ - player's X Y Z viewangle
+
+velX - player's X velocity
+velY - player's Y velocity
+velZ - player's Z velocity
+velXYZ - player's X Y Z velocity
+
+speedXY - player's horizontal speed
+speedZ  - player's vertical speed
+
+PreviousPlayerNum     - checks df_mp_TrackPlayerNum, finds previous player number
+NextPlayerNum         - checks df_mp_TrackPlayerNum, finds next player number
+PreviousTeamPlayerNum - checks df_mp_TrackPlayerNum, finds previous same-team player number
+NextTeamPlayerNum     - checks df_mp_TrackPlayerNum, finds next same-team player number
+
+mapname    - current map name
+date       - current date in YYYYMMDD format
+time       - current time in HHMMSSS format
+playername - player's name (colors removed)
+cgtime     - clientside timer
+
+chsInfo(#)  - Crosshair Stats information item, as defined by #  // example chsInfo(43)
+chsLabel(#) - Crosshair Stats text label, as defined by #        // example chsLabel(122)
+
+saveposname - vstr name to store player pos, angles, and velocity
+
+df_demos_ReplayCameraMode      - sets the replay camera mode
+df_demos_ReplayVar_FOV         - sets the replay FOV
+df_demos_ReplayTransitionSpeed - sets the replay camera transition speed
+

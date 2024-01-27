@@ -1,0 +1,8 @@
+/df_ndm_powerups [0-1] (default: 0)
+
+Toggles the powerups in the Tricks Mode and Fast Caps gametypes.
+
+  0: powerups disabled
+  1: powerups enabled
+
+NOTE: The cvar df_mode must be set to Custom Settings (value 0) for this cvar to take effect.

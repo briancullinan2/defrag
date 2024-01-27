@@ -1,0 +1,2 @@
+\df_ui_CustomMenu [ DEFAULT: 1 RANGE: 0 (q3) to 1 (custom) ] - turns custom menu on/off
+

@@ -1,0 +1,3 @@
+\df_ghosts_MiniviewBorderSize [ DEFAULT: 4 RANGE: 0 TO 25 ] - changes the border size drawn around the miniview
+
+NOTE: The border of the miniview uses the texture "backtile" found in pak0.pk3 of quake3, (\gfx\2d\backtile.jpg).  You can edit this file (back it up, or better yet, copy it to "zBackTile.jpg", edit it, and put the pk3 in your defrag folder) to change the color/texture of the border.
