@@ -2,7 +2,7 @@
 const fs = require('fs')
 const path = require('path')
 const {glob} = require('glob')
-const process = require('child_process')
+const {spawnSync} = require('child_process')
 
 
 const SUPPORTED_FORMATS = [
@@ -56,7 +56,7 @@ async function compareZip(pk3File) {
         .concat(['-u', tempFile, textFiles[pack_i]])
       //console.log(startArgs)  
       
-      await process.spawnSync('zip', startArgs, {
+      await spawnSync('zip', startArgs, {
         cwd: sourcePath,
         timeout: 2000,
       })
@@ -108,7 +108,7 @@ async function convertImages(pk3File) {
 
     let alphaCmd
     try {
-      let alphaProcess = await process.spawnSync('identify', ['-format', "'%[opaque]'", altPath], {
+      let alphaProcess = await spawnSync('identify', ['-format', "'%[opaque]'", altPath], {
         cwd: sourcePath,
         timeout: 3000,
       })
@@ -123,7 +123,7 @@ async function convertImages(pk3File) {
     }
   
 
-    await process.spawnSync('convert', ['-strip', '-interlace', 'Plane', '-sampling-factor', '4:2:0', '-quality', '10%', '-auto-orient', altPath, pk3Path], {
+    await spawnSync('convert', ['-strip', '-interlace', 'Plane', '-sampling-factor', '4:2:0', '-quality', '10%', '-auto-orient', altPath, pk3Path], {
       cwd: sourcePath,
       timeout: 3000,
     })
@@ -139,10 +139,10 @@ async function checkForRepack(request, response, next) {
 
   let isPk3Path = request.originalUrl.includes('maps/')
     && request.originalUrl.includes('.pk3')
-  let mapPath = request.originalUrl.substr(request.originalUrl.indexOf('maps/') + 5)
-    .replace(/\?.*$/gi, '')
   // definitely requesting a repacked file
   if(isPk3Path) {
+    let mapPath = request.originalUrl.substr(request.originalUrl.indexOf('maps/') + 5)
+    .replace(/\?.*$/gi, '')
       // form a docs/demoq3/pak0.pk3dir style path
     if(fs.existsSync(path.join(__dirname, '../../docs/', mapPath + 'dir'))) {
       // compare contents of folder with contents of corresponding zip and mtime
@@ -171,5 +171,89 @@ async function checkForRepack(request, response, next) {
 
 }
 
+const IMAGE_TYPES = new RegExp('(' + [
+  '.png',
+  '.jpg',
+  '.jpeg',
+  '.tga',
+  '.gif',
+  '.pcx',
+  '.webp',
+  '.hdr',
+  '.dds',
+].join('|') + ')$')
+
+const MATCH_PALETTE = /palette\s"(.*?)"\s([0-9]+,[0-9]+,[0-9]+)/ig
+
+async function generatePalette(pk3File) {
+  let sourcePath = path.join(__dirname, '../../docs/')
+  let pk3Path = path.join(sourcePath, pk3File, 'pak0.pk3dir')
+  if(!fs.existsSync(pk3Path)) {
+    return
+  }
+
+  let paletteFile = path.join(pk3Path, 'scripts/palette.shader')
+
+  var palette = {}
+  var existingPalette = ''
+  if(fs.existsSync(paletteFile)) {
+    existingPalette = fs.readFileSync(paletteFile).toString('utf-8')
+    var m
+    while((m = (MATCH_PALETTE).exec(existingPalette)) !== null) {
+      palette[path.join(pk3Path, m[1])] = m[2]
+    }
+    existingPalette = existingPalette.replace(/palettes\/.*?\n*\{[\s\S]*?\}\n*/ig, '')
+  }
+
+
+  const imageFiles = (await glob('**/*', { 
+    ignore: 'node_modules/**', 
+    cwd: pk3Path 
+  })).filter(f => f.match(IMAGE_TYPES))
+
+  console.log(imageFiles)
+  for(let image_i = 0; image_i < imageFiles.length; image_i++) {
+    if(typeof palette[imageFiles[image_i]] != 'undefined') {
+      continue
+    }
+    // get average image color for palette
+    try {
+      let alphaProcess = await spawnSync('convert', [
+        imageFiles[image_i], '-resize', '1x1\!', '-format', '%[fx:int(255*a+.5)],%[fx:int(255*r+.5)],%[fx:int(255*g+.5)],%[fx:int(255*b+.5)]', 'info:-'
+      ], {
+        cwd: pk3Path,
+        timeout: 3000,
+      })
+      let colorCmd = alphaProcess.stdout.toString('utf-8')
+      palette[imageFiles[image_i]] = colorCmd
+      console.log(imageFiles[image_i], colorCmd)
+    } catch (e) {
+      console.error(e.message, (e.output || '').toString('utf-8').substr(0, 1000))
+    }
+    //palette[imagePath] = `0, 0, 0`
+  }
+
+
+  existingPalette = `palettes/default
+  {
+  ${Object.keys(palette).map((k, v, i) => `  palette "${k.replace(pk3Path, '')}" ${v}`).join('\n')}
+  }
+  ` + existingPalette
+    fs.writeFileSync(paletteFile, existingPalette)
+  
+
+}
+
+
+
 module.exports = checkForRepack
+
+
+if(require.main === module && process.argv[1] == __filename) {
+  generatePalette('defrag')
+  .then(() => compareZip('defrag/pak0.pk3'))
+  .then(result => {
+    console.log(result)
+  })
+}
 
