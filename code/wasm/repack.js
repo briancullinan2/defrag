@@ -22,7 +22,8 @@ const SUPPORTED_FORMATS = [
   '.bsp', '.md3', '.iqm', '.mdr',
 ]
 
-const FILE_TYPES = new RegExp('(' + SUPPORTED_FORMATS.join('|') + ')$|menu\/|gfx\/2d\/', 'ig')
+// include icons because menu uses it to load, not a lazy check unforntunatly
+const FILE_TYPES = new RegExp('(' + SUPPORTED_FORMATS.join('|') + ')$|menu\/|gfx\/2d\/|players\/icon.*\.tga', 'ig')
 
 let lockFunc = false
 let lockPromise
