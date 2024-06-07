@@ -58,7 +58,7 @@ async function compareZip(pk3File) {
       
       await process.spawnSync('zip', startArgs, {
         cwd: sourcePath,
-        timeout: 1000,
+        timeout: 2000,
       })
       
       // slow it down a little or write locks won't work and junk files don't get merged in
@@ -74,6 +74,64 @@ async function compareZip(pk3File) {
   Promise.resolve(lockPromise)
   lockFunc()
   lockPromise = false
+}
+
+
+async function convertImages(pk3File) {
+  console.log(pk3File)
+  let sourcePath = path.join(__dirname, '../../docs/')
+  let altName = pk3File.replace(path.extname(pk3File), '.tga')
+  let altPath = path.join(sourcePath, altName)
+  let pk3Path = path.join(sourcePath, pk3File)
+  if(fs.existsSync(pk3Path)) {
+    return pk3Path
+  }
+  // restrict file access for existing files
+  if(pk3File.indexOf('.pk3dir') > -1) {
+    let altFile = path.join(sourcePath, 'demoq3', pk3File.split('/').slice(2).join('/'))
+    if(fs.existsSync(altFile)) {
+      return altFile
+    }
+  }
+  if(!fs.existsSync(altPath)) {
+    altPath = path.join(sourcePath, 'demoq3', pk3File.split('/').slice(2).join('/').replace(path.extname(pk3File), '.tga'))
+    if(fs.existsSync(altPath)) {
+      try {
+        fs.mkdirSync(path.dirname(pk3Path), { recursive: true });
+      } catch (e) {
+        console.error(e)
+      }
+    }
+  }
+  if(!fs.existsSync(pk3Path)
+    && fs.existsSync(altPath)) {
+
+    let alphaCmd
+    try {
+      let alphaProcess = await process.spawnSync('identify', ['-format', "'%[opaque]'", altPath], {
+        cwd: sourcePath,
+        timeout: 3000,
+      })
+      alphaCmd = alphaProcess.stdout.toString('utf-8')
+    } catch (e) {
+      console.error(e.message, (e.output || '').toString('utf-8').substr(0, 1000))
+    }
+
+    if(/* true || TODO: allAlpha? */ alphaCmd.match(/false/ig) && pk3File.indexOf('.png') == -1
+      || !alphaCmd.match(/false/ig) && pk3File.indexOf('.jpg') == -1) {
+        return
+    }
+  
+
+    await process.spawnSync('convert', ['-strip', '-interlace', 'Plane', '-sampling-factor', '4:2:0', '-quality', '10%', '-auto-orient', altPath, pk3Path], {
+      cwd: sourcePath,
+      timeout: 3000,
+    })
+    
+    await new Promise((resolve) => setTimeout(resolve, 100))
+
+    return pk3Path
+  }
 }
 
 
@@ -96,6 +154,18 @@ async function checkForRepack(request, response, next) {
       return response
     }
   }
+
+  // TODO: requesting an image, convert it
+  if(request.originalUrl.includes('.png') || request.originalUrl.includes('.jpg')) {
+    let altPath = await convertImages(request.originalUrl.replace(/\?.*$/gi, ''))
+    if(altPath) {
+      fs.createReadStream(altPath).pipe(response);
+      return response
+    }
+  }
+
+  // TODO: requesting audio, transcode it
+
 
   return next()
 
