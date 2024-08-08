@@ -235,9 +235,9 @@ static qhandle_t R_RegisterOBJ(const char *name, model_t *mod)
 		void *v;
 	} buf;
 	qboolean loaded = qfalse;
-	int filesize;
+	//int filesize;
 
-	filesize = ri.FS_ReadFile(name, (void **) &buf.v);
+	/*filesize = */ri.FS_ReadFile(name, (void **) &buf.v);
 	if(!buf.u)
 	{
 		mod->type = MOD_BAD;
@@ -659,7 +659,12 @@ static qboolean R_LoadMD3( model_t *mod, int lod, void *buffer, int fileSize, co
 				if(!fname) {
 					fname = strrchr(shader->name, '\\');
 				}
-				temp = va("%s%s", dirName, fname);
+				if(!fname) {
+					fname = shader->name;
+					temp = va("%s/%s", dirName, fname);
+				} else {
+					temp = va("%s%s", dirName, fname);
+				}
 				if(fname) {
 					sh = R_FindShader( temp, LIGHTMAP_NONE, qtrue );
 					//Com_Printf("shader found! %s, %s, %s\n", dirName, fname, shader->name);
@@ -669,7 +674,7 @@ static qboolean R_LoadMD3( model_t *mod, int lod, void *buffer, int fileSize, co
 				} else {
 					shader->shaderIndex = sh->index;
 					if(makeSkin)
-						R_AddSkinSurface((char *)temp, sh);
+						R_AddSkinSurface(surf->name, sh);
 				}
 			} else {
 				shader->shaderIndex = sh->index;
