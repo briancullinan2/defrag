@@ -654,7 +654,7 @@ static qboolean R_LoadMD3(model_t * mod, int lod, void *buffer, int bufferSize, 
 					fname = strrchr(md3Shader->name, '\\');
 				}
 				if(!fname) {
-					fname = shader->name;
+					fname = md3Shader->name;
 					temp = va("%s/%s", dirName, fname);
 				} else {
 					temp = va("%s%s", dirName, fname);
