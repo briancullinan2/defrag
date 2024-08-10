@@ -799,6 +799,160 @@ image_t *R_FreeOldestImage( void ) {
 
 
 
+#ifdef USE_PTHREADS
+
+#include <pthread.h>
+
+extern qboolean shouldUseAlternate;
+
+static byte *pixelDatas[MAX_DRAWIMAGES] = {0};
+static pthread_mutex_t pixel_data_mutex;
+
+const char *R_LoadImage( const char *name, byte **pic, int *width, int *height );
+
+image_t *R_CreateImage2( const char *name, const char *name2, byte *pic, int width, int height, imgFlags_t flags, image_t *existing );
+
+/*
+================
+R_CreateImage2
+
+This is the only way any image_t are created
+================
+*/
+static image_t *R_CreateImage3( const char *name, const char *name2, imgFlags_t flags ) {
+	image_t   *image = NULL;
+	long      hash;
+	size_t		namelen;
+
+	namelen = strlen( name );
+	if ( namelen >= MAX_QPATH ) {
+		ri.Error (ERR_DROP, "R_CreateImage: \"%s\" is too long", name);
+	}
+
+	if ( tr.numImages == MAX_DRAWIMAGES ) {
+		//image = R_FreeOldestImage();
+		if(!image) {
+			ri.Printf( PRINT_WARNING, "R_CreateImage: MAX_DRAWIMAGES hit");
+			return NULL;
+		}
+	} else
+		image = tr.images[tr.numImages] = ri.Hunk_Alloc( sizeof( *image ) + MAX_QPATH + MAX_QPATH, h_low );
+
+	image->imgName = (char *)( image + 1 );
+	strcpy( image->imgName, name );
+	image->imgName2 = (char *)( image + 1 + MAX_QPATH );
+	strcpy( image->imgName2, name2 );
+	image->lastTimeUsed = tr.lastRegistrationTime;
+
+	image->flags = flags;
+
+	if ( namelen > 6 && Q_stristr( image->imgName, "maps/" ) == image->imgName && Q_stristr( image->imgName + 6, "/lm_" ) != NULL ) {
+		// external lightmap atlases stored in maps/<mapname>/lm_XXXX textures
+		//image->flags = IMGFLAG_NOLIGHTSCALE | IMGFLAG_NO_COMPRESSION | IMGFLAG_NOSCALE | IMGFLAG_COLORSHIFT;
+		image->flags |= IMGFLAG_NO_COMPRESSION | IMGFLAG_NOSCALE;
+	}
+
+	hash = generateHashValue(name);
+	image->next = hashTable[hash];
+	hashTable[hash] = image;
+
+	image->width = 0;
+	image->height = 0;
+	image->texnum = 0;
+	//qglGenTextures(1, &image->texnum);
+	tr.numImages++;
+
+	if ( flags & IMGFLAG_RGB )
+		image->internalFormat = GL_RGB;
+	else
+		image->internalFormat = 0; // autodetect
+
+	// lightmaps are always allocated on TMU 1
+	if ( qglActiveTextureARB && (flags & IMGFLAG_LIGHTMAP) ) {
+		image->TMU = 1;
+	} else {
+		image->TMU = 0;
+	}
+
+	return image;
+}
+
+byte *R_LoadAlternateImage( byte *pic, int width, int height );
+byte *R_LoadAlternateImageVariables( byte *pic, int width, int height, const char *variables);
+
+
+void R_FinishImage3( image_t *image, byte *pic ) {
+	byte *variableImage = NULL;
+
+	if(image->variables[0] != '\0') {
+		variableImage = R_LoadAlternateImageVariables(pic, image->width, image->height, image->variables);
+		if(variableImage && variableImage != pic) {
+			pic = variableImage;
+		}
+	}
+
+	byte *altImage = R_LoadAlternateImage(pic, image->width, image->height);
+	if(altImage && altImage != pic) {
+		image->alternate = R_CreateImage( va("-alternate%s", image->imgName), va("-alternate%s", image->imgName2), altImage, image->width, image->height, image->flags);
+		ri.free(altImage);
+	}
+
+	R_CreateImage2(image->imgName, image->imgName2, pic, image->width, image->height, image->flags, image);
+
+	if(variableImage && variableImage != pic) {
+		ri.free(variableImage);
+	}
+
+}
+
+
+static void *R_LoadRemote(void *data, int length) {
+	//const char *localName;
+	image_t *image;
+	byte	*pic;
+	image = tr.images[(int)data];
+
+	/*localName =*/ R_LoadImage( image->imgName2, &pic, &image->width, &image->height );
+	// update name
+	if(pic) {
+				ri.Printf(PRINT_ALL, "loaded: %s\n", image->imgName2);
+		//strcpy( image->imgName2, localName );
+		pthread_mutex_lock(&pixel_data_mutex);
+		pixelDatas[(int)data] = pic;
+		pthread_mutex_unlock(&pixel_data_mutex);
+		return pic;
+	}
+	return NULL;
+}
+
+void CheckAsyncImages( int msec ) {
+	int i;
+
+	R_IssuePendingRenderCommands();
+
+	RE_ClearScene();
+
+	if(ri.Milliseconds() - tr.lastAsyncCheck > 100) {
+		tr.lastAsyncCheck = msec;
+		pthread_mutex_lock(&pixel_data_mutex);
+		for(i = 0; i < MAX_DRAWIMAGES; i++) {
+			if(pixelDatas[i]) {
+				ri.Printf(PRINT_ALL, "finishing: %s\n", tr.images[i]->imgName2);
+				R_FinishImage3(tr.images[i], pixelDatas[i]);
+				ri.free(pixelDatas[i]);
+				pixelDatas[i] = NULL;
+			} else {
+				break;
+			}
+		}
+		pthread_mutex_unlock(&pixel_data_mutex);
+	}
+}
+
+
+#endif
+
+
 /*
 ================
 R_CreateImage
@@ -807,7 +961,18 @@ This is the only way any image_t are created
 Picture data may be modified in-place during mipmap processing
 ================
 */
-image_t *R_CreateImage( const char *name, const char *name2, byte *pic, int width, int height, imgFlags_t flags ) {
+#ifdef USE_PTHREADS
+image_t *R_CreateImage( const char *name, const char *name2, byte *pic, int width, int height, imgFlags_t flags ) 
+{
+	return R_CreateImage2( name, name2, pic, width, height, flags, NULL );
+}
+
+
+image_t *R_CreateImage2( const char *name, const char *name2, byte *pic, int width, int height, imgFlags_t flags, image_t *existing ) 
+#else
+image_t *R_CreateImage( const char *name, const char *name2, byte *pic, int width, int height, imgFlags_t flags ) 
+#endif
+{
 	image_t		*image;
 	long		hash;
 	GLint		glWrapClampMode;
@@ -836,6 +1001,9 @@ image_t *R_CreateImage( const char *name, const char *name2, byte *pic, int widt
 		}
 	}
 
+#ifdef USE_PTHREADS
+	if(!existing) {
+#endif
 	image = ri.Hunk_Alloc( sizeof( *image ) + namelen + namelen2, h_low );
 	image->lastTimeUsed = tr.lastRegistrationTime;
 	image->imgName = (char *)( image + 1 );
@@ -861,6 +1029,18 @@ image_t *R_CreateImage( const char *name, const char *name2, byte *pic, int widt
 	image->width = width;
 	image->height = height;
 
+	qglGenTextures( 1, &image->texnum );
+
+#ifdef USE_PTHREADS
+	} else {
+		image = existing;
+		if(image->texnum) {
+			qglDeleteTextures(1, &image->texnum);
+		}
+		qglGenTextures(1, &image->texnum);
+	}
+#endif
+
 	if ( namelen > 6 && Q_stristr( image->imgName, "maps/" ) == image->imgName && Q_stristr( image->imgName + 6, "/lm_" ) != NULL ) {
 		// external lightmap atlases stored in maps/<mapname>/lm_XXXX textures
 		//image->flags = IMGFLAG_NOLIGHTSCALE | IMGFLAG_NO_COMPRESSION | IMGFLAG_NOSCALE | IMGFLAG_COLORSHIFT;
@@ -882,8 +1062,6 @@ image_t *R_CreateImage( const char *name, const char *name2, byte *pic, int widt
 	// save current state
 	currTMU = glState.currenttmu;
 	currTexture = glState.currenttextures[ glState.currenttmu ];
-
-	qglGenTextures( 1, &image->texnum );
 
 	// lightmaps are always allocated on TMU 1
 	if ( qglActiveTextureARB && (flags & IMGFLAG_LIGHTMAP) ) {
@@ -941,11 +1119,15 @@ typedef struct
 static const imageExtToLoaderMap_t imageLoaders[] =
 {
 	{ "png",  R_LoadPNG },
+#ifndef USE_PTHREADS
 	{ "tga",  R_LoadTGA },
+#endif
 	{ "jpg",  R_LoadJPG },
 	{ "jpeg", R_LoadJPG },
+#ifndef USE_PTHREADS
 	{ "pcx",  R_LoadPCX },
 	{ "bmp",  R_LoadBMP }
+#endif
 };
 
 static const int numImageLoaders = ARRAY_LEN( imageLoaders );
@@ -961,8 +1143,13 @@ Loads any of the supported image types into a canonical
 const char *R_LoadImage( const char *name, byte **pic, int *width, int *height )
 {
 	static char localName[ MAX_QPATH ];
+#ifdef USE_PTHREADS
+	static char localName2[ MAX_QPATH ];
+	const char *ext;
+#else
 	const char *altName, *ext;
-	//qboolean orgNameFailed = qfalse;
+#endif
+	qboolean orgNameFailed = qfalse;
 	int orgLoader = -1;
 	int i;
 
@@ -993,9 +1180,8 @@ const char *R_LoadImage( const char *name, byte **pic, int *width, int *height )
 			{
 				// Loader failed, most likely because the file isn't there;
 				// try again without the extension
-				//orgNameFailed = qtrue;
+				orgNameFailed = qtrue;
 				orgLoader = i;
-				COM_StripExtension( name, localName, MAX_QPATH );
 			}
 			else
 			{
@@ -1003,6 +1189,8 @@ const char *R_LoadImage( const char *name, byte **pic, int *width, int *height )
 				return localName;
 			}
 		}
+
+		COM_StripExtension( name, localName, MAX_QPATH );
 	}
 
 	// Try and find a suitable match using all
@@ -1012,21 +1200,39 @@ const char *R_LoadImage( const char *name, byte **pic, int *width, int *height )
 		if ( i == orgLoader )
 			continue;
 
+#ifdef USE_PTHREADS
+		strcpy(localName2, localName);
+		strcat(localName2, ".");
+		strcat(localName2, imageLoaders[ i ].ext);
+
+		// Load
+		imageLoaders[ i ].ImageLoader( localName2, pic, width, height );
+
+		// va() uses static chars which causes a race condition. function variables use heap.
+#else
 		altName = va( "%s.%s", localName, imageLoaders[ i ].ext );
 
 		// Load
 		imageLoaders[ i ].ImageLoader( altName, pic, width, height );
+#endif
 
 		if ( *pic )
 		{
-#if 0
 			if ( orgNameFailed )
 			{
+#ifdef USE_PTHREADS
+				ri.Printf( PRINT_DEVELOPER, S_COLOR_YELLOW "WARNING: %s not present, using %s instead\n",
+						name, localName2 );
+#else
 				ri.Printf( PRINT_DEVELOPER, S_COLOR_YELLOW "WARNING: %s not present, using %s instead\n",
 						name, altName );
-			}
 #endif
+			}
+#ifdef USE_PTHREADS
+			Q_strncpyz( localName, localName2, sizeof( localName ) );
+#else
 			Q_strncpyz( localName, altName, sizeof( localName ) );
+#endif
 			break;
 		}
 	}
@@ -1060,19 +1266,35 @@ byte *R_LoadAlternateImage_real( byte *pic, int width, int height, float greysca
 			newWorkImage = R_InvertColors4(workImage, width, height);
 		}
 		if(workImage != pic) {
+#ifdef USE_PTHREADS
+			ri.free(workImage);
+#else
 			ri.Free(workImage);
+#endif
 		}
 		workImage = newWorkImage;
 	}
 	if(edgy > 0) {
 		any = qtrue;
 		byte *rgb = R_RGBAtoR(workImage, width, height);
+#ifdef USE_PTHREADS
+		byte *edgy = ri.malloc(width * height * 4);
+#else
 		byte *edgy = ri.Malloc(width * height * 4);
+#endif
 		canny_edge_detection((pixel_t *)rgb, width, height, (pixel_t *)edgy, 45, 55, 2.0f);
 		newWorkImage = R_RtoRGBA(edgy, pic, width, height);
+#ifdef USE_PTHREADS
+		ri.free(edgy);
+#else
 		ri.Free(edgy);
+#endif
 		if(workImage != pic) {
+#ifdef USE_PTHREADS
+			ri.free(workImage);
+#else
 			ri.Free(workImage);
+#endif
 		}
 		workImage = newWorkImage;
 	}
@@ -1084,7 +1306,11 @@ byte *R_LoadAlternateImage_real( byte *pic, int width, int height, float greysca
 			newWorkImage = R_Rainbow(workImage, width, height);
 		}
 		if(workImage != pic) {
+#ifdef USE_PTHREADS
+			ri.free(workImage);
+#else
 			ri.Free(workImage);
+#endif
 		}
 		workImage = newWorkImage;
 	}
@@ -1092,7 +1318,11 @@ byte *R_LoadAlternateImage_real( byte *pic, int width, int height, float greysca
 		any = qtrue;
 		newWorkImage = R_Berserk(workImage, width, height);
 		if(workImage != pic) {
+#ifdef USE_PTHREADS
+			ri.free(workImage);
+#else
 			ri.Free(workImage);
+#endif
 		}
 		workImage = newWorkImage;
 	}
@@ -1100,7 +1330,11 @@ byte *R_LoadAlternateImage_real( byte *pic, int width, int height, float greysca
 		any = qtrue;
 		newWorkImage = R_HueShift(hueShift, workImage, width, height);
 		if(workImage != pic) {
+#ifdef USE_PTHREADS
+			ri.free(workImage);
+#else
 			ri.Free(workImage);
+#endif
 		}
 		workImage = newWorkImage;
 	}
@@ -1108,7 +1342,11 @@ byte *R_LoadAlternateImage_real( byte *pic, int width, int height, float greysca
 		any = qtrue;
 		newWorkImage = R_SatShift(satShift, workImage, width, height);
 		if(workImage != pic) {
+#ifdef USE_PTHREADS
+			ri.free(workImage);
+#else
 			ri.Free(workImage);
+#endif
 		}
 		workImage = newWorkImage;
 	}
@@ -1116,7 +1354,11 @@ byte *R_LoadAlternateImage_real( byte *pic, int width, int height, float greysca
 		any = qtrue;
 		newWorkImage = R_LumShift(lumShift, workImage, width, height);
 		if(workImage != pic) {
+#ifdef USE_PTHREADS
+			ri.free(workImage);
+#else
 			ri.Free(workImage);
+#endif
 		}
 		workImage = newWorkImage;
 	}
@@ -1222,9 +1464,17 @@ void R_UpdateAlternateImages( void ) {
 			byte *altImage = R_LoadAlternateImage(pic, width, height);
 			if(altImage && altImage != pic) {
 				image->alternate = R_CreateImage( va("-alternate%s", image->imgName), va("-alternate%s", localName), altImage, width, height, image->flags);
+#ifdef USE_PTHREADS
+				ri.free(altImage);
+#else
 				ri.Free(altImage);
+#endif
 			}
+#ifdef USE_PTHREADS
+			ri.free(pic);
+#else
 			ri.Free(pic);
+#endif
 		}
 	}
 
@@ -1292,7 +1542,7 @@ image_t	*R_FindImageFile( const char *name, imgFlags_t flags )
 	int		hash;
 	char variables[ MAX_QPATH ] = {'\0'};
 
-	if ( !name ) {
+	if ( !name || !name[0] ) {
 		return NULL;
 	}
 
@@ -1325,9 +1575,9 @@ image_t	*R_FindImageFile( const char *name, imgFlags_t flags )
 
 	if ( strrchr( name, '.' ) > name ) {
 		// try with stripped extension
-		//COM_StripExtension( name, strippedName, sizeof( strippedName ) );
+		//COM_StripExtension( name, strippedName, sizeof( strippedName ) ); // moved above
 		for ( image = hashTable[ hash ]; image; image = image->next ) {
-			if ( !Q_stricmp( strippedName, image->imgName )
+			if ( !Q_stricmp( image->imgName, strippedName ) // was Q_stricmp( strippedName, image->imgName ) because this image file is special
 				&& (variables[0] == '\0' || Q_stristr(image->imgName, variables)) ) {
 				//if ( strcmp( strippedName, "*white" ) ) {
 					if ( image->flags != flags ) {
@@ -1347,13 +1597,25 @@ image_t	*R_FindImageFile( const char *name, imgFlags_t flags )
 	image_t *palette = NULL;
 	if(pal) {
 		Q_strncpy(paletteName, (char *)va("*pal%i-%i-%i-%i", pal[0], pal[1], pal[2], pal[3]), sizeof(paletteName));
-		palette = R_CreateImage(paletteName, paletteName, 
-			pal, 16, 16, IMGFLAG_CLAMPTOEDGE | IMGFLAG_MIPMAP );
+		palette = R_CreateImage(paletteName, paletteName, pal, 16, 16, IMGFLAG_CLAMPTOEDGE | IMGFLAG_MIPMAP );
 	}
 
 	if(Q_stristr(name, "*pal")) {
 		return palette;
 	}
+
+#ifdef USE_PTHREADS
+	if(ri.Pthread_Start && palette) { // conditions to load async
+		// create a placeholder image for async loading
+		//image = R_CreateImage3( ( char * ) name, strippedName2, flags & ~IMGFLAG_MIPMAP & ~IMGFLAG_PICMIP );
+		image = R_CreateImage(name, strippedName2, pal, 16, 16, IMGFLAG_CLAMPTOEDGE | IMGFLAG_MIPMAP );
+		image->palette = palette;
+		Q_strncpyz(image->variables, variables, MAX_QPATH);
+		if(ri.Pthread_Start(R_LoadRemote, (void *)(tr.numImages - 1), sizeof(int)) > -1) { // initiate async load
+			return image;
+		}
+	}
+#endif
 
 	localName = R_LoadImage( strippedName2, &pic, &width, &height );
 	if ( pic == NULL ) {
@@ -1368,7 +1630,11 @@ image_t	*R_FindImageFile( const char *name, imgFlags_t flags )
 	if(variables[0] != '\0') {
 		byte *variableImage = R_LoadAlternateImageVariables(pic, width, height, variables);
 		if(variableImage && variableImage != pic) {
+#ifdef USE_PTHREADS
+			ri.free(pic);
+#else
 			ri.Free(pic);
+#endif
 			pic = variableImage;
 		}
 	}
@@ -1380,10 +1646,18 @@ image_t	*R_FindImageFile( const char *name, imgFlags_t flags )
 	image->palette = palette;
 	if(altImage && altImage != pic) {
 		image->alternate = R_CreateImage( va("-alternate%s", name), va("-alternate%s", localName), altImage, width, height, flags );
-		ri.Free(altImage);
+#ifdef USE_PTHREADS
+		ri.free(altImage);
+#else
+		ri.Free( altImage );
+#endif
 	}
 
+#ifdef USE_PTHREADS
+	ri.free(pic);
+#else
 	ri.Free( pic );
+#endif
 	return image;
 }
 
@@ -1819,6 +2093,12 @@ void R_InitImages( void ) {
 		trWorlds[i].numImages = 5;
 	}
 #endif
+
+#ifdef USE_PTHREADS
+	pthread_mutex_init(&pixel_data_mutex, NULL);
+	Com_Memset(pixelDatas, 0, sizeof(pixelDatas));
+#endif
+
 }
 
 

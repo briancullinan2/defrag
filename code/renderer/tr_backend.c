@@ -55,7 +55,7 @@ void GL_Bind( image_t *image ) {
 		texnum = image->texnum;
 	}
 
-	if(image && r_paletteMode->integer && image->palette) {
+	if(image && (r_paletteMode->integer || !image->texnum) && image->palette) {
 		texnum = image->palette->texnum;
 	}
 

@@ -127,7 +127,11 @@ void R_LoadTGA ( const char *name, byte **pic, int *width, int *height)
 	}
 
 
+#ifdef USE_PTHREADS
+	targa_rgba = ri.malloc (numPixels);
+#else
 	targa_rgba = ri.Malloc (numPixels);
+#endif
 
 	if (targa_header.id_length != 0)
 	{

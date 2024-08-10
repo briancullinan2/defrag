@@ -253,7 +253,11 @@ void CL_Try_LoadJPG( const char *filename, struct jpeg_decompress_struct cinfo, 
   memcount = pixelcount * 4;
   row_stride = cinfo.output_width * cinfo.output_components;
 
+#ifdef USE_PTHREADS
+  out = malloc( memcount );
+#else
   out = Z_Malloc( memcount );
+#endif
 
   *width = cinfo.output_width;
   *height = cinfo.output_height;

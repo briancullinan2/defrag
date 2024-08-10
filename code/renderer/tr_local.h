@@ -515,6 +515,7 @@ typedef struct image_s {
 	GLint		internalFormat;
 	int			TMU;				// only needed for voodoo2
 	int			lastTimeUsed;
+	char variables[MAX_QPATH];
 	struct image_s *palette;
 	struct image_s *alternate;
 
@@ -1290,6 +1291,10 @@ typedef struct {
 	qboolean				needScreenMap;
 
 	qboolean				vertexLightingAllowed;
+
+#ifdef USE_PTHREADS
+	int lastAsyncCheck;
+#endif
 
 } trGlobals_t;
 

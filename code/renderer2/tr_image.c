@@ -2381,11 +2381,6 @@ static image_t *R_CreateImage2( const char *name, byte *pic, int width, int heig
 
 #ifdef __WASM__
 
-
-
-#ifdef __WASM__
-extern  cvar_t  *r_paletteMode;
-#endif
 extern qboolean shouldUseAlternate;
 
 void R_FinishImage3( image_t *, byte *pic, GLenum picFormat, int numMips );

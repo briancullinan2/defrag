@@ -1092,6 +1092,15 @@ if(rwi != 0) {
 	RE_ClearScene();
 
 	tr.registered = qtrue;
+
+#ifdef USE_PTHREADS
+	// make sure the thread list is clear and ready to use
+	//for(int i = 0; i < MAX_PTHREADS; i++) {
+	//	if(ri.Pthread_Status(i)) {
+	//		tr.pthreads = qfalse; // continue as normal
+	//	}
+	//}
+#endif
 }
 
 //=============================================================================

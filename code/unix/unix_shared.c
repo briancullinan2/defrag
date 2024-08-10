@@ -19,6 +19,7 @@ along with Quake III Arena source code; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ===========================================================================
 */
+
 #define _GNU_SOURCE
 #include <sched.h>
 #include <sys/types.h>
@@ -610,3 +611,66 @@ qboolean Sys_SetAffinityMask( const uint64_t mask )
 	}
 }
 #endif // USE_AFFINITY_MASK
+
+#ifdef USE_PTHREADS
+
+#include <pthread.h>
+
+qboolean initPthreads = qfalse;
+
+typedef struct {
+	void *p;
+	void *data;
+	long dataLength;
+	void * (* threadfunc)(void *, int );
+	volatile qboolean finished;
+} q3threadHandle_t;
+
+static q3threadHandle_t *running[MAX_PTHREADS];
+
+static void *Sys_Pthread_Start(void *data) {
+	q3threadHandle_t* tcb;
+	tcb = (q3threadHandle_t*)data;
+	tcb->threadfunc(tcb->data, tcb->dataLength);
+	tcb->finished = qtrue;
+	return NULL;
+}
+
+int Sys_Pthread(void * (* threadfunc)(void *, int), void *data, int dataLength) {
+	int i;
+
+	if(!initPthreads) {
+		for (i = 0; i < MAX_PTHREADS; i++) {
+			if(running[i] == NULL) {
+				q3threadHandle_t* tcb = malloc( sizeof(q3threadHandle_t));
+				running[i] = tcb;
+				running[i]->finished = qtrue; // because it's new
+			}
+		}
+	}
+
+	for (i = 0; i < MAX_PTHREADS; i++) {
+		if(running[i] && running[i]->finished) {
+			running[i]->data = data;
+			running[i]->dataLength = dataLength;
+			running[i]->threadfunc = threadfunc;
+			pthread_create( (pthread_t *)running[i], NULL, Sys_Pthread_Start, &running[i]->p);
+			return i;
+		}
+	}
+
+	return -1;
+}
+
+qboolean Sys_Pthread_Running(int handle) {
+	if(handle < 0 || handle >= MAX_PTHREADS) {
+		return qfalse;
+	}
+	return !running[handle]->finished;
+}
+
+
+#endif
+
+
+

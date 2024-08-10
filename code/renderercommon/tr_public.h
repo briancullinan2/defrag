@@ -266,6 +266,12 @@ typedef struct {
 	void*	(*VK_GetInstanceProcAddr)( VkInstance instance, const char *name );
 	qboolean (*VK_CreateSurface)( VkInstance instance, VkSurfaceKHR *pSurface );
 
+#ifdef USE_PTHREADS
+	int (*Pthread_Start)( void * (* threadfunc)(void *, int), void *data, int dataLength );
+	void	(*free)( void *ptr );
+	void	*(*malloc)( unsigned long bytes );
+#endif
+
 } refimport_t;
 
 extern	refimport_t	ri;

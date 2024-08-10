@@ -3529,6 +3529,10 @@ void CL_R_FinishImage3( void *img, byte *pic, int picFormat, int numMips ) {
 #endif
 
 
+#ifdef USE_PTHREADS
+int Sys_Pthread(void * (* threadfunc)(void *, int), void *data, int dataLength);
+#endif
+
 /*
 ============
 CL_InitRef
@@ -3660,6 +3664,12 @@ static void CL_InitRef( void ) {
 	rimp.VKimp_Shutdown = VKimp_Shutdown;
 	rimp.VK_GetInstanceProcAddr = VK_GetInstanceProcAddr;
 	rimp.VK_CreateSurface = VK_CreateSurface;
+#endif
+
+#ifdef USE_PTHREADS
+	rimp.Pthread_Start = Sys_Pthread;
+	rimp.free = free;
+	rimp.malloc = malloc;
 #endif
 
 	ret = GetRefAPI( REF_API_VERSION, &rimp );

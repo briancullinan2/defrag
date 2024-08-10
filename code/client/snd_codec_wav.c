@@ -224,7 +224,11 @@ void *S_WAV_CodecLoad(const char *filename, snd_info_t *info)
 	}
 
 	// Allocate some memory
+#ifdef USE_PTHREADS
+	buffer = malloc(info->size);
+#else
 	buffer = Hunk_AllocateTempMemory(info->size);
+#endif
 	if(!buffer)
 	{
 		FS_FCloseFile(file);
