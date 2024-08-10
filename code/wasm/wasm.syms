@@ -91,7 +91,6 @@ S_CodecReadStream
 S_CodecLoad
 S_CodecInit
 S_CodecShutdown
-S_PaintChannel
 
 
 Sys_FreeFileList

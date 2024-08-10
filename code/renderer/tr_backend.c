@@ -55,12 +55,16 @@ void GL_Bind( image_t *image ) {
 		texnum = image->texnum;
 	}
 
-	if(image && r_paletteMode->integer && image->palette) {
+	if(image && (r_paletteMode->integer || !image->texnum) && image->palette) {
 		texnum = image->palette->texnum;
 	}
 
 	if(image && shouldUseAlternate && image->alternate) {
 		texnum = image->alternate->texnum;
+	}
+
+	if(image && !shouldUseAlternate && image->replace) {
+		texnum = image->replace->texnum;
 	}
 
 	if ( r_nobind->integer && tr.dlightImage ) {		// performance evaluation option

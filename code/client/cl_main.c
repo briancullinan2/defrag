@@ -2123,7 +2123,7 @@ static void CL_DownloadsComplete( void ) {
 	// this will also (re)load the UI
 	// if this is a local client then only the client part of the hunk
 	// will be cleared, note that this is done after the hunk mark has been set
-#if defined(USE_MULTIVM_CLIENT) || defined(USE_MULTIVM_RENDERER)
+#if defined(USE_MULTIVM_CLIENT) || defined(USE_MULTIVM_RENDERER) || defined(USE_PTHREADS)
 	// TODO: cl_norenderRestart
 	re.InitShaders();
 	S_Shutdown();
@@ -3529,6 +3529,12 @@ void CL_R_FinishImage3( void *img, byte *pic, int picFormat, int numMips ) {
 #endif
 
 
+#ifdef USE_PTHREADS
+int Sys_Pthread(void * (* threadfunc)(int, int, int), int data, int dataLength, int enumValue);
+void CL_LoadJPG2( const char *filename, byte *existing, int length, unsigned char **pic, int *width, int *height );
+
+#endif
+
 /*
 ============
 CL_InitRef
@@ -3660,6 +3666,13 @@ static void CL_InitRef( void ) {
 	rimp.VKimp_Shutdown = VKimp_Shutdown;
 	rimp.VK_GetInstanceProcAddr = VK_GetInstanceProcAddr;
 	rimp.VK_CreateSurface = VK_CreateSurface;
+#endif
+
+#ifdef USE_PTHREADS
+	rimp.CL_LoadJPG2 = CL_LoadJPG2,
+	rimp.Pthread_Start = Sys_Pthread;
+	rimp.free = free;
+	rimp.malloc = malloc;
 #endif
 
 	ret = GetRefAPI( REF_API_VERSION, &rimp );

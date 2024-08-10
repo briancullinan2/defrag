@@ -32,6 +32,15 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <winsock.h>
 #endif
 
+#if defined(_DEBUG)
+#if defined(__linux__) || defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) || defined(__APPLE__)
+#include <execinfo.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#endif
+#endif
+
 #include "../client/keys.h"
 
 const int demo_protocols[] = { 66, 67, OLD_PROTOCOL_VERSION, NEW_PROTOCOL_VERSION, 0 };
@@ -308,6 +317,16 @@ void NORETURN FORMAT_PRINTF(2, 3) QDECL Com_Error( errorParm_t code, const char 
 			DebugBreak();
 		}
 	}
+#else
+#if defined(_DEBUG)
+#if defined(__linux__) || defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) || defined(__APPLE__)
+	{
+		void *syms[10];
+		const size_t size = backtrace( syms, ARRAY_LEN( syms ) );
+		backtrace_symbols_fd( syms, size, STDERR_FILENO );
+	}
+#endif
+#endif
 #endif
 
 	if ( com_errorEntered ) {

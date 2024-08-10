@@ -147,7 +147,7 @@ typedef struct {
 
   const cplane_t *(*GetFrustum)( void );
 
-#if defined(USE_MULTIVM_RENDERER) || defined(__WASM__)
+#if defined(USE_MULTIVM_RENDERER) || defined(__WASM__) || defined(USE_PTHREADS)
 	void	(*InitShaders)( void );
 #endif
 #if defined(__WASM__)
@@ -265,6 +265,13 @@ typedef struct {
 	void	(*VKimp_Shutdown)( qboolean unloadDLL );
 	void*	(*VK_GetInstanceProcAddr)( VkInstance instance, const char *name );
 	qboolean (*VK_CreateSurface)( VkInstance instance, VkSurfaceKHR *pSurface );
+
+#ifdef USE_PTHREADS
+	void	(*CL_LoadJPG2)( const char *filename, byte *existing, int length, unsigned char **pic, int *width, int *height );
+	int (*Pthread_Start)( void * (* threadfunc)(int, int, int), int data, int dataLength, int enumValue );
+	void	(*free)( void *ptr );
+	void	*(*malloc)( unsigned long bytes );
+#endif
 
 } refimport_t;
 

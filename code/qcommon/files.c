@@ -38,6 +38,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //#define USE_MULTIFS 1
 #endif
 
+#ifdef USE_PTHREADS
+
+#include <pthread.h>
+pthread_mutex_t read_file_sync;
+#endif
+
+
 /*
 =============================================================================
 
@@ -261,8 +268,10 @@ static int getAltChecksum(const char *pakName, int *altChecksum);
 #define USE_PK3_CACHE
 #define USE_PK3_CACHE_FILE
 
+#ifndef USE_PTHREADS
 #define USE_HANDLE_CACHE
 #define MAX_CACHED_HANDLES 384
+#endif
 
 #define MAX_ZPATH			256
 #define MAX_FILEHASH_SIZE	4096
@@ -2156,7 +2165,22 @@ Filename are relative to the quake search path
 a null buffer will just return the file length without loading
 ============
 */
+#ifdef USE_PTHREADS
+int FS_ReadFile2( const char *qpath, void **buffer );
+
 int FS_ReadFile( const char *qpath, void **buffer ) {
+	int result;
+	pthread_mutex_lock(&read_file_sync);
+	result = FS_ReadFile2(qpath, buffer);
+	pthread_mutex_unlock(&read_file_sync);
+	return result;
+}
+
+int FS_ReadFile2( const char *qpath, void **buffer ) 
+#else
+int FS_ReadFile( const char *qpath, void **buffer ) 
+#endif
+{
 	fileHandle_t	h;
 	byte*			buf;
 	qboolean		isConfig;
@@ -2197,7 +2221,11 @@ int FS_ReadFile( const char *qpath, void **buffer ) {
 				return len;
 			}
 
+#ifdef USE_PTHREADS
+			buf = malloc( len + 1 );
+#else
 			buf = Hunk_AllocateTempMemory(len+1);
+#endif
 			*buffer = buf;
 
 			r = FS_Read( buf, len, com_journalDataFile );
@@ -2243,7 +2271,11 @@ int FS_ReadFile( const char *qpath, void **buffer ) {
 		return len;
 	}
 
+#ifdef USE_PTHREADS
+	buf = malloc( len + 1 );
+#else
 	buf = Hunk_AllocateTempMemory( len + 1 );
+#endif
 	*buffer = buf;
 
 	FS_Read( buf, len, h );
@@ -2272,6 +2304,10 @@ FS_FreeFile
 =============
 */
 void FS_FreeFile( void *buffer ) {
+#ifdef USE_PTHREADS
+	pthread_mutex_lock(&read_file_sync);
+#endif
+
 	if ( !fs_searchpaths ) {
 		Com_Error( ERR_FATAL, "Filesystem call made without initialization" );
 	}
@@ -2280,12 +2316,20 @@ void FS_FreeFile( void *buffer ) {
 	}
 	fs_loadStack--;
 
+#ifdef USE_PTHREADS
+	free(buffer);
+#else
 	Hunk_FreeTempMemory( buffer );
+#endif
 
 	// if all of our temp files are free, clear all of our space
 	if ( fs_loadStack == 0 ) {
 		Hunk_ClearTempMemory();
 	}
+
+#ifdef USE_PTHREADS
+	pthread_mutex_unlock(&read_file_sync);
+#endif
 }
 
 
@@ -4758,6 +4802,8 @@ FS_Startup
 static void FS_Startup( void ) {
 	const char *homePath;
 	int i, start, end;
+
+	pthread_mutex_init(&read_file_sync, NULL);
 
 	Com_Printf( "----- FS_Startup -----\n" );
 

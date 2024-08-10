@@ -1165,18 +1165,7 @@ static qboolean S_ScanChannelStarts( void ) {
 		// into the very first sample
 		if ( ch->startSample == START_SAMPLE_IMMEDIATE ) {
 			ch->startSample = s_paintedtime;
-#if 1 //ndef __WASM__
 			newSamples = qtrue;
-#else
-extern void S_PaintChannel( channel_t *ch, const sfx_t *sc, int count, int sampleOffset );
-			int count, sampleOffset; 
-			sampleOffset = s_paintedtime - ch->startSample;
-			count = (s_paintedtime + 13) - s_paintedtime;
-			if ( sampleOffset + count > ch->thesfx->soundLength ) {
-				count = ch->thesfx->soundLength - sampleOffset;
-			}
-			S_PaintChannel(ch, ch->thesfx, count, sampleOffset);
-#endif
 			continue;
 		}
 
