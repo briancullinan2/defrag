@@ -63,7 +63,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //#endif
 //#define USE_MULTIVM_RENDERER 1
 #define USE_PTHREADS 1
-#define MAX_PTHREADS 10
+#define MAX_PTHREADS 20
 
 
 #if defined(USE_MULTIVM_CLIENT) || defined(USE_MULTIVM_SERVER)

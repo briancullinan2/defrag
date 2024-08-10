@@ -647,6 +647,7 @@ int Sys_Pthread(void * (* threadfunc)(void *, int), void *data, int dataLength) 
 				running[i]->finished = qtrue; // because it's new
 			}
 		}
+		initPthreads = qtrue;
 	}
 
 	for (i = 0; i < MAX_PTHREADS; i++) {

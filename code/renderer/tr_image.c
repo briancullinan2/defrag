@@ -959,21 +959,18 @@ image_t *R_CreateImage( const char *name, const char *name2, byte *pic, int widt
 		trWorlds[0].images[ trWorlds[0].numImages++ ] = image;
 #endif
 
-	image->flags = flags;
-	image->width = width;
-	image->height = height;
-
-	qglGenTextures( 1, &image->texnum );
-
 #ifdef USE_PTHREADS
 	} else {
 		image = existing;
 		if(image->texnum) {
 			qglDeleteTextures(1, &image->texnum);
 		}
-		qglGenTextures(1, &image->texnum);
 	}
 #endif
+
+	image->flags = flags;
+	image->width = width;
+	image->height = height;
 
 	if ( namelen > 6 && Q_stristr( image->imgName, "maps/" ) == image->imgName && Q_stristr( image->imgName + 6, "/lm_" ) != NULL ) {
 		// external lightmap atlases stored in maps/<mapname>/lm_XXXX textures
@@ -996,6 +993,8 @@ image_t *R_CreateImage( const char *name, const char *name2, byte *pic, int widt
 	// save current state
 	currTMU = glState.currenttmu;
 	currTexture = glState.currenttextures[ glState.currenttmu ];
+
+	qglGenTextures( 1, &image->texnum );
 
 	// lightmaps are always allocated on TMU 1
 	if ( qglActiveTextureARB && (flags & IMGFLAG_LIGHTMAP) ) {
@@ -1533,8 +1532,11 @@ image_t	*R_FindImageFile( const char *name, imgFlags_t flags )
 	if(ri.Pthread_Start && pal) { // conditions to load async
 		// create a placeholder image for async loading
 		//image = R_CreateImage3( ( char * ) name, strippedName2, flags & ~IMGFLAG_MIPMAP & ~IMGFLAG_PICMIP );
-		image = R_CreateImage(name, strippedName2, pal, 16, 16, IMGFLAG_CLAMPTOEDGE | IMGFLAG_MIPMAP );
+		image = R_CreateImage(name, strippedName2, pal, 16, 16, flags );
+		Q_strncpyz(image->imgName2, strippedName2, MAX_QPATH);
 		Q_strncpyz(image->variables, variables, MAX_QPATH);
+		//R_LoadRemote((void *)(tr.numImages - 1), sizeof(int));
+		//return image;
 		if(ri.Pthread_Start(R_LoadRemote, (void *)(tr.numImages - 1), sizeof(int)) > -1) { // initiate async load
 			return image;
 		}
