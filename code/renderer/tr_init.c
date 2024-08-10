@@ -2158,7 +2158,7 @@ refexport_t *GetRefAPI ( int apiVersion, refimport_t *rimp ) {
 	re.AddPolyBufferToScene =   RE_AddPolyBufferToScene;
   re.GetFrustum = RE_GetFrustum;
 
-#if defined(USE_MULTIVM_RENDERER) || defined(USE_MULTIVM_SERVER)
+#if defined(USE_MULTIVM_RENDERER) || defined(USE_MULTIVM_CLIENT)
 	re.InitShaders = R_InitShaders;
 #endif
 

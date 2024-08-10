@@ -3913,7 +3913,7 @@ R_InitShaders
 ==================
 */
 void R_InitShaders( void ) {
-#if defined(USE_MULTIVM_RENDERER) || defined(USE_MULTIVM_SERVER)
+#if defined(USE_MULTIVM_RENDERER) || defined(USE_MULTIVM_CLIENT)
 	int i;
 	ri.Printf( PRINT_ALL, "\nInitializing Shaders (%i)\n", rwi );
   tr.lastRegistrationTime = ri.Milliseconds();

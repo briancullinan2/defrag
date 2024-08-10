@@ -2123,9 +2123,8 @@ static void CL_DownloadsComplete( void ) {
 	// this will also (re)load the UI
 	// if this is a local client then only the client part of the hunk
 	// will be cleared, note that this is done after the hunk mark has been set
-#if defined(USE_MULTIVM_CLIENT) || defined(USE_MULTIVM_SERVER)
+#if defined(USE_MULTIVM_CLIENT) || defined(USE_MULTIVM_RENDERER)
 	// TODO: cl_norenderRestart
-	
 	re.InitShaders();
 	S_Shutdown();
 	CL_ShutdownVMs();
