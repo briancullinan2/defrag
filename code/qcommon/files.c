@@ -4803,7 +4803,9 @@ static void FS_Startup( void ) {
 	const char *homePath;
 	int i, start, end;
 
+#ifdef USE_PTHREADS
 	pthread_mutex_init(&read_file_sync, NULL);
+#endif
 
 	Com_Printf( "----- FS_Startup -----\n" );
 

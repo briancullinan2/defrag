@@ -765,7 +765,7 @@ static uint32_t DecompressIDATs(struct BufferedFile *BF, uint8_t **Buffer)
 #endif
 	if(!DecompressedData)
 	{
-#ifndef USE_PTHREADS
+#ifdef USE_PTHREADS
 		ri.free(CompressedData);
 #else
 		ri.Free(CompressedData);
