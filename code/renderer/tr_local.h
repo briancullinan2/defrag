@@ -518,6 +518,7 @@ typedef struct image_s {
 	char variables[MAX_QPATH];
 	struct image_s *palette;
 	struct image_s *alternate;
+	struct image_s *replace;
 
 } image_t;
 

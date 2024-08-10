@@ -812,77 +812,13 @@ const char *R_LoadImage( const char *name, byte **pic, int *width, int *height )
 
 image_t *R_CreateImage2( const char *name, const char *name2, byte *pic, int width, int height, imgFlags_t flags, image_t *existing );
 
-/*
-================
-R_CreateImage2
-
-This is the only way any image_t are created
-================
-*/
-static image_t *R_CreateImage3( const char *name, const char *name2, imgFlags_t flags ) {
-	image_t   *image = NULL;
-	long      hash;
-	size_t		namelen;
-
-	namelen = strlen( name );
-	if ( namelen >= MAX_QPATH ) {
-		ri.Error (ERR_DROP, "R_CreateImage: \"%s\" is too long", name);
-	}
-
-	if ( tr.numImages == MAX_DRAWIMAGES ) {
-		//image = R_FreeOldestImage();
-		if(!image) {
-			ri.Printf( PRINT_WARNING, "R_CreateImage: MAX_DRAWIMAGES hit");
-			return NULL;
-		}
-	} else
-		image = tr.images[tr.numImages] = ri.Hunk_Alloc( sizeof( *image ) + MAX_QPATH + MAX_QPATH, h_low );
-
-	image->imgName = (char *)( image + 1 );
-	strcpy( image->imgName, name );
-	image->imgName2 = (char *)( image + 1 + MAX_QPATH );
-	strcpy( image->imgName2, name2 );
-	image->lastTimeUsed = tr.lastRegistrationTime;
-
-	image->flags = flags;
-
-	if ( namelen > 6 && Q_stristr( image->imgName, "maps/" ) == image->imgName && Q_stristr( image->imgName + 6, "/lm_" ) != NULL ) {
-		// external lightmap atlases stored in maps/<mapname>/lm_XXXX textures
-		//image->flags = IMGFLAG_NOLIGHTSCALE | IMGFLAG_NO_COMPRESSION | IMGFLAG_NOSCALE | IMGFLAG_COLORSHIFT;
-		image->flags |= IMGFLAG_NO_COMPRESSION | IMGFLAG_NOSCALE;
-	}
-
-	hash = generateHashValue(name);
-	image->next = hashTable[hash];
-	hashTable[hash] = image;
-
-	image->width = 0;
-	image->height = 0;
-	image->texnum = 0;
-	//qglGenTextures(1, &image->texnum);
-	tr.numImages++;
-
-	if ( flags & IMGFLAG_RGB )
-		image->internalFormat = GL_RGB;
-	else
-		image->internalFormat = 0; // autodetect
-
-	// lightmaps are always allocated on TMU 1
-	if ( qglActiveTextureARB && (flags & IMGFLAG_LIGHTMAP) ) {
-		image->TMU = 1;
-	} else {
-		image->TMU = 0;
-	}
-
-	return image;
-}
-
 byte *R_LoadAlternateImage( byte *pic, int width, int height );
 byte *R_LoadAlternateImageVariables( byte *pic, int width, int height, const char *variables);
 
 
 void R_FinishImage3( image_t *image, byte *pic ) {
 	byte *variableImage = NULL;
+	image_t *replace;
 
 	if(image->variables[0] != '\0') {
 		variableImage = R_LoadAlternateImageVariables(pic, image->width, image->height, image->variables);
@@ -897,7 +833,8 @@ void R_FinishImage3( image_t *image, byte *pic ) {
 		ri.free(altImage);
 	}
 
-	R_CreateImage2(image->imgName, image->imgName2, pic, image->width, image->height, image->flags, image);
+	replace = R_CreateImage2(image->imgName, image->imgName2, pic, image->width, image->height, image->flags, NULL);
+	image->replace = replace;
 
 	if(variableImage && variableImage != pic) {
 		ri.free(variableImage);
@@ -1591,6 +1528,19 @@ image_t	*R_FindImageFile( const char *name, imgFlags_t flags )
 	// load the pic from disk
 	//
 	byte* pal = R_FindPalette(strippedName2);
+
+#ifdef USE_PTHREADS
+	if(ri.Pthread_Start && pal) { // conditions to load async
+		// create a placeholder image for async loading
+		//image = R_CreateImage3( ( char * ) name, strippedName2, flags & ~IMGFLAG_MIPMAP & ~IMGFLAG_PICMIP );
+		image = R_CreateImage(name, strippedName2, pal, 16, 16, IMGFLAG_CLAMPTOEDGE | IMGFLAG_MIPMAP );
+		Q_strncpyz(image->variables, variables, MAX_QPATH);
+		if(ri.Pthread_Start(R_LoadRemote, (void *)(tr.numImages - 1), sizeof(int)) > -1) { // initiate async load
+			return image;
+		}
+	}
+#endif
+
 	image_t *palette = NULL;
 	if(pal) {
 		Q_strncpy(paletteName, (char *)va("*pal%i-%i-%i-%i", pal[0], pal[1], pal[2], pal[3]), sizeof(paletteName));
@@ -1600,19 +1550,6 @@ image_t	*R_FindImageFile( const char *name, imgFlags_t flags )
 	if(Q_stristr(name, "*pal")) {
 		return palette;
 	}
-
-#ifdef USE_PTHREADS
-	if(ri.Pthread_Start && palette) { // conditions to load async
-		// create a placeholder image for async loading
-		//image = R_CreateImage3( ( char * ) name, strippedName2, flags & ~IMGFLAG_MIPMAP & ~IMGFLAG_PICMIP );
-		image = R_CreateImage(name, strippedName2, pal, 16, 16, IMGFLAG_CLAMPTOEDGE | IMGFLAG_MIPMAP );
-		image->palette = palette;
-		Q_strncpyz(image->variables, variables, MAX_QPATH);
-		if(ri.Pthread_Start(R_LoadRemote, (void *)(tr.numImages - 1), sizeof(int)) > -1) { // initiate async load
-			return image;
-		}
-	}
-#endif
 
 	localName = R_LoadImage( strippedName2, &pic, &width, &height );
 	if ( pic == NULL ) {

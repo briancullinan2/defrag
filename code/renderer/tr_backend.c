@@ -63,6 +63,10 @@ void GL_Bind( image_t *image ) {
 		texnum = image->alternate->texnum;
 	}
 
+	if(image && !shouldUseAlternate && image->replace) {
+		texnum = image->replace->texnum;
+	}
+
 	if ( r_nobind->integer && tr.dlightImage ) {		// performance evaluation option
 		texnum = tr.dlightImage->texnum;
 	}
