@@ -915,7 +915,6 @@ static void *R_LoadRemote(void *data, int length) {
 	/*localName =*/ R_LoadImage( image->imgName2, &pic, &image->width, &image->height );
 	// update name
 	if(pic) {
-				ri.Printf(PRINT_ALL, "loaded: %s\n", image->imgName2);
 		//strcpy( image->imgName2, localName );
 		pthread_mutex_lock(&pixel_data_mutex);
 		pixelDatas[(int)data] = pic;
@@ -937,12 +936,10 @@ void CheckAsyncImages( int msec ) {
 		pthread_mutex_lock(&pixel_data_mutex);
 		for(i = 0; i < MAX_DRAWIMAGES; i++) {
 			if(pixelDatas[i]) {
-				ri.Printf(PRINT_ALL, "finishing: %s\n", tr.images[i]->imgName2);
+				//ri.Printf(PRINT_ALL, "finishing: %s\n", tr.images[i]->imgName2);
 				R_FinishImage3(tr.images[i], pixelDatas[i]);
 				ri.free(pixelDatas[i]);
 				pixelDatas[i] = NULL;
-			} else {
-				break;
 			}
 		}
 		pthread_mutex_unlock(&pixel_data_mutex);

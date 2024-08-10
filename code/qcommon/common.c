@@ -318,12 +318,14 @@ void NORETURN FORMAT_PRINTF(2, 3) QDECL Com_Error( errorParm_t code, const char 
 		}
 	}
 #else
+#if defined(_DEBUG)
 #if defined(__linux__) || defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) || defined(__APPLE__)
 	{
 		void *syms[10];
 		const size_t size = backtrace( syms, ARRAY_LEN( syms ) );
 		backtrace_symbols_fd( syms, size, STDERR_FILENO );
 	}
+#endif
 #endif
 #endif
 
