@@ -314,13 +314,14 @@ function makePaletteShader(localName, response) {
 
 
 function sendCompressed(file, res, acceptEncoding) {
+  const turnOffCompression = true
   const zlib = require('zlib')
   const mime = require('mime')
   let readStream = fs.createReadStream(file)
   res.setHeader('cache-control', 'public, max-age=31557600')
   res.setHeader('content-type', mime.lookup(file))
   // if compressed version already exists, send it directly
-  if(acceptEncoding.includes('br')) {
+  if(!turnOffCompression && acceptEncoding.includes('br')) {
     res.append('content-encoding', 'br')
     if(fs.existsSync(file + '.br')) {
       res.append('content-length', fs.statSync(file + '.br').size)
@@ -328,7 +329,7 @@ function sendCompressed(file, res, acceptEncoding) {
     } else {
       readStream = readStream.pipe(zlib.createBrotliCompress())
     }
-  } else if(acceptEncoding.includes('gzip')) {
+  } else if(!turnOffCompression && acceptEncoding.includes('gzip')) {
     res.append('content-encoding', 'gzip')
     if(fs.existsSync(file + '.gz')) {
       res.append('content-length', fs.statSync(file + '.gz').size)
@@ -336,7 +337,7 @@ function sendCompressed(file, res, acceptEncoding) {
     } else {
       readStream = readStream.pipe(zlib.createGzip())
     }
-  } else if(acceptEncoding.includes('deflate')) {
+  } else if(!turnOffCompression && acceptEncoding.includes('deflate')) {
     res.append('content-encoding', 'deflate')
     if(fs.existsSync(file + '.df')) {
       res.append('content-length', fs.statSync(file + '.df').size)

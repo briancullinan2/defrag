@@ -230,4 +230,17 @@ async function readPreFS() {
       '/maps/' + basegame + '/pak1.pk3')
   Com_DL_Perform(basegame + '/pak1.pk3', 
       basegame + '/pak1.pk3', responseData2)
+
+  // write description to pk3dir so that it loads as a pak when the engine starts
+  //   this is key to making async work on fresh loads
+  let nameStr = '/base/demoq3/pak0.pk3dir/description.txt'
+  FS_CreatePath(stringToAddress(nameStr))
+  FS.virtual[nameStr] = {
+    timestamp: new Date(),
+    mode: FS_FILE,
+    contents: new Uint8Array('Multiworld\n')
   }
+  writeStore(FS.virtual[nameStr], nameStr)
+
+    
+}
