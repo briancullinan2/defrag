@@ -149,6 +149,8 @@ typedef struct {
 
 #if defined(USE_MULTIVM_RENDERER) || defined(__WASM__)
 	void	(*InitShaders)( void );
+#endif
+#if defined(__WASM__)
 	void	(*FinishImage3)(void *, byte *pic, int picFormat, int numMips);
 #endif
 #ifdef USE_MULTIVM_RENDERER

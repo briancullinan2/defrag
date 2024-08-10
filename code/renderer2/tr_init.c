@@ -1668,7 +1668,6 @@ void RE_FinishImage3(void *img, byte *pic, int picFormat, int numMips) {
 }
 #endif
 
-#ifdef USE_LAZY_MEMORY
 #ifdef USE_MULTIVM_RENDERER
 void RE_SetDvrFrame(float x, float y, float width, float height) {
 	dvrXScale = width;
@@ -1676,7 +1675,6 @@ void RE_SetDvrFrame(float x, float y, float width, float height) {
 	dvrXOffset = x;
 	dvrYOffset = y;
 }
-#endif
 #endif
 
 

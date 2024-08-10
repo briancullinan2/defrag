@@ -2347,7 +2347,7 @@ void RE_LoadWorldMap( const char *name )
 
 #else
 	if ( tr.worldMapLoaded ) {
-#ifdef USE_LAZY_MEMORY
+#ifdef USE_MULTIVM_RENDERER
   	ri.Printf( PRINT_WARNING, "ERROR: attempted to redundantly load world map\n" );
 #else
 	if ( tr.worldMapLoaded ) {

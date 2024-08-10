@@ -1083,7 +1083,7 @@ void CL_ClearMemory( void ) {
 		// clear collision map data
 		CM_ClearMap();
 	} else {
-#ifdef USE_MULTIVM_SERVER
+#if 0 //def USE_MULTIVM_SERVER
 		// clear to mark doesn't work in multivm mode because there are many marks
 		Hunk_Clear();
     CM_ClearMap();
@@ -2123,7 +2123,7 @@ static void CL_DownloadsComplete( void ) {
 	// this will also (re)load the UI
 	// if this is a local client then only the client part of the hunk
 	// will be cleared, note that this is done after the hunk mark has been set
-#if defined(USE_MULTIVM_CLIENT) || defined(USE_MULTIVM_RENDERER)
+#if 0 //defined(USE_MULTIVM_CLIENT) || defined(USE_MULTIVM_RENDERER)
 	// TODO: cl_norenderRestart
 	re.InitShaders();
 	S_Shutdown();
