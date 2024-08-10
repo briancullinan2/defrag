@@ -63,6 +63,7 @@ endif
 #########################  WASM     ###################################
 ifeq ($(PLATFORM),wasm)
 ARCH=js
+USE_RENDERER_DLOPEN=0
 RENDERER_DEFAULT=opengl2
 WASM=1
 CROSS_COMPILING=1
