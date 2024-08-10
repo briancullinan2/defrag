@@ -295,7 +295,9 @@ static void CloseBufferedFile(struct BufferedFile *BF)
 	{
 		if(BF->Buffer)
 		{
+#ifndef USE_PTHREADS
 			ri.FS_FreeFile(BF->Buffer);
+#endif
 		}
 
 #ifdef USE_PTHREADS
@@ -1943,11 +1945,91 @@ static qboolean DecodeImageInterlaced(struct PNG_Chunk_IHDR *IHDR,
 	return(qtrue);
 }
 
+#ifdef USE_PTHREADS
+void R_LoadPNG2(const char *name, byte **pic, int *width, int *height, struct BufferedFile *existing);
+
+
+void R_LoadPNG(const char *name, byte **pic, int *width, int *height) {
+	R_LoadPNG2(name, pic, width, height, NULL);
+}
+
+void R_LoadPNGFromBuffer(char *name, byte *buffer, int length, byte **pic, int *width, int *height) {
+	struct BufferedFile *BF;
+
+	/*
+	 *  input verification
+	 */
+
+	if(!name)
+	{
+		return;
+	}
+
+	/*
+	 *  Allocate control struct.
+	 */
+
+#ifdef USE_PTHREADS
+	BF = ri.malloc(sizeof(struct BufferedFile));
+#else
+	BF = ri.Malloc(sizeof(struct BufferedFile));
+#endif
+	if(!BF)
+	{
+		return;
+	}
+
+	/*
+	 *  Initialize the structs components.
+	 */
+
+	BF->Length    = 0;
+	BF->Buffer    = NULL;
+	BF->Ptr       = NULL;
+	BF->BytesLeft = 0;
+
+	/*
+	 *  Read the file.
+	 */
+	BF->Length = length;
+	BF->Buffer = buffer;
+
+	/*
+	 *  Did we get it? Is it big enough?
+	 */
+
+	if(!(BF->Buffer && (BF->Length > 0)))
+	{
+#ifdef USE_PTHREADS
+		ri.free(BF);
+#else
+		ri.Free(BF);
+#endif
+
+		return;
+	}
+
+	/*
+	 *  Set the pointers and counters.
+	 */
+
+	BF->Ptr       = BF->Buffer;
+	BF->BytesLeft = BF->Length;
+
+	R_LoadPNG2(name, pic, width, height, BF);
+}
+
+
+
+void R_LoadPNG2(const char *name, byte **pic, int *width, int *height, struct BufferedFile *existing)
+#else
+
 /*
  *  The PNG loader
  */
 
 void R_LoadPNG(const char *name, byte **pic, int *width, int *height)
+#endif
 {
 	struct BufferedFile *ThePNG;
 	byte *OutBuffer;
@@ -2005,7 +2087,12 @@ void R_LoadPNG(const char *name, byte **pic, int *width, int *height)
 	/*
 	 *  Read the file.
 	 */
-
+#ifdef USE_PTHREADS
+	if(existing)
+	{
+		ThePNG = existing;
+	} else
+#endif
 	ThePNG = ReadBufferedFile(name);
 	if(!ThePNG)
 	{

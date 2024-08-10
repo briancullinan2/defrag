@@ -2304,6 +2304,10 @@ FS_FreeFile
 =============
 */
 void FS_FreeFile( void *buffer ) {
+#ifdef USE_PTHREADS
+	pthread_mutex_lock(&read_file_sync);
+#endif
+
 	if ( !fs_searchpaths ) {
 		Com_Error( ERR_FATAL, "Filesystem call made without initialization" );
 	}
@@ -2322,6 +2326,10 @@ void FS_FreeFile( void *buffer ) {
 	if ( fs_loadStack == 0 ) {
 		Hunk_ClearTempMemory();
 	}
+
+#ifdef USE_PTHREADS
+	pthread_mutex_unlock(&read_file_sync);
+#endif
 }
 
 

@@ -620,9 +620,10 @@ qboolean initPthreads = qfalse;
 
 typedef struct {
 	void *p;
-	void *data;
-	long dataLength;
-	void * (* threadfunc)(void *, int );
+	int data;
+	int dataLength;
+	int enumValue;
+	void * (* threadfunc)(int, int, int);
 	volatile qboolean finished;
 } q3threadHandle_t;
 
@@ -631,12 +632,12 @@ static q3threadHandle_t *running[MAX_PTHREADS];
 static void *Sys_Pthread_Start(void *data) {
 	q3threadHandle_t* tcb;
 	tcb = (q3threadHandle_t*)data;
-	tcb->threadfunc(tcb->data, tcb->dataLength);
+	tcb->threadfunc(tcb->data, tcb->dataLength, tcb->enumValue);
 	tcb->finished = qtrue;
 	return NULL;
 }
 
-int Sys_Pthread(void * (* threadfunc)(void *, int), void *data, int dataLength) {
+int Sys_Pthread(void * (* threadfunc)(int, int, int), int data, int dataLength, int enumValue) {
 	int i;
 
 	if(!initPthreads) {
@@ -655,6 +656,7 @@ int Sys_Pthread(void * (* threadfunc)(void *, int), void *data, int dataLength) 
 			running[i]->data = data;
 			running[i]->dataLength = dataLength;
 			running[i]->threadfunc = threadfunc;
+			running[i]->enumValue = enumValue;
 			pthread_create( (pthread_t *)running[i], NULL, Sys_Pthread_Start, &running[i]->p);
 			return i;
 		}

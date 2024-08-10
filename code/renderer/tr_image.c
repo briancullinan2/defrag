@@ -803,9 +803,18 @@ image_t *R_FreeOldestImage( void ) {
 
 #include <pthread.h>
 
+
+typedef enum {
+	IM_NONE,
+	IM_PNG,
+	IM_TGA,
+	IM_JPG,
+} imageType_t;
+
 extern qboolean shouldUseAlternate;
 
 static byte *pixelDatas[MAX_DRAWIMAGES] = {0};
+static byte *fileDatas[MAX_DRAWIMAGES] = {0};
 static pthread_mutex_t pixel_data_mutex;
 
 const char *R_LoadImage( const char *name, byte **pic, int *width, int *height );
@@ -814,11 +823,13 @@ image_t *R_CreateImage2( const char *name, const char *name2, byte *pic, int wid
 
 byte *R_LoadAlternateImage( byte *pic, int width, int height );
 byte *R_LoadAlternateImageVariables( byte *pic, int width, int height, const char *variables);
+void R_LoadPNGFromBuffer(char *name, byte *buffer, int length, byte **pic, int *width, int *height);
+void R_LoadTGAFromBuffer( const char *filename, byte *existing, int length, byte **pic, int *width, int *height );
 
 
 void R_FinishImage3( image_t *image, byte *pic ) {
 	byte *variableImage = NULL;
-	image_t *replace;
+	//image_t *replace;
 
 	if(image->variables[0] != '\0') {
 		variableImage = R_LoadAlternateImageVariables(pic, image->width, image->height, image->variables);
@@ -833,8 +844,8 @@ void R_FinishImage3( image_t *image, byte *pic ) {
 		ri.free(altImage);
 	}
 
-	replace = R_CreateImage2(image->imgName, image->imgName2, pic, image->width, image->height, image->flags, NULL);
-	image->replace = replace;
+	/*replace =*/ R_CreateImage2(image->imgName, image->imgName2, pic, image->width, image->height, image->flags, image);
+	//image->replace = replace;
 
 	if(variableImage && variableImage != pic) {
 		ri.free(variableImage);
@@ -842,19 +853,33 @@ void R_FinishImage3( image_t *image, byte *pic ) {
 
 }
 
+void R_LoadJPGFromBuffer( const char *filename, byte *existing, int length, unsigned char **pic, int *width, int *height )
+{
+	ri.CL_LoadJPG2( filename, existing, length, pic, width, height );
+}
 
-static void *R_LoadRemote(void *data, int length) {
+
+static void *R_LoadRemote(int index, int length, int enumValue) {
 	//const char *localName;
 	image_t *image;
-	byte	*pic;
-	image = tr.images[(int)data];
+	byte	*pic = NULL;
+	image = tr.images[index];
 
-	/*localName =*/ R_LoadImage( image->imgName2, &pic, &image->width, &image->height );
+	/*localName =*/ 
+	//R_LoadImage( image->imgName2, &pic, &image->width, &image->height );
+	if(enumValue == IM_PNG) {
+		R_LoadPNGFromBuffer(image->imgName2, fileDatas[index], length, &pic, &image->width, &image->height);
+	} else if(enumValue == IM_PNG) {
+		R_LoadJPGFromBuffer(image->imgName2, fileDatas[index], length, &pic, &image->width, &image->height);
+	} else if(enumValue == IM_TGA) {
+		R_LoadTGAFromBuffer(image->imgName2, fileDatas[index], length, &pic, &image->width, &image->height);
+	}
+
 	// update name
 	if(pic) {
 		//strcpy( image->imgName2, localName );
 		pthread_mutex_lock(&pixel_data_mutex);
-		pixelDatas[(int)data] = pic;
+		pixelDatas[index] = pic;
 		pthread_mutex_unlock(&pixel_data_mutex);
 		return pic;
 	}
@@ -875,6 +900,7 @@ void CheckAsyncImages( int msec ) {
 			if(pixelDatas[i]) {
 				//ri.Printf(PRINT_ALL, "finishing: %s\n", tr.images[i]->imgName2);
 				R_FinishImage3(tr.images[i], pixelDatas[i]);
+				ri.FS_FreeFile(fileDatas[i]);
 				ri.free(pixelDatas[i]);
 				pixelDatas[i] = NULL;
 			}
@@ -1052,15 +1078,11 @@ typedef struct
 static const imageExtToLoaderMap_t imageLoaders[] =
 {
 	{ "png",  R_LoadPNG },
-#ifndef USE_PTHREADS
 	{ "tga",  R_LoadTGA },
-#endif
 	{ "jpg",  R_LoadJPG },
 	{ "jpeg", R_LoadJPG },
-#ifndef USE_PTHREADS
 	{ "pcx",  R_LoadPCX },
 	{ "bmp",  R_LoadBMP }
-#endif
 };
 
 static const int numImageLoaders = ARRAY_LEN( imageLoaders );
@@ -1154,8 +1176,8 @@ const char *R_LoadImage( const char *name, byte **pic, int *width, int *height )
 			if ( orgNameFailed )
 			{
 #ifdef USE_PTHREADS
-				ri.Printf( PRINT_DEVELOPER, S_COLOR_YELLOW "WARNING: %s not present, using %s instead\n",
-						name, localName2 );
+				//ri.Printf( PRINT_DEVELOPER, S_COLOR_YELLOW "WARNING: %s not present, using %s instead\n",
+				//		name, localName2 );
 #else
 				ri.Printf( PRINT_DEVELOPER, S_COLOR_YELLOW "WARNING: %s not present, using %s instead\n",
 						name, altName );
@@ -1529,16 +1551,32 @@ image_t	*R_FindImageFile( const char *name, imgFlags_t flags )
 	byte* pal = R_FindPalette(strippedName2);
 
 #ifdef USE_PTHREADS
+	void *fileData;
+	int length;
 	if(ri.Pthread_Start && pal) { // conditions to load async
+		imageType_t type = IM_NONE;
 		// create a placeholder image for async loading
 		//image = R_CreateImage3( ( char * ) name, strippedName2, flags & ~IMGFLAG_MIPMAP & ~IMGFLAG_PICMIP );
-		image = R_CreateImage(name, strippedName2, pal, 16, 16, flags );
-		Q_strncpyz(image->imgName2, strippedName2, MAX_QPATH);
-		Q_strncpyz(image->variables, variables, MAX_QPATH);
-		//R_LoadRemote((void *)(tr.numImages - 1), sizeof(int));
-		//return image;
-		if(ri.Pthread_Start(R_LoadRemote, (void *)(tr.numImages - 1), sizeof(int)) > -1) { // initiate async load
-			return image;
+		if((length = ri.FS_ReadFile(va("%s.%s", strippedName, "png"), &fileData)) > 0) {
+			type = IM_PNG;
+		} else if((length = ri.FS_ReadFile(va("%s.%s", strippedName, "jpg"), &fileData)) > 0) {
+			type = IM_JPG;
+		} else if((length = ri.FS_ReadFile(va("%s.%s", strippedName, "tga"), &fileData)) > 0) {
+			type = IM_TGA;
+		} else {
+			type = IM_NONE;
+		}
+
+		if(type != IM_NONE) {
+			image = R_CreateImage(name, strippedName, pal, 16, 16, flags & ~IMGFLAG_MIPMAP & ~IMGFLAG_PICMIP );
+			Q_strncpyz(image->imgName2, strippedName, MAX_QPATH);
+			Q_strncpyz(image->variables, variables, MAX_QPATH);
+			//R_LoadRemote((void *)(tr.numImages - 1), sizeof(int));
+			fileDatas[tr.numImages - 1] = fileData;
+			//return image;
+			if(ri.Pthread_Start(R_LoadRemote, (tr.numImages - 1), length, type) > -1) { // initiate async load
+				return image;
+			}
 		}
 	}
 #endif

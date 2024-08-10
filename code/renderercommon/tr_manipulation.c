@@ -267,7 +267,11 @@ void R_AddPalette(const char *name, int a, int r, int g, int b) {
 		}
 	}
 
+#ifdef USE_PTHREADS
+	palette = ri.malloc( sizeof( *palette ) + namelen + 1 );
+#else
 	palette = ri.Hunk_Alloc( sizeof( *palette ) + namelen + 1, h_low );
+#endif
 	palette->imgName = (char *)( palette + 1 );
 	strcpy( palette->imgName, normalName );
 	palette->a = a;
