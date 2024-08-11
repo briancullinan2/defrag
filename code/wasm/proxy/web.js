@@ -1,9 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-const MODNAME = 'demoq3';
-const GAME_DIRECTORY = 'multigame'
+const GAME_DIRECTORY = 'demoq3'
 const WEB_DIRECTORY = path.resolve(__dirname + '/../../../docs')
-const ASSETS_DIRECTORY = path.resolve(__dirname + '/../../../docs/' + MODNAME + '/pak0.pk3dir/')
+const ASSETS_DIRECTORY = path.resolve(__dirname + '/../../../docs/' + GAME_DIRECTORY + '/pak0.pk3dir/')
 const BUILD_DIRECTORY = path.resolve(__dirname + '/../../../build/')
 const ALLOWED_DIRECTORIES = [
   WEB_DIRECTORY,
@@ -431,7 +430,7 @@ function respondRequest(request, response) {
     let alpha = hasAlpha(file)
     if((!alpha && localName.includes('.jpeg'))
       || (alpha && localName.includes('.png'))) {
-      execSync(`convert -strip -quality 50% -auto-orient "${file}" "${path.resolve(newPath)}"`, {stdio : 'pipe'})
+      execSync(`magick "${file}" -auto-orient -strip -quality 50% "${path.resolve(newPath)}"`, {stdio : 'pipe'})
     }
     if(fs.existsSync(newPath)) {
       if(request.headers['accept-encoding']) {

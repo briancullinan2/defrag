@@ -27,6 +27,9 @@ Run `npm start` to start the proxy/repack conjoined server.
 
 Open a browser and direct it to http://localhost:8080/ to see the engine try to load. Use the debug console. Contact the original developer when it fails and report common issues to list here:
 
+Error: ENOENT: no such file or directory, rename '...'
+
+Set the MODNAME const in /code/wasm/repack.js to your mod name
 
 
 ### windows/msvc
