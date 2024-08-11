@@ -1,8 +1,9 @@
 const fs = require('fs');
 const path = require('path');
+const MODNAME = 'demoq3';
 const GAME_DIRECTORY = 'multigame'
 const WEB_DIRECTORY = path.resolve(__dirname + '/../../../docs')
-const ASSETS_DIRECTORY = path.resolve(__dirname + '/../../../docs/demoq3/pak0.pk3dir/')
+const ASSETS_DIRECTORY = path.resolve(__dirname + '/../../../docs/' + MODNAME + '/pak0.pk3dir/')
 const BUILD_DIRECTORY = path.resolve(__dirname + '/../../../build/')
 const ALLOWED_DIRECTORIES = [
   WEB_DIRECTORY,
@@ -129,18 +130,26 @@ function findAltAudio(localName) {
 }
 
 function hasAlpha(otherFormatName) {
-  const { execSync } = require('child_process');
+  const { spawnSync } = require('child_process');
+  let alphaCmd
   try {
-    let alphaCmd = execSync(`identify -format '%[opaque]' "${path
-      .resolve(otherFormatName)}"`, {stdio : 'pipe'}).toString('utf-8')
-    // if it is alpha
-    if(/* true || TODO: allAlpha? */ alphaCmd.match(/true/ig)) {
-      return false
-    }
+    let alphaProcess = spawnSync('magick', [
+      path.resolve(otherFormatName), 
+      '-scale', '1x1!', '-format', "'%[fx:int(255*a+.5)]'", 'info:-'
+    ], {
+    //  cwd: SOURCE_PATH,
+      timeout: 3000,
+    })
+    alphaCmd = alphaProcess.stdout.toString('utf-8')
+    //console.log(alphaCmd)
+    //console.log(alphaProcess.stderr.toString('utf-8'))
   } catch (e) {
     console.error(e.message, (e.output || '').toString('utf-8').substr(0, 1000))
   }
-  return true
+
+  //const MATCH = /false/ig
+  const MATCH = /'0'|'255'/ig
+  return !alphaCmd.match(MATCH)
 }
 
 
@@ -422,7 +431,7 @@ function respondRequest(request, response) {
     let alpha = hasAlpha(file)
     if((!alpha && localName.includes('.jpeg'))
       || (alpha && localName.includes('.png'))) {
-      execSync(`convert -strip -interlace Plane -sampling-factor 4:2:0 -quality 20% -auto-orient "${file}" "${path.resolve(newPath)}"`, {stdio : 'pipe'})
+      execSync(`convert -strip -quality 50% -auto-orient "${file}" "${path.resolve(newPath)}"`, {stdio : 'pipe'})
     }
     if(fs.existsSync(newPath)) {
       if(request.headers['accept-encoding']) {

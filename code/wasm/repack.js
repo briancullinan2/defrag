@@ -4,6 +4,7 @@ const path = require('path')
 const {glob} = require('glob')
 const {spawnSync} = require('child_process')
 
+const MODNAME = 'demoq3'
 const SOURCE_PATH = path.join(__dirname, '../../docs/')
 const OUTPUT_PATH = path.join(__dirname, '../../docs/maps/')
 
@@ -38,7 +39,7 @@ async function compareZip(pk3File) {
   }
   // compare corresponding zip and mtime
   let sourcePath = path.join(SOURCE_PATH, pk3File + 'dir')
-  // form a docs/demoq3/pak0.pk3dir style path
+  // form a docs/MODNAME/pak0.pk3dir style path
   let finishedPath = path.join(OUTPUT_PATH, pk3File)
   if(!finishedPath.includes('.pk3'))
     throw new Error('abort')
@@ -86,19 +87,19 @@ async function convertImage(pk3File) {
   let altName = pk3File.replace(path.extname(pk3File), '.tga')
   let altPath = path.join(SOURCE_PATH, altName)
   let pk3Path = path.join(SOURCE_PATH, pk3File)
-  let force = true
+  let force = false
   if((!force && fs.existsSync(pk3Path))) {
     return pk3Path
   }
   // restrict file access for existing files
   //if(pk3File.indexOf('.pk3dir') > -1) {
-  //  let altFile = path.join(SOURCE_PATH, 'demoq3', pk3File.split('/').slice(2).join('/'))
+  //  let altFile = path.join(SOURCE_PATH, MODNAME, pk3File.split('/').slice(2).join('/'))
   //  if(fs.existsSync(altFile)) {
   //    return altFile
   //  }
   //}
   if(!fs.existsSync(altPath)) {
-    altPath = path.join(SOURCE_PATH, 'demoq3', pk3File.split('/').slice(2).join('/').replace(path.extname(pk3File), '.tga'))
+    altPath = path.join(SOURCE_PATH, MODNAME, pk3File.split('/').slice(2).join('/').replace(path.extname(pk3File), '.tga'))
     if(fs.existsSync(altPath)) {
       try {
         fs.mkdirSync(path.dirname(pk3Path), { recursive: true });
@@ -134,7 +135,7 @@ async function convertImage(pk3File) {
     }
 
 // make all white with correct opacity
-// magick docs/demoq3/pak0.pk3dir/gfx/misc/smokepuff3.tga -compose CopyOpacity -layers merge docs/demoq3/pak0.pk3dir/gfx/misc/smokepuff3.png
+// magick docs/MODNAME/pak0.pk3dir/gfx/misc/smokepuff3.tga -compose CopyOpacity -layers merge docs/MODNAME/pak0.pk3dir/gfx/misc/smokepuff3.png
 
     let imageProcess
     if(pk3File.indexOf('.png') != -1) {
@@ -165,7 +166,7 @@ async function checkForRepack(request, response, next) {
   if(isPk3Path) {
     let mapPath = request.originalUrl.substr(request.originalUrl.indexOf('maps/') + 5)
     .replace(/\?.*$/gi, '')
-      // form a docs/demoq3/pak0.pk3dir style path
+      // form a docs/MODNAME/pak0.pk3dir style path
     if(fs.existsSync(path.join(SOURCE_PATH, mapPath + 'dir'))) {
       // compare contents of folder with contents of corresponding zip and mtime
       await compareZip(mapPath) 
@@ -338,9 +339,9 @@ module.exports = checkForRepack
 
 
 if(require.main === module && process.argv[1] == __filename) {
-  generatePalette('demoq3')
-  .then(() => convertSounds('demoq3'))
-  .then(() => compareZip('demoq3/pak0.pk3'))
+  generatePalette(MODNAME)
+  .then(() => convertSounds(MODNAME))
+  .then(() => compareZip(path.join(MODNAME, 'pak0.pk3')))
   .then(result => {
     console.log(result)
   })

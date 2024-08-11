@@ -1,5 +1,6 @@
 
 const MATCH_ADDRESS = /[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+\:[0-9]+/gi
+const MODNAME = 'demoq3';
 
 
 function getQueryCommands() {
@@ -106,10 +107,10 @@ function getQueryCommands() {
 	// TODO: from URL or default.cfg?
 	if(!startup.includes('fs_game')) {
 		startup.push.apply(startup, [
-			'+set', 'fs_game', 'demoq3',
+			'+set', 'fs_game', MODNAME,
 		])
-		if(typeof FS.virtual['demoq3'] == 'undefined') {
-			FS.virtual['demoq3'] = {
+		if(typeof FS.virtual[MODNAME] == 'undefined') {
+			FS.virtual[MODNAME] = {
 				timestamp: new Date(),
 				mode: FS_DIR,
 			}
@@ -262,7 +263,7 @@ function Sys_Error(fmt, args) {
 function Sys_SetStatus(status, replacementStr) {
 	// TODO: something like  window.title = , then setTimeout( window.title = 'Quake3e' again)
 	console.log(addressToString(status), replacementStr)
-
+	
 }
 
 function CL_MenuModified(oldValue, newValue, cvar) {
