@@ -1,0 +1,1 @@
+\df_ndm_timer_checkpoint [ TYPE: STRING - DEFAULT: NULL ] - Sets a checkpoint trigger in Tricks Mode (type \df_ndm_timer_aliases into the console to obtain a list of the possible values)

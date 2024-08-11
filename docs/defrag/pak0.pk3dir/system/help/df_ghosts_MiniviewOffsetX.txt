@@ -1,0 +1,1 @@
+\df_ghosts_MiniviewOffsetX [ DEFAULT: 235 RANGE: -500 TO 500 ] - changes the horizontal position of the miniview elative to the center of the screen

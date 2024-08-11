@@ -1,0 +1,1 @@
+\df_drawCheckpointStats [ TYPE: Boolean DEFAULT: 1 ] - Turns on/off the display of the bottom right checkpoints info.

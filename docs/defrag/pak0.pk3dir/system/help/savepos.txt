@@ -1,0 +1,102 @@
+========================
+CONSOLE COMMAND: savepos
+========================
+
+1. Information
+2. Usage Examples
+3. How It Works
+4. Additional Information
+5. Distance To Saved Position
+6. Other Uses For savepos
+7. History
+
+--------------------
+savepos [ <option> ]
+--------------------
+
+--------------
+1. Information
+--------------
+Allows player to save multiple positions, and teleport to each position. This only works when cheats are enabled.  The system calls the server side command named "placeplayer".  This is great for practicing maps,  as it allows the player to return to a position in a map instantly.
+
+The savepos command itself has 3 options:
+
+0 = save position, angles, and velocity
+1 = save position, angles
+2 = save position, angles (no pitch)
+
+If no option is specified, the default of "0" is used automatically.
+
+*** Note: savedpositions may be saved to a file (and later loaded again) using the varSave command.
+
+-----------------
+2. Usage Examples
+-----------------
+The command is used either through the console, or (better solution) through config binds.
+
+Example Binds:
+--------------
+set posempty ""
+bind 4 "savepos 0"
+bind 1 "vstr pos1; set saveposname pos1"
+bind 2 "vstr pos2; set saveposname pos2"
+bind 3 "vstr pos3; set saveposname pos3"
+bind 5 "set pos1 vstr posempty; set pos2 vstr posempty; set pos3 vstr posempty; echo saved positions cleared"
+
+bind 0 "varSave pos1 mysavepos.cfg; varSave pos2 mysavepos.cfg; varSave pos2 mysavepos.cfg" // allows saving of positions to file
+
+*** NOTE: if you don't want the velocity to be saved (ignore velocity option), use:
+
+bind 4 "savepos 1"
+
+*** NOTE: if you don't want the velocity or pitch to be saved (ignore velocity, pitch option), use:
+
+bind 4 "savepos 2"
+
+---------------
+3. How It Works
+---------------
+pressing 1, then 4, will save your position (in pos1)
+pressing 1 will teleport you to the saved position (pos1)
+pressing 5 will clear all the saved positions, especially useful when switching to a new map
+
+pressing 0 will save the positions to a file (note that the positions are just appended to the end of the text file specified)
+
+-------------------------
+4. Additional Information
+-------------------------
+The player must first supply a "saveposname", so when "savepos" is called, it has a name for the vstr string it will create.  Usage is as follows:
+
+\set posempty ""                // creates an empty string used to reset positions
+\set saveposname MyPositionName // sets the saveposname to "MyPositionName"
+\savepos                        // saves position (now the vstr "MyPositionName" contains "placeplayer x y z pitch yaw roll velX velY velZ")
+\vstr MyPositionName            // teleport player (executes the vstr "MyPositionName")
+
+Essentially what happens, is when savepos is called, q3 will create a vstr (string) that the player may execute.  The name of this vstr is whatever is assigned to it through the /set saveposname command.  The player may then execute that vstr.  This allows as many position saves as desired.
+
+The savepos command uses a server side command called "placeplayer" in order to put the player in the saved location.
+
+-----------------------------
+5. Distance To Saved Position
+-----------------------------
+A special set of crosshair stats display information items is provided that shows the distance from the last saved position to the player's current position = useful for determining distances.  See the crosshair stats display documentation for more information.
+
+-------------------------
+6. Other Uses For savepos
+-------------------------
+Saved positions are used in conjunction with some of the Demos Camera modes.  See the Demos Camera documentation for more details.
+
+Distance from player to last saved position statistics are available through the crosshair stats display system.
+
+----------
+7. History
+----------
+1.90
+- Restored original q3 "setviewpos" command, added new "placeplayer" command that allows position, angles (including roll), and velocity to be specified
+- Fix: removed additional minor velocity added on restore (would sometimes place player in a slightly different location)
+- Optionally store velocity
+- Outputs message on restore now, and message is stored in demos, for additional usage indication
+- Added ingame help
+
+1.70
+- Feature introduced

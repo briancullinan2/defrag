@@ -1,0 +1,7 @@
+/df_competition ""
+
+Marks your demo as being intended for a particular contest.
+
+This feature permits admins to :
+1/ prevent the submission of a given demo across multiple contest websites.
+2/ ensure that players do not submit demos prior to that contest.

@@ -1,0 +1,7 @@
+\df_ghosts_CheckPVS  [ DEFAULT: 1 RANGE: 0 (no), 1 (yes) ] - determines if the ghost or demo camera system should check the map Potential Visible Set.
+
+The quake3 PVS deteremines if a section of the map is visible or not to the player.  An example of a section outside of the PVS would be another room, seperated by the void (you usually get to a room like this through a teleporter).  If the ghost is playing, and a ghost camera mode is on (in either the mainview or the miniview) and the ghost goes outside the current PVS, then a hall of mirrors effect occurs (mappers are familiar with this effect).  Keep this variable set to 1.  Leaving it set to the default (1), handles the quake3 PVS in an appropriate way, so that the ghost's view (camera) can still be drawn properly.  There's not really much reason to set it to 0.  Leave it alone you freaks.
+
+Note that you can see the effect of the PVS when watching a playback of the ghost.  Notice that when the ghost is not in visible range (maybe it went around the corner) to you the player, then the items on the screen are not visible to the ghost's view as it continues running through the map.  If you are in visible range to the ghost, then the PVS permits items to be displayed in the ghost's view.
+
+DemoCams also use the same variable to (df_ghosts_CheckPVS) to determine if the PVS check should occur.

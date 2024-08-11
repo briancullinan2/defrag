@@ -1,0 +1,1 @@
+\df_ghosts_MiniviewDrawGun [ DEFAULT: 1 RANGE: 0 TO 8 ] - turns on/off display of the gun in the miniview

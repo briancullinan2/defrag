@@ -1,0 +1,12 @@
+/df_mode_fastcaps [0-7] (default: 2)
+
+Selects a preset config for the Fast Caps gametype.
+
+  0: enable custom settings
+  1: disable weapons, forbid jump-pads/teleporters/movers
+  2: enable weapons, allow jump-pads/teleporters/movers
+  3: disable weapons, allow jump-pads/teleporters/movers
+  4: enable weapons, forbid jump-pads/teleporters/movers
+  5: swinging hook
+  6: Quake3 hook
+  7: vanilla Quake3

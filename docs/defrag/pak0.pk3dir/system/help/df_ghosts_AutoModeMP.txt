@@ -1,0 +1,6 @@
+\df_ghosts_AutoModeMP [ DEFAULT: 0 RANGE: 0 TO 1 ] - turns on/off the ghosts automatic playing/recording system during multiplayer games.  Used in conjunction with df_ghosts_AutoMode.
+
+ 0 = Off
+ 1 = On
+
+Note, this must be enabled (even if df_ghosts_AutoMode is off) in order to insure that ghosts play back at proper speeds within multiplayer/online games.

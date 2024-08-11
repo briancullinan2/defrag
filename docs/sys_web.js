@@ -1,6 +1,6 @@
 
 const MATCH_ADDRESS = /[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+\:[0-9]+/gi
-const MODNAME = 'demoq3';
+const MODNAME = 'defrag';
 
 
 function getQueryCommands() {

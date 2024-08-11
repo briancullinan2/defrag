@@ -1,0 +1,38 @@
+===========================
+CONSOLE COMMAND: varCommand
+===========================
+
+1. Information
+2. Usage Examples
+3. Additional Information
+4. History
+
+------------------------------------
+varCommand [ FORMAT: command <...> ]
+------------------------------------
+
+--------------
+1. Information
+--------------
+Performs a $StringSubtitution, then calls the normal Quake3 command that was specified.  Useful mainly for creating vstrs first, then calling a normal q3 command and having the vstrs be used.
+
+-----------------
+2. Usage Examples
+-----------------
+\set user_demoname "DFDemo1"      // sets the vstr user_demoname to "DFDemo1"
+\varCommand record $user_demoname // calls the record command using "record DFDemo1" due to the string substution
+
+\varCommand say My position is $posX $posY $posZ // calls the say command, and reports the players current position, using the special strings posX, posY, posZ
+
+\varCommand ?                  // displays ingame help
+
+-------------------------
+3. Additional Information
+-------------------------
+See the documentation on StringSubs for more information on how to use the $StringSubs feature.
+
+----------
+4. History
+----------
+1.90
+- Feature introduced

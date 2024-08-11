@@ -1,0 +1,5 @@
+/df_cl_fastRespawn [0-1] (default: 1)
+	Selects respawn delay.
+	  0: 700ms (pre 1.91.26)
+	  1: 250ms (introduced in 1.91.26)
+

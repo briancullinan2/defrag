@@ -1,0 +1,56 @@
+================================
+CONSOLE COMMAND: help\commands\?
+================================
+
+1. Information
+2. Usage
+3. Usage Examples
+4. History
+
+----------------------------------------------
+help [ FORMAT: help <command_name|cvar_name> ]
+----------------------------------------------
+
+--------------
+1. Information
+--------------
+
+The help command (can be substituted with "?" or "commands") gives ingame help on the various console commands and cvars.
+
+--------
+2. Usage
+--------
+
+type: "help" or "?" or "commands" to get a list of the console commands available
+type: "command_name ?" to get help for an individual command
+type: "? command_name" to get extended help for an individual command
+type: "? cvar_name" got get extended help for an individual cvar
+
+*** Note: "help" and "?" and "commands" all do the same thing.
+
+*** Suggestion: for fast cvar help, first start typing out the cvar name you want help for (start the line with "\").  Use the console autocomplete feature to finish typing the cvar name (type the first few letters of the cvar name, then press tab).  Then, move your cursor back to the beginning of the line, just after the "\", and type "? ", so you end up with:
+
+\? cvar_name
+
+-----------------
+3. Usage Examples
+-----------------
+
+\help      // lists the consoles commands available
+\?         // lists the consoles commands available (same as "help" command)
+\commands  // lists the consoles commands available (same as "help" command)
+
+\varMath ? // gives help on the varMath console command
+
+\? df_demos_CameraMode  // gives extended information for the df_demos_CameraMode cvar
+
+\? df_chs1_Info  // gives a complete list of all the crosshair stats information items
+
+\? cvars  // gives a complete list of the defrag-specific cvars available
+\? vstrs  // gives a complete list of the special defrag-specific vstrs available
+
+----------
+4. History
+----------
+1.9
+- Feature introduced

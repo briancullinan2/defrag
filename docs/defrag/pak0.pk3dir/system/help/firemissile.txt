@@ -1,0 +1,34 @@
+============================
+CONSOLE COMMAND: firemissile
+============================
+
+1. Information
+2. Usage Examples
+3. History
+
+------------------------------------------------------------------------------
+firemissile [(start) x y z (forward) x y z weapon_num (4|5|8|9) quaded (0|1) ]
+------------------------------------------------------------------------------
+
+4 WP_GRENADE_LAUNCHER
+5 WP_ROCKET_LAUNCHER
+8 WP_PLASMAGUN
+9 WP_BFG
+
+--------------
+1. Information
+--------------
+
+Fires a missile from the starting point and in the direction specified, using the weapon number specified.  This is mainly used for ghost live ammo.  NOTE: cheats must be enabled.
+
+-----------------
+2. Usage Examples
+-----------------
+
+firemissile 100 200 50 0 0 1 5 0 // fires a non-quaded rocket from position 100,200,50 straight up
+
+----------
+3. History
+----------
+1.9
+- Feature introduced

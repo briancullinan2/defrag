@@ -1,0 +1,1 @@
+\df_chs_UsePredicted [ DEFAULT: 1 (off) RANGE: 0 TO 1 ] - use predicted player data as option for input into CHS items and AccelMeter.  This makes the readout smoother (but less accurate) during multiplayer games.

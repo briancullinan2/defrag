@@ -1,0 +1,1 @@
+\df_ghosts_MiniviewFOV [ DEFAULT: 90 RANGE: 5 TO 250 ] - changes the field of view (FOV) of the miniview.

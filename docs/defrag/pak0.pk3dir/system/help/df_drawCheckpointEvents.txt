@@ -1,0 +1,1 @@
+\df_drawCheckpointEvents [ TYPE: Boolean DEFAULT: 1 ] - Turns on/off the display of the screen-centered checkpoint events.

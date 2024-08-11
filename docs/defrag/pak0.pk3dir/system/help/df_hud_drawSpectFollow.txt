@@ -1,0 +1,5 @@
+/df_hud_drawSpectFollow [0-2] (default: 2)
+	Shows spectated player name.
+	  0: off
+	  1: always on
+	  2: on for 3 seconds

@@ -1,0 +1,16 @@
+\df_demos_ReplayDrawMask [ DEFAULT: 32767 RANGE: 0 TO N (mask) ] - Shows/Hides replay entities in debug modes
+
+ 1  = RP_DRAW_ID
+ 2  = RP_DRAW_CAM
+ 4  = RP_DRAW_CAM2CAM
+ 8  = RP_DRAW_ACT2CAM
+ 16 = RP_DRAW_ACTPOINTS
+ 32 = RP_DRAW_ACTBOXRAILS
+ 64 = RP_DRAW_ACTBOX
+ 
+Add the numbers to display the desired items.
+
+Example - to show only ID numbers, Cameras, and Activation Points, use: df_demos_ReplayDrawMask 19
+1 + 2 + 16 = 19
+
+You can hide or show various replay script items while in debug mode.  This is useful if you have large scripts, as quake3 has a limit to the number of shaders that can be displayed at a given time.  So, you can turn on the most useful items to you - most likely IDs, CAMs, and ACTPOINTs.

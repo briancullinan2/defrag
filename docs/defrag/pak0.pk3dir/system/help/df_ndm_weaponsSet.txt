@@ -1,0 +1,20 @@
+/df_ndm_weaponsSet [bit mask] (default: 1022)
+
+Determines which weapons players are given in the Tricks Mode and Fast Caps gametypes.
+
+  Gauntlet:          2
+  Machine Gun:       4
+  Shotgun:           8
+  Grenade Launcher:  16
+  Rocket Launcher:   32
+  Lightning Gun:     64
+  Rail Gun:          128
+  Plasma Gun:        256
+  BFG:               512
+  Grappling Hook:    1024
+
+Select the weapons that are to be enabled by adding their corresponding values.
+For example:
+  Rocket Launcher (32) + Plasma Gun (256) = df_ndm_weaponsSet 288
+
+NOTE: The cvar df_mode must be set to Custom Settings (value 0) for this cvar to take effect.

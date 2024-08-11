@@ -1,0 +1,5 @@
+/df_hud_videocapture_enable [0-1] (default: 0)
+	Enables/Disables Video Capture Mode
+
+Disables the hud, similarly to cg_draw2D 0, but keeps displaying the timer.
+It was thought of for video capture, and you might enjoy playing with cl_noprint as well.

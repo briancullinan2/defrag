@@ -1,0 +1,1 @@
+\df_ndm_timer_stop [ TYPE: STRING - DEFAULT: NULL ] - Sets the timer-stop trigger in Tricks Mode (type \df_ndm_timer_aliases into the console to obtain a list of the possible values)

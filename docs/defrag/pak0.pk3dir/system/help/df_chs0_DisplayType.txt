@@ -1,0 +1,16 @@
+\df_chs0_DisplayType [ DEFAULT: 0 (arrows, style 1) RANGE: 0 TO 6 ] - changes the display type of the CHS set
+
+ 0 = CHS0_ARROWS1_CENTERED: Arrows, style 1 (single character "picture" style), centered pattern
+
+ 1 = CHS0_ARROWS2_CENTERED: Arrows, style 2 (ascii character style)
+
+ 2 = CHS0_ARROWS1_TREE: Arrows, style 1 (single character "picture" style), tree (gaz-style) pattern
+
+ 3 = CHS0_LETTERS_CENTERED_FLBR_JC: Letters, Centered pattern: Uses FLBR J C to indicate Forward, Left, Back, Right, Jump, Crouch
+
+ 4 = CHS0_LETTERS_TREE_FLBR_JC: Letters, Tree pattern: Uses FLBR J C to indicate Forward, Left, Back, Right, Jump, Crouch
+
+ 5 = CHS0_LETTERS_CENTERED_USER_JC: Letters, Centered pattern: Uses whatever keys the user has bound for +forward, +moveleft, +back, +moveright, to indicate Forward, Left, Back, Right, and J C to indicate Jump and Crouch
+
+ 6 = CHS0_LETTERS_TREE_USER_JC: Letters, Tree pattern: Uses whatever keys the user has bound for +forward, +moveleft, +back, +moveright, to indicate Forward, Left, Back, Right, and J C to indicate Jump and Crouch
+

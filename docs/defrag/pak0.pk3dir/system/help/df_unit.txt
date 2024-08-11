@@ -1,0 +1,7 @@
+/df_unit [0-2] (default: 0)
+
+Selects the unit type to be used with the various meters and statistics.
+
+  0: quake units - quake units per second
+  1: meters      - meters per hour
+  2: miles       - miles per hour

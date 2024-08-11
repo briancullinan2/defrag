@@ -1,0 +1,12 @@
+\df_ghost1_RecordFileFormat [ DEFAULT: 2 RANGE: 0 to 3 ] - changes the ghost file format for recording ghosts.
+
+ 0 = Camera only: Records only the player position and angles.  Pretty much only useful for reducing ghost file sizes.  Works fine for first person ghost camera views.  Third person cams (as well as viewing the ghost normally, without a ghost cam) looks terrible, as the player animations are not recorded to the file.
+
+ 1 = Player only (no missiles or explosions): Records only the player data (position, angles, animations).  Missiles and explosions are not recorded to the file.  Reduces file size as compared to Format #2.  Note that usually you will want to record everything (use format #2), and then you can optionally turn of the drawing of missiles/explosions using the df_ghost*_PlayDrawMissiles variable.
+
+ 2 = Player, Missiles, and Explosions: Records player, missiles (rockets, grenades, bfg shots, and plasma shots), and explosions.
+
+ 3 = Player, Missiles, Explosions, and CVars.  This mode records not only all of the ghost items, but any cvar changes as well (such as cg_thirdperson, cg_thirdpersonrange, etc.).  During playback of the ghost, if the camera mode is set to one of the Var modes (14 or 15), then the cvar changes that occured during recording of the ghost will be played back as well. This is particularly useful for demo recam recording using the ghost.  The cvars that the ghost monitors (and hence, records) are specified by the "Ghost-MonitoredVars.cfg" in the system folder.  Edit that file to indicate which cvars the ghost should record.
+
+Notes:
+When recording using fileformat #2 or #3, missiles and explosions are recorded.  A maximum of 10 missiles and 10 explosions per snapshot are recorded, and ultimately means that a maximum of 10 missiles and 10 explosions are displayed during playback.  This was done to reduce file size.  Works fine, since it's pretty rare to have 10 rockets on screen at any one time.  Plasma maybe, but what the hell are you shooting at??  Plasma wall climbs etc - 10 seems to give great results anyway.

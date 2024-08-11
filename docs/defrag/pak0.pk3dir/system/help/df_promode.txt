@@ -1,0 +1,6 @@
+/df_promode [0-1] (default: 0)
+
+Toggles the CPM physics.
+
+  0: VQ3 physics
+  1: CPM physics

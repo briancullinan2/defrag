@@ -1,0 +1,1 @@
+\df_vote_allowVotes [ DEFAULT: 1 RANGE: 0 (off) TO 1 (on) ] - globally enables/disables votes

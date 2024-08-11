@@ -1,0 +1,5 @@
+/cg_autoswitch [0-2] (default: 1)
+
+  0: disabled
+  1: enabled
+  2: switch only to new weapons

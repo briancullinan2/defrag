@@ -1,0 +1,1 @@
+\df_chs1_OffsetY [ DEFAULT: 0 RANGE: -240 TO 240 ] - changes the vertical position of the CHS set relative to the center of the screen

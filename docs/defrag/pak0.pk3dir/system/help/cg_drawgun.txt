@@ -1,0 +1,6 @@
+\cg_drawgun [ DEFAULT: 1 (on) RANGE: 0 TO 2 ] - changes display of gun
+
+ 0 = off
+ 1 = on
+ 2 = on/static (no bobbing/moving)
+ 

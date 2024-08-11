@@ -1,0 +1,8 @@
+\df_ghost1_RecordView [ DEFAULT: 0 RANGE: 0, 1 ] - optionally sets the ghost recording of the camera/angles to the virtual position of the camera.
+
+The default is 0.  The only reason to set it to 1 is for some cases of demo recamming, specifically if you are recording a demo recam to a ghost file, and using the DemoCam 3 mode.  Demo cam 3 mode is third person free mode (you can move/orbit the camera around the visible player).  In order to capture your camming movements to a ghost file in this case, it is necessary to record the camera (view) position during the demo, not the player (normally you are recording the players position and angles).  This will then record your camming movements as you orbit the player in thirdperson mode.  Basically just use "1" for df_demos_CameraMode 3, otherwise keep it set to "0".
+
+In the case that you set df_ghost1_RecordView to 1, and use this newly recorded ghost during demo playback, you will have to set the following vars (to show the original player, and hide the ghost weapon):
+
+cg_thirdperson 1
+cg_drawgun 0

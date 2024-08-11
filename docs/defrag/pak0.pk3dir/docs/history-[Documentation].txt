@@ -1,0 +1,102 @@
+============================
+Defrag Documentation History
+============================
+
+---------------------
+Friday, July 11, 2003
+---------------------
+1.90 documentation released with Defrag 1.90
+
+- New:
+
+cmd-[arena].txt
+cmd-[displaymessage].txt
+cmd-[ghost].txt
+cmd-[help].txt
+cmd-[placeplayer].txt
+cmd-[varCommand].txt
+cmd-[varFormat].txt
+cmd-[varJoin].txt
+cmd-[resetjumpmeter].txt
+cmd-[varSave].txt
+readme-[Defrag-Mapping].txt
+readme-[Demos-ModSupport].txt
+readme-[FAQ].txt
+readme-[GrapplingHook].txt
+readme-[JumplMeter].txt
+readme-[KeyMapping].txt
+readme-[KnownIssues].txt
+readme-[Mapping-Shooter_TargetPlayer].txt
+readme-[Mapping-VelocityPads].txt
+readme-[MenuDisplay].txt
+readme-[Multiplayer].txt
+readme-[NewFeatures-1.90].txt
+readme-[Player-SmokeTrails].txt
+readme-[PossibleEnhancements].txt
+readme-[Replays-General].txt
+readme-[Replays-ScriptEditing].txt
+readme-[Spectating].txt
+readme-[StringSubs].txt
+readme-[VarTransitions].txt
+var-[df_ndm_RespawnPoint].txt
+walkthrough-[Ghosts-DemoFreecamming].txt
+
+- Updated:
+
+cmd-[info].txt
+cmd-[savepos].txt
+cmd-[varCycle].txt
+cmd-[varMath].txt
+cmd-[varValueCycle].txt
+cmd-[varValueMath].txt
+FAQ-[Ghosts].txt (renamed to readme-[FAQ].txt)
+list-[CHS-Info].txt
+readme-[AccelMeter].txt
+readme-[CrosshairStats-CHS0].txt
+readme-[CrosshairStats-CHS1].txt
+readme-[DemoCams].txt
+readme-[Ghosts-DemoCamSaving].txt (renamed to walkthrough-[Ghosts-DemoCamSaving].txt)
+readme-[Ghosts-DemoRecamming].txt (renamed to walkthrough-[Ghosts-DemoRecamming].txt)
+readme-[Ghosts-General].txt
+readme-[Ghosts-Miniview].txt
+readme-[Ghosts-Racing].txt
+readme-[Ghosts-Tricking].txt
+readme-[OverbounceDetection].txt
+readme-[Thanks].txt
+
+defrag.def (entity definitions for mapping)
+
+----------------------------
+Saturday, October 19th, 2002
+----------------------------
+1.80 documentation released with Defrag 1.80
+
+- Complete:
+
+cmd-[info].txt
+cmd-[read].txt
+cmd-[savepos].txt
+cmd-[varCycle].txt
+cmd-[varMath].txt
+cmd-[varValueCycle].txt
+cmd-[varValueMath].txt
+list-[CHS-Info].txt
+readme-[AccelMeter].txt
+readme-[CrosshairStats-CHS0].txt
+readme-[CrosshairStats-CHS1].txt
+readme-[DemoCams].txt
+readme-[DF-Configs].txt
+readme-[NewFeatures-1.80].txt
+readme-[Ghosts-General].txt
+readme-[Ghosts-Miniview].txt
+readme-[Ghosts-Racing].txt
+readme-[Ghosts-Tricking].txt
+readme-[OverbounceDetection].txt
+readme-[Thanks].txt
+var-[df_varHelpers_DrawOutput].txt
+
+- Incomplete:
+
+FAQ-[Ghosts].txt
+readme-[Ghosts-DemoCamSaving].txt
+readme-[Ghosts-DemoRecamming].txt

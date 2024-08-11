@@ -1,0 +1,5 @@
+/df_recfiles_keepLatest [0-1] (default: "0")
+
+Write a .rec file in system/records/latest every time the player completes a run. A '.rec file' is a record of your checkpoint and final times. This setting consumes extra io resources when enabled.
+
+Regular system/records .rec files are still recorded automatically whether df_recfiles_keepLatest is enabled or not.

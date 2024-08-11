@@ -1,0 +1,11 @@
+\df_mp_NoDrawRadius [ DEFAULT: 200 RANGE: -N TO N ] - CLIENTSIDE VAR - hides other players/missiles/explosions inside radius, depending on the current df_mp_InteferenceOff setting.
+
+-N = show players using "invisibility" shader if within radius
+ 0 = turns off players/missiles/effects hiding
+ N = hides players/missiles/effects if within radius (and interference is off for that particular object)
+
+Depending on the current server setting of df_mp_InterferenceOff, certain entities (players, missiles, explosions) can be hidden if they fall within the specified radius.  This is useful as it can be visually distracting if another player is in the way (even if that player will not physically interfere).
+
+The variable is tied to the current server setting of df_mp_InterferenceOff.  If the current setting has turned off Player2Player interference, then all players that fall within the specified radius will not be drawn on the client's system.  Similarly, if df_mp_InterferenceOff has been set to disable missile interference, than missiles/explosions from other players will be hidden as well.
+
+Setting the value to 0 disables all hiding of other entities, regardless of if they are interfering or not.

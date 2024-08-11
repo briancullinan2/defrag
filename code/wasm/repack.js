@@ -4,7 +4,7 @@ const path = require('path')
 const {glob} = require('glob')
 const {spawnSync} = require('child_process')
 
-const MODNAME = 'demoq3'
+const MODNAME = 'defrag'
 const DEFAULT_MODEL = 'sarge'
 const SOURCE_PATH = path.join(__dirname, '../../docs/')
 const OUTPUT_PATH = path.join(__dirname, '../../docs/maps/')

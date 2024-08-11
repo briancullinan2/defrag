@@ -1,0 +1,194 @@
+//---[ Q3 Extensions ]---
+cg_drawDamage "1"
+cg_drawgun "1"
+
+//---[ General ]---
+df_autorecord "1"
+df_ar_stopdelay "1800"
+df_ar_format "$map.$-route[$gt.$phys.$-mode]$m.$-s.$-ms($pl.$plc)"
+df_ar_speedcapture_format "0"
+df_checkpoints "2"
+df_demos_validation "0"
+df_drawBesttime "1"
+df_drawJumpmeters "3"
+df_drawSpeed "1"
+df_script_onMapLoad "0"
+df_script_onRespawn "0"
+df_sound_flagGrabbing "0"
+df_unit "1"
+
+//---[ Player ]---
+df_name ""
+df_country "CountryHere"
+df_player_SmokeTrails "0.00"
+
+//---[ HUD ]---
+df_hud "1"
+df_hud_cgaz "1"
+df_hud_3DIcons "1"
+df_hud_color "4"
+df_hud_colorRGB ""
+df_hud_colorwarning "1"
+df_hud_forceteamcolors "1"
+df_hud_fontcolor "7"
+df_hud_fontcolorRGB ""
+df_hud_fontshadow "1"
+df_hud_transparency "0.25"
+df_hud_videocapture_enable "0"
+df_hud_videocapture_x "320"
+df_hud_videocapture_y "240"
+df_hud_videocapture_fontsize "16"
+df_hud_videocapture_fontcolor "7"
+df_hud_videocapture_fontshadow "1"
+df_hud_videocapture_fontjustify "0"
+
+//---[ Crosshair Stats ALL ]---
+df_chs_UsePredicted "1"
+
+//---[ Crosshair Stats CHS0 ]---
+df_chs0_Draw "0"
+df_chs0_FontSize "8"
+df_chs0_FontShadow "0"
+df_chs0_FontColor "7"
+df_chs0_FontTransparency "1.00"
+df_chs0_LabelColor "7"
+df_chs0_DisplayType "0"
+df_chs0_OffsetX "0"
+df_chs0_OffsetY "0"
+
+//---[ Crosshair Stats CHS1 ]---
+df_chs1_Draw "0"
+df_chs1_FontSize "10"
+df_chs1_FontShadow "1"
+df_chs1_FontColor "7"
+df_chs1_FontTransparency "1.00"
+df_chs1_LabelColor "7"
+df_chs1_LabelType "0"
+df_chs1_DisplayType "0"
+df_chs1_OffsetX "0"
+df_chs1_OffsetY "0"
+df_chs1_EnableCombos "0"
+df_chs1_ComboSeparator "/"
+df_chs1_Info1 "0"
+df_chs1_Info2 "0"
+df_chs1_Info3 "0"
+df_chs1_Info4 "0"
+df_chs1_Info5 "0"
+df_chs1_Info6 "0"
+df_chs1_Info7 "0"
+df_chs1_Info8 "0"
+
+//---[ Crosshair Stats CHS2 ]---
+df_chs2_Draw "0"
+df_chs2_FontSize "8"
+df_chs2_FontShadow "1"
+df_chs2_FontColor "7"
+df_chs2_FontTransparency "1.00"
+df_chs2_LabelColor "7"
+df_chs2_LabelType "1"
+df_chs2_DisplayType "1"
+df_chs2_OffsetX "-300"
+df_chs2_OffsetY "100"
+df_chs2_EnableCombos "0"
+df_chs2_ComboSeparator "/"
+df_chs2_Info1 "0"
+df_chs2_Info2 "0"
+df_chs2_Info3 "0"
+df_chs2_Info4 "0"
+df_chs2_Info5 "0"
+df_chs2_Info6 "0"
+df_chs2_Info7 "0"
+df_chs2_Info8 "0"
+
+//---[ varHelpers ]---
+df_varHelpers_DrawOutput "7"
+
+//---[Overbounce Detection]---
+df_ob_Fast "1"
+df_ob_AllSlopes "0"
+df_ob_OffsetStartPosZ "0.00"
+df_ob_OffsetStopPosZ "0.00"
+
+//---[ Accelmeter ]---
+df_accel_Draw "0"
+df_accel_FontSize "7"
+df_accel_Mode "0"
+df_accel_Output "0"
+df_accel_OffsetX "0"
+df_accel_OffsetY "0"
+df_accel_Scale "-1.2"
+df_accel_HistoryResetSpeed "100"
+
+//---[ Ghosts - All ]---
+df_ghosts_FileExtension ""
+df_ghosts_DrawOutput "3"
+df_ghosts_AutoMode "4"
+df_ghosts_AutoModeMP "0"
+df_ghosts_NoDrawRadius "200"
+df_ghosts_SelfMissilesOnly "1"
+df_ghosts_LiveAmmo "0"
+df_ghosts_CheckPVS "1"
+
+//---[ Ghost 1 ]---
+df_ghost1_RecordFileFormat "2"
+df_ghost1_RecordInterval "50"
+df_ghost1_RecordView "0"
+df_ghost1_PlayTimescale "1.0"
+df_ghost1_PlayDrawPlayer "3"
+df_ghost1_PlayDrawMissiles "2"
+df_ghost1_PlayCameraMode "0"
+df_ghost1_PlayLoop "0"
+
+//---[ Ghost 2 ]---
+df_ghost2_RecordFileFormat "2"
+df_ghost2_RecordInterval "50"
+df_ghost2_RecordView "0"
+df_ghost2_PlayTimescale "1.0"
+df_ghost2_PlayDrawPlayer "3"
+df_ghost2_PlayDrawMissiles "2"
+df_ghost2_PlayCameraMode "0"
+df_ghost2_PlayLoop "0"
+
+//---[ Miniview ]---
+df_ghosts_MiniviewDraw "1"
+df_ghosts_MiniviewCameraMode "1"
+df_ghosts_MiniviewDrawGun "1"
+df_ghosts_MiniviewSize "25"
+df_ghosts_MiniviewOffsetX "235"
+df_ghosts_MiniviewOffsetY "-155"
+df_ghosts_MiniviewBorderSize "4"
+df_ghosts_MiniviewFOV "90"
+
+//---[ Demo Cameras ]---
+df_demos_CameraMode "0"
+df_demos_CameraTransitionSpeed "50"
+df_demos_HidePacketEntities "0"
+df_demos_HideLocalEntities "0"
+df_demos_ReplayMode "0"
+df_demos_ReplayFilename ""
+df_demos_ReplayDrawMask "32767"
+df_demos_UnlockThirdPersonPitch "0"
+
+//---[ Multiplayer - Local ]---
+df_mp_NoDrawRadius "200"
+
+//---[ Multiplayer - Server ]---
+df_mp_InteferenceOff "0"
+
+//---[ Menu System ]---
+df_ui_CustomMenu         "1"
+df_ui_DisplayCVarName    "1"
+df_ui_TextColorLabel     "1.00 1.00 0.00 1.00"
+df_ui_TextColorValue     "1.00 0.00 0.00 1.00"
+df_ui_TextColorMedium    "0.00 0.00 1.00 1.00"
+df_ui_TextColorBig       "1.00 0.00 0.00 1.00"
+df_ui_TextColorDisabled  "0.50 0.50 0.50 1.00"
+df_ui_TextColorHighlight "1.00 1.00 0.00 1.00"
+df_ui_PulseColor         "1.00 1.00 1.00 1.00"
+df_ui_ListbarColor       "1.00 0.00 0.00 0.30"
+df_ui_StatusColor        "1.00 1.00 1.00 1.00"
+df_ui_CursorColor        "0.50 0.80 1.00 1.00"
+
+df_demos_UICompatibility "0"
+
+//---[ EOF ]---

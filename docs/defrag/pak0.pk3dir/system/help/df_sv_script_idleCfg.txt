@@ -1,0 +1,1 @@
+\df_sv_script_idleCfg [ TYPE: String DEFAULT: NULL ] - Set the config file to execute when the server has been idle for a set period of time. (see df_sv_script_idleDelay)

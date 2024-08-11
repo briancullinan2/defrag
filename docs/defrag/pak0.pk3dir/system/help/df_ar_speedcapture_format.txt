@@ -1,0 +1,1 @@
+\df_ar_speedcapture_format [ DEFAULT: 0 (off) RANGE: 0 TO 1 ] - turns on/off the speedcapture.com demo name format for autorecord in Fast Caps.

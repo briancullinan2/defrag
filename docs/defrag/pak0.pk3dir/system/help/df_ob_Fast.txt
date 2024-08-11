@@ -1,0 +1,3 @@
+\df_ob_fast [ DEFAULT: 1 (on) RANGE: 0 (off) TO 1 (on) ]
+
+Turns OB fast prediction on or off.  OB fast prediction uses a different algorithm internally to detect OBs.  This algorithm is much faster, and it's calculation time is not dependant on the distance/height to the floor the player is looking at, and therefore has absolutely minimal effects on display framerates.  It is, however, very slightly inaccurate (due to floating point rounding errors, etc.).  Map makers may want to turn off fast prediction if they are looking to find new OB heights for usage in a new map.  Using noclip to move up and down while using OB detection should definately use df_ob_fast off, as it is much more accurate.

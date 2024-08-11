@@ -1,0 +1,148 @@
+========================
+CONSOLE COMMAND: varMath
+========================
+
+1. Information
+2. Usage Examples
+3. Immediate Var Updates
+4. Config Variables
+5. Before/After
+6. Additional Information
+7. History
+
+-------------------------------------------------------------------------
+varMath [ FORMAT: varname operator(+-*/%=) value <operator(+-*/%=) value> ]
+-------------------------------------------------------------------------
+
+--------------
+1. Information
+--------------
+Performs math on variables.  Useful for creating binds without the necessity of multiple vstrs and vstr swaps.  Valid operators are "+ - * / % =".
+
+varMath performs string math (+ or =) if old or new values are strings.
+
+Note that varMath can use $StringSubstitution - you can specify a vstr name instead of a value, and the value stored in the vstr will be used.
+
+Performs math on up to 25 operators/vars.
+
+*** NOTE: The order of operations sets the precedence, not the operators themselves. 
+
+Therefore: varMath 7 + 3 + 10 / 5 is processed as (7 + 3 + 10) / 5 = 20 / 5 = 4
+
+NOT: 7 + 3 + (10 / 5) = 7 + 3 + 2 = 12
+
+So, the above formula is better written as: varMath 10 / 5 + 7 + 3 (which WILL = 12)
+
+*** WARNING: the format must be adhered to, in regards to the varname operator sequence.  Having 2 varnames or 2 operators in sequence will not work (INCORRECT: varMath = 25 + * 10)
+
+-----------------
+2. Usage Examples
+-----------------
+\varMath r_gamma + .1   // adds .1 to the current r_gamma value
+\varMath timescale - .1 // subtracts .1 from the current timescale value
+
+\varMath user_string1 = "hello"  // user_string1 now contains "hello"
+\varMath user_string1 + " there" // user_string1 now contains "hello there"
+
+\set user_value1 100
+\set user_value2 50
+\varMath user_number1 = user_value1 // user_number1 is now 100
+\varMath user_number1 + user_value2 // user_number1 is now 150
+
+\varMath user_number2 = 10 / 5 + 7 + 3 // user_number2 is now 12
+
+\varMath user_demoname = $mapname + _ + $time + _ + $playername // user_demoname is now "q3dm17_1246125_o3j" // assuming ozone is playing dm17 ;)
+
+\varMath ? // displays ingame help
+
+------------------------
+3. Immediate Var Updates
+------------------------
+
+*** WARNING/IMPORTANT: There is a delay between issuing a console command to q3, and the actual command being executed.  This means that changing a var with varMath may be delayed.  There is a way around this issue: prefix all of your user created vars with "user_".  This will tell the system that these vars should be updated as soon as possible.
+
+Example of a delay (using varMath):
+-----------------------------------
+We want to create a string to contain the mapname and a number afterwards (q3dm17_1)
+
+\set MyNumber "0"     // MyNumber = 0
+\varMath MyNumber+ 1; varMath MyDemoNam = $mapname + _ + $MyNumber // MyDemoName = q3dm17_0, we wanted q3dm17_1
+
+Now, what we want is "q3dm17_1".  But, because of the delay in updating MyNumber, we get "q3dm17_0", since MyNumber is late in getting updated, the next call to varMath uses MyNumber with the value of "0", when we wanted "1" to be used.
+
+Solution:
+---------
+If we use the "user_" prefix for the vars we create, varMath will update these vars immediately (no delay) and we can use these values in subsequent calls to varMath, etc.
+
+\set user_MyNumber "0"     // user_MyNumber = 0
+\varMath user_MyNumber + 1; varMath user_MyDemoName = $mapname + _ + $user_MyNumber // user_MyDemoName = q3dm17_1, exactly what we wanted
+
+-------------------
+4. Config Variables
+-------------------
+Uses the df_varHelpers_DrawOutput variable when displaying the result of using this command.  Use the df_varHelpers_DrawOutput variable to change the color/output style for varCycle
+
+\df_varHelpers_DrawOutput [ DEFAULT: 1 RANGE: 0 TO 8 STEP: INTEGER ]
+
+Changes the color/output style for all varHelper commands (varMath, varValueMath, varCycle, varValueCycle)
+
+ 0 = Off
+ 1 = Normal Output Style 1: All white output
+ 2 = CHS0 Output Style 1: Uses CHS0 set colors (fontcolor, labelcolor)
+ 3 = CHS1 Output Style 1: Uses CHS1 set colors (fontcolor, labelcolor)
+ 4 = CHS2 Output Style 1: Uses CHS2 set colors (fontcolor, labelcolor)
+ 5 = NORMAL Output Style 2: All white output
+ 6 = CHS0 Output Style 2: Uses CHS0 set colors (fontcolor, labelcolor)
+ 7 = CHS1 Output Style 2: Uses CHS1 set colors (fontcolor, labelcolor)
+ 8 = CHS2 Output Style 2: Uses CHS2 set colors (fontcolor, labelcolor)
+
+---------------
+5. Before/After
+---------------
+(Old style config to increase or decrease timescale:)
+
+bind KP_MINUS "vstr v_timescale_dec"
+bind KP_PLUS  "vstr v_timescale_inc"
+
+set v_timescale_00 "set v_timescale_dec vstr v_timescale_09; set v_timescale_inc vstr v_timescale_01; timescale 00.1; echo TIMESCALE --> 00.1"
+set v_timescale_01 "set v_timescale_dec vstr v_timescale_00; set v_timescale_inc vstr v_timescale_02; timescale 00.2; echo TIMESCALE --> 00.2"
+set v_timescale_02 "set v_timescale_dec vstr v_timescale_01; set v_timescale_inc vstr v_timescale_03; timescale 00.3; echo TIMESCALE --> 00.3"
+set v_timescale_03 "set v_timescale_dec vstr v_timescale_02; set v_timescale_inc vstr v_timescale_04; timescale 00.4; echo TIMESCALE --> 00.4"
+set v_timescale_04 "set v_timescale_dec vstr v_timescale_03; set v_timescale_inc vstr v_timescale_05; timescale 00.5; echo TIMESCALE --> 00.5"
+set v_timescale_05 "set v_timescale_dec vstr v_timescale_04; set v_timescale_inc vstr v_timescale_06; timescale 00.6; echo TIMESCALE --> 00.6"
+set v_timescale_06 "set v_timescale_dec vstr v_timescale_05; set v_timescale_inc vstr v_timescale_07; timescale 00.7; echo TIMESCALE --> 00.7"
+set v_timescale_07 "set v_timescale_dec vstr v_timescale_06; set v_timescale_inc vstr v_timescale_08; timescale 00.8; echo TIMESCALE --> 00.8"
+set v_timescale_08 "set v_timescale_dec vstr v_timescale_07; set v_timescale_inc vstr v_timescale_09; timescale 00.9; echo TIMESCALE --> 00.9"
+set v_timescale_09 "set v_timescale_dec vstr v_timescale_08; set v_timescale_inc vstr v_timescale_10; timescale 01.0; echo TIMESCALE --> 01.0"
+set v_timescale_dec_def vstr v_timescale_09
+set v_timescale_inc_def vstr v_timescale_00
+set v_timescale_dec vstr v_timescale_dec_def
+set v_timescale_inc vstr v_timescale_inc_def
+set v_timescale_reset "set v_timescale_dec vstr v_timescale_dec_def; set v_timescale_inc vstr v_timescale_inc_def; vstr v_timescale_inc_def"
+
+(New style:)
+
+bind KP_MINUS "varMath timescale - .1"
+bind KP_PLUS  "varMath timescale + .1"
+
+-------------------------
+6. Additional Information
+-------------------------
+Due to the way quake3 handles converting strings to floating point numbers internally, some floating point rounding errors can occur.  For instance, adding .1 to a variable (say 1) 4 times may result in the following values: 1.1, 1.2, 1.29999, 1.39999
+
+See the documentation on StringSubs for more information on how to use the $StringSubs feature.
+
+----------
+7. History
+----------
+1.90
+- Now handles up to 25 operators/vars
+- Perform string math (set or concatenate) if old or new values are strings, by using the + or = operators
+- % (modulus) operator added
+- $StringSubtitution added
+- Added ingame help
+- "user_" prefix required for immediate var updates
+- Fix: cheat
+
+1.80
+- Feature introduced

@@ -1,0 +1,7 @@
+/df_drawSpeed [0-2] (default: 1)
+
+Controls the display of the Speed Meter on the HUD.
+
+  0: off
+  1: on
+  2: on, using a former quake-unit conversion ratio (Defrag old-school)

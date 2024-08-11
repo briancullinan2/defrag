@@ -1,0 +1,10 @@
+\df_chs0_FontColor [ DEFAULT: 7 (white) RANGE: 0 TO 9 ] - changes font color
+
+ 0 = Black
+ 1 = Red
+ 2 = Green
+ 3 = Yellow
+ 4 = Blue
+ 5 = Cyan
+ 6 = Magenta
+ 7 = White

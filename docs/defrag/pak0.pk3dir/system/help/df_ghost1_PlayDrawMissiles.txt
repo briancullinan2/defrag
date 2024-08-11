@@ -1,0 +1,7 @@
+\df_ghost1_PlayDrawMissiles [ DEFAULT: 2 RANGE: 0 TO 2 ] - changes the rendering of the ghost missiles and explosions.
+
+ 0 = DRAW_MISSILES_OFF: Turns off rendering (drawing) of the ghost's missiles and explosions.
+
+ 1 = DRAW_MISSILES_ONLY: Ghost missiles are drawn, ghost explosions are not.
+
+ 2 = DRAW_MISSILES_EXPLOSIONS: Both ghost missiles and ghost explosions are drawn.

@@ -1,0 +1,13 @@
+\df_varHelpers_DrawOutput [ DEFAULT: 1 RANGE: 0 TO 8 STEP: INTEGER ]
+
+Changes the color/output style for all varHelper commands (varMath, varValueMath, varCycle, varValueCycle)
+
+ 0 = Off
+ 1 = Normal Output Style 1: All white output
+ 2 = CHS0 Output Style 1: Uses CHS0 set colors (fontcolor, labelcolor)
+ 3 = CHS1 Output Style 1: Uses CHS1 set colors (fontcolor, labelcolor)
+ 4 = CHS2 Output Style 1: Uses CHS2 set colors (fontcolor, labelcolor)
+ 5 = NORMAL Output Style 2: All white output
+ 6 = CHS0 Output Style 2: Uses CHS0 set colors (fontcolor, labelcolor)
+ 7 = CHS1 Output Style 2: Uses CHS1 set colors (fontcolor, labelcolor)
+ 8 = CHS2 Output Style 2: Uses CHS2 set colors (fontcolor, labelcolor)

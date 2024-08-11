@@ -1,0 +1,2 @@
+/cg_noDamageKick [0-1] (default: 0)
+	Disables view kicks from damage.

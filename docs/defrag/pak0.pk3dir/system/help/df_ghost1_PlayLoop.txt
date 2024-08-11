@@ -1,0 +1,5 @@
+\df_ghost1_PlayLoop [ DEFAULT: 0 RANGE: 0 to 2 ]
+
+ 0 = Off: Ghost playback stops automatically at the end of the file.
+ 1 = Loop: Ghost playback loops back to the beginning of the ghost file when the end of the file is reached.
+ 2 = Pause: Ghost playback is paused at the end of the file.

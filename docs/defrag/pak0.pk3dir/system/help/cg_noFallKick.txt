@@ -1,0 +1,2 @@
+/cg_noFallKick [0-1] (default: 0)
+	Disables view kicks from hitting the ground.

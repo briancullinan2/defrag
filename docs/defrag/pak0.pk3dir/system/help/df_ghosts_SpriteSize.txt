@@ -1,0 +1,10 @@
+df_ghosts_SpriteSize [ DEFAULT: 8 RANGE: 4 TO 20 ] - font size of message displayed via df_ghosts_SpriteInfo
+
+The color and transparency of the font is dictated by the df_ghosts_DrawOutput setting:
+
+df_ghosts_DrawOutput:
+ 0: color = white, trasparency = 1.00
+ 1: color = red,   tranparency = 1.00
+ 2: chs0 color and tranparency used
+ 3: chs1 color and tranparency used
+ 4: chs2 color and tranparency used

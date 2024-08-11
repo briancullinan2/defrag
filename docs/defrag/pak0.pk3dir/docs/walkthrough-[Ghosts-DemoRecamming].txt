@@ -1,0 +1,53 @@
+=======================
+Ghosts - Demo Recamming
+=======================
+
+1. Information
+2. Walk Through
+
+--------------
+1. Information
+--------------
+Demo Recamming is a more involved process of recamming a demo.  Note that Demo Recamming is considered a different techique than "DemoCam Saving".
+
+Demo Recamming is the usage of the ghost system to do more advanced things with the camera during demo playback.  An example of such a thing would be the usage of a missile cam during an actual demo.
+
+Normally, you can record a ghost from a demo.  Now, you could just load the map, and play back the ghost, and switch the ghost camera mode to one of the missile cams (the missiles are also recorded from the demo to the ghost file). However, the ghost does not reproduce exactly what occurs in the demo - rocket smoke is missing, as well as some other differences.  If you are satisified with the quality of the ghost then you can just do video image output during the ghost playback.
+
+However, what you probably want to do is use the missile cam but within the actual demo, and hence see all the other effects that you normally witness within a demo (like seeing other players, etc.)  So what we need to do is actually recam the demo from the missiles viewpoint.
+
+An even more advanced thing one can do is record a ghost from a demo.  Then load the map and play back the ghost.  As the ghost is playing, you record a new ghost. This is your camera ghost.  You move around, following the ghost that is playing.  This is essentially using the first ghost as your camera "subject".  The ghost you are recording is your camera ghost.  After you are finished camming the subject ghost, you would load the demo, and have the 2nd ghost (the cam ghost) play during the demo, and force the mainview to use df_ghost1_PlayCameraMode 1.
+
+Normally, simply using the DemoCam modes is sufficient to produce the desired effect.  However, there may be some cases where doing this multi step process of using 2 ghosts is the only way to get the effect you want.
+
+*** Note, you should first turn off Replays (df_demos_ReplayMode 0) if it is on.
+*** Note, you should first turn off DemoCams (df_demos_CameraMode 0) if it is on.
+
+---------------
+2. Walk Through
+---------------
+
+*** Note, you should first turn off Replays (df_demos_ReplayMode 0) if it is on.
+*** Note, you should first turn off DemoCams (df_demos_CameraMode 0) if it is on.
+
+- EXAMPLE 1:
+
+This example will take you through Demo Recamming, using a ghost missile cam.  This is one of the easier DemoRecamming techniques, since it only requires one ghost to perform the recam.
+
+1. Set df_ghosts_AutoMode 1 (GHOSTS_SET_AUTOMODE_RECORD_FROM_DEMO).  This will cause the ghost system to record a new ghost as soon as the demo starts.
+
+2. Play the desired demo.  Once the demo finishes, you will have a new ghost, with the same name as the demo.
+
+3. Now, what we want to do is play the demo back, but force the ghost view to be the camera focus.  Let's use the 3rd person, free ghost missile cam.  Also, we need to tell the ghost system that we are going to play a ghost as soon as the demo starts.  In addition, we should turn off the drawing of the ghost player, as well as the ghost missiles and explosions.  We don't need to see any of this, since all this data exists in the demo.  We just want to use the ghost as a camera. And, very important, we need to tell quake3 to draw the player!
+
+df_ghosts_AutoMode 2
+df_ghost1_PlayDrawPlayer 0
+df_ghost1_PlayDrawMissiles 0
+df_ghost1_PlayCameraMode 8
+
+cg_thirdperson 1
+
+4. Play the demo.  If all went well, we should be following the player until he fires a missile.  Then the camera will switch to missile cam.  Since we are using df_ghost1_PlayCameraMode 8 (3P_FIRST_MISSILE_FREE) we should be able to rotate/orbit around the missile using the mouse.
+
+5. Note: If you are planning to use the missile cams for non-Defrag demos (OSP, etc.), or on Defrag demos earlier than Defrag 1.90, set df_ghosts_SelfMissilesOnly to 0.  This will allow the ghost to record the missiles properly.  With it set to the default value of 1, you may not be able to record missiles to the ghost file.
+

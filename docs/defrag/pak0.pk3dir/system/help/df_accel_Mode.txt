@@ -1,0 +1,7 @@
+\df_accel_Mode [ DEFAULT: 0 RANGE: 0 TO 2 ] - changes the display type for the accelmeter.
+
+ 0 = crosshair graphics
+ 1 = text graphics, using "+" and "O"
+ 2 = text graphics, using "+" and "+"
+
+Note that for text graphics modes, the accelmeter uses the FontColor, LabelColor, and FontTransparency variables/characteristics from Crosshair Stats Set 2 (CHS2).

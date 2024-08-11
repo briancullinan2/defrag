@@ -1,0 +1,6 @@
+/df_hud_3DIcons [0-1] (default: 1)
+
+Toggles the display of the 3D flag on the Defrag HUD in the Fast Caps gametype.
+
+  0: icon
+  1: 3D model

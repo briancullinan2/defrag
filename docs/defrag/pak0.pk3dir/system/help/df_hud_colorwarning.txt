@@ -1,0 +1,2 @@
+/df_hud_colorwarning [0-1] (default: 1)
+	Marks low values in red.

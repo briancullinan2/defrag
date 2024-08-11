@@ -1,0 +1,5 @@
+/dmq_stop
+
+Stops the Demo Queue from playing.
+
+Related commands are: dmq_add, dmq_clear, dmq_play.

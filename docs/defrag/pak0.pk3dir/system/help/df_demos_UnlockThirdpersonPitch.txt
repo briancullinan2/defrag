@@ -1,0 +1,1 @@
+\df_demos_UnlockThirdpersonPitch [ DEFAULT: 0 RANGE: 0 (off) to 1 (on) ] - removes the pitch restriction when cg_thirdperson is 1.  This allows full overhead (or underneath) views.

@@ -1,0 +1,5 @@
+\df_cl_alwaysDrawItems [ TYPE: Integer DEFAULT: 1 RANGE: 0 to 3 ] - allows picked up items to keep being drawn in multiplayer modes.
+  0 - disabled
+  1 - enabled
+  2 - enabled only with cg_simpleItems off
+  3 - enabled only with cg_simpleItems on

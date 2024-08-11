@@ -1,0 +1,18 @@
+/df_hud_color [0-11] (default: 4)
+
+- Defrag Hud Color Chart
+ * vQ3 colors
+	0  : Black
+	1  : Red
+	2  : Green
+	3  : Yellow
+	4  : Blue
+	5  : Cyan
+	6  : Magenta
+	7  : White
+
+ * Defrag Additional Colors
+	8  : Gray
+	9  : Orange
+	10 : Purple
+	11 : Dark Green

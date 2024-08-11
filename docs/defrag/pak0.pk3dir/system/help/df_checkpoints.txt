@@ -1,0 +1,14 @@
+/df_checkpoints [0-3] (default: 2)
+
+Controls the display of your checkpoint times (bottom right corner of the HUD).
+
+  0: off
+  1: effective time
+  2: offset time
+  3: relative time
+
+In Effective Time mode, the HUD will display the times at which you passed each checkpoint.
+
+In Offset Time mode, your checkpoint times will be compared to the times of the best run to have been saved by Defrag (in the system\records directory of your Defrag setup).
+
+In Relative Time mode, the HUD will display for each checkpoint the time that elapsed since you passed the previous checkpoint.

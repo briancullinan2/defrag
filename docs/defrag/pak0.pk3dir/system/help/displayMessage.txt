@@ -1,0 +1,34 @@
+===============================
+CONSOLE COMMAND: displaymessage
+===============================
+
+1. Information
+2. Usage Examples
+3. Sample Binds
+4. History
+
+--------------------------------------------------
+displaymessage [ vertical_position char_size msg ]
+--------------------------------------------------
+
+--------------
+1. Information
+--------------
+Center prints a message on screen.  Using this command does NOT put the message in a demo (during demo creation).  The main use of this command would be to create on-screen messages for video makers.  The displaymessage command CAN be used while watching a demo - the main usage of the command.
+
+-----------------
+2. Usage Examples
+-----------------
+
+\displaymessage 100 15 A message with some ^1colored ^2text
+
+---------------
+3. Sample binds
+---------------
+\bind uparrow "displaymessage 100 20 I can display a message while watching a demo"
+
+----------
+4. History
+----------
+1.90
+- Feature introduced with the ghost feature

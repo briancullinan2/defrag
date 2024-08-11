@@ -1,0 +1,3 @@
+\df_ob_AllSlopes [ DEFAULT: 0 (off) RANGE: 0 (off) TO 1 (on) ]
+
+Turns on OB prediction for all slopes (not just XY-planar (horizontal) floors).  Peformance-wise, with df_ob_AllSlopes set to 0, OB prediction won't occur for angled floors.  With it on, OB prediction occurs.  The performance difference for horizontal versus angled floors is null, however, with OB prediction on only for horizontal floors, the sloped prediction won't occur at all.  Also, with OB prediction on for slopes, you'll see the OB prediction indication flicker on and off as you travel down a slope, or scan a slop with the crosshair.  Generally OB prediction for slopes is not needed.

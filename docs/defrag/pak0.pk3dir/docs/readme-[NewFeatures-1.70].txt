@@ -1,0 +1,32 @@
+* history 1.70 *
+
+- Added support for standard quake3 maps (Tricks Mode)
+- Added support for CTF Fast Caps
+- Tricks Mode: Added item-defined timer feature (df_ndm_timer_*)
+- Added Crosshair Stats display system and user inputs indicator
+- Autorecord: Various enhancements and fixes
+- Autorecord: Added external app for demo files cleaning and sorting (_DemosTool.exe)
+- CPM: Added cpm item clipboxes
+- Added external app for recorded best times output (RecordsTool.exe)
+- Fixed RunBeamer missing plasmagun
+- Fixed some shader problems on map textures
+- Fixed CVar "defrag_version" ability to be set from command line issue
+- Removed sv_fps and com_maxfps restrictions when cheats are enabled
+- Removed older crosshair health/armor stats and speed display
+- Stats: Added "stats" console command
+- Stats: Added Longest Jump
+- Stats: Added pmove_msec
+- Stats: Fixed target_init meddling
+- Stats: Fixed Tallest Height not being reseted
+- Stats: Jump meters: Replaced df_drawDistance and df_drawHeight CVars with df_drawJumpmeters
+- Cheat Prevention: Fixed timer encryption side effects
+- Cheat Prevention: Strengthened timer encryption
+- HUD: Added video-capture mode (df_hud_videocapture_*)
+- UI: Redesigned Launch Game menu (50 maps per page)
+- UI: Added Tricks Mode support
+- UI: Registration limits extended for demos (2x defrag 1.61 - 4x original vq3) 
+- UI: Removed CD-Key splash screen and Id logo opening cinematic
+- Scripting: Added df_script_onMapLoad
+- Scripting: Replaced df_respawn_cfg with df_script_onRespawn
+- Mapping: Added "RemoveMachinegun" option on Target_init
+- Mapping: Added "author" key in map definition files (.defi)

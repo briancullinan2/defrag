@@ -1,0 +1,3 @@
+\df_chs1_EnableCombos [ DEFAULT: 0 (off) RANGE: 0 (off) TO 1 (on) ] - turns user combos on/off.  
+
+See User Defined Combos section for more information and warnings about user combos.  Also, when combos are enabled, cvar/vstr monitoring is possible.

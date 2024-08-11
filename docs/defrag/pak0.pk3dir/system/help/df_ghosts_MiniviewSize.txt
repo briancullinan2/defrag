@@ -1,0 +1,1 @@
+\df_ghosts_MiniviewSize [ DEFAULT: 25 RANGE: 5 TO 75 ] - adjusts the size of the miniview

@@ -1,0 +1,10 @@
+\df_demos_UICompatibility [ MASK: DEFAULT: 0 (normal) RANGE: 0 TO 3 ] 
+
+ 0 = normal (all features enabled)
+ 1 = strict filenames -  forces file names and folders to use the same capitalization as the actual demo filenames
+ 2 = no folders - turns off the ability to browse folder below the demos folder
+ 3 = all options (strict filenames, no folders)
+
+If you are having problems using the Demo User interface from a Mac or Linux Operating System, you can try setting a cvar that will disable some of the features in the Demo UI.
+
+Try changing df_demos_UICompatibility to "1".  This will use strict filenaming, which is the main cause of the UI not working in Mac and Linux systems.  If that doesn't work, try "2", and then, ultimately "3".

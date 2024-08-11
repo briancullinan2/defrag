@@ -1,0 +1,13 @@
+\df_chs0_LabelColor [ DEFAULT: 7 (white) RANGE: 0 TO 9 ] - creates 2 tone display
+
+If the LabelColor is different than the FontColor, the CHS0 displays in a 2-tone fashion.  Two tone display shows all the arrows (or direction keys if the DisplayType is not 0) on screen.  When a key is pressed, the appropriate CH0 indicator is "lit up" using the FontColor. The LabelColor becomes the "off color"
+
+ 0 = Black
+ 1 = Red
+ 2 = Green
+ 3 = Yellow
+ 4 = Blue
+ 5 = Cyan
+ 6 = Magenta
+ 7 = White
+

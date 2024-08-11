@@ -1,0 +1,99 @@
+=========================
+CONSOLE COMMAND: varCycle
+=========================
+
+1. Information
+2. Usage Examples
+3. Immediate Var Updates
+4. Config Variables
+5. Before/After
+6. Additional Information
+7. History
+
+-------------------------------------------------------------------
+varCycle [ FORMAT: varname defaultvalue <value1 value2 value3...> ]
+-------------------------------------------------------------------
+
+--------------
+1. Information
+--------------
+Ah, finally, no more long-winded configs with long vstrs, vstr swaps.  This command reads the varname value, then cycles through the list of values specified, and sets the varname value to the next value in the list.  The first number specified is the default value you wish to assign to the variable, in the event that the variable's current value (before the call to varCycle occurs) is one that is not in the cycle list.
+
+Note that varCycle can use $StringSubstitution - you can specify a vstr name instead of a value, and the value stored in the vstr will be used.
+
+-----------------
+2. Usage Examples
+-----------------
+\varCycle sv_fps 125 60 80 111 125 142        // checks sv_fps and sets sv_fps to the next value in the list
+\varCycle user_demobutton record record stoprecord // checks user_demobutton and sets user_demobutton to the next value in the list
+
+\varCycle user_string $MyDefaultVal $MyVal1 $MyVal2 $MyVal3 // checks MyString and sets it to the next value in the list, using vstr $StringSubs (whatever values are stored in the specified vstrs).
+
+\varCycle ? // displays ingame help
+
+------------------------
+3. Immediate Var Updates
+------------------------
+
+*** WARNING/IMPORTANT: There is a delay between issuing a console command to q3, and the actual command being executed.  This means that changing a var with varMath may be delayed.  There is a way around this issue: prefix all of your user created vars with "user_".  This will tell the system that these vars should be updated as soon as possible.
+
+Example of a delay (using varMath):
+-----------------------------------
+We want to create a string to contain the mapname and a number afterwards (q3dm17_1)
+
+\set MyNumber "0"     // MyNumber = 0
+\varMath MyNumber+ 1; varMath MyDemoNam = $mapname + _ + $MyNumber // MyDemoName = q3dm17_0, we wanted q3dm17_1
+
+Now, what we want is "q3dm17_1".  But, because of the delay in updating MyNumber, we get "q3dm17_0", since MyNumber is late in getting updated, the next call to varMath uses MyNumber with the value of "0", when we wanted "1" to be used.
+
+Solution:
+---------
+If we use the "user_" prefix for the vars we create, varMath will update these vars immediately (no delay) and we can use these values in subsequent calls to varMath, etc.
+
+\set user_MyNumber "0"     // user_MyNumber = 0
+\varMath user_MyNumber + 1; varMath user_MyDemoName = $mapname + _ + $user_MyNumber // user_MyDemoName = q3dm17_1, exactly what we wanted
+
+-------------------
+4. Config Variables
+-------------------
+Uses the df_varHelpers_DrawOutput variable when displaying the result of using this command.  Use the df_varHelpers_DrawOutput variable to change the color/output style for varCycle
+
+\df_varHelpers_DrawOutput [ DEFAULT: 1 RANGE: 0 TO 8 STEP: INTEGER ]
+
+Changes the color/output style for all varHelper commands (varMath, varValueMath, varCycle, varValueCycle)
+
+ 0 = Off
+ 1 = Normal Output Style 1: All white output
+ 2 = CHS0 Output Style 1: Uses CHS0 set colors (fontcolor, labelcolor)
+ 3 = CHS1 Output Style 1: Uses CHS1 set colors (fontcolor, labelcolor)
+ 4 = CHS2 Output Style 1: Uses CHS2 set colors (fontcolor, labelcolor)
+ 5 = NORMAL Output Style 2: All white output
+ 6 = CHS0 Output Style 2: Uses CHS0 set colors (fontcolor, labelcolor)
+ 7 = CHS1 Output Style 2: Uses CHS1 set colors (fontcolor, labelcolor)
+ 8 = CHS2 Output Style 2: Uses CHS2 set colors (fontcolor, labelcolor)
+
+---------------
+5. Before/After
+---------------
+Old style:
+// some lengthy vstr list to cycle com_maxfps from 60 to 80 to 100 to...
+
+New style:
+\bind F9 "varCycle com_maxfps 125 60 80 100 111 125 142"
+
+-------------------------
+6. Additional Information
+-------------------------
+See the documentation on StringSubs for more information on how to use the $StringSubs feature.
+
+----------
+7. History
+----------
+1.90
+- $StringSubtitution added
+- "user_" prefix required for immediate var updates
+- Added ingame help
+- Fix: cheat
+
+1.80
+- Feature Introduced

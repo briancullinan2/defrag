@@ -1,0 +1,19 @@
+\df_ghosts_AutoMode [ DEFAULT: 4 RANGE: 0 TO 8 ] - changes the behavior of the ghosts automatic playing/recording system.
+
+ 0 = GHOSTS_SET_AUTOMODE_OFF: Off
+
+ 1 = GHOSTS_SET_AUTOMODE_RECORD_FROM_DEMO: Records a ghost from a demo.  The ghost starts recording as soon as the demo starts, and stops recording when the demo finishes.  The ghost filename is the same as the demo name.
+
+ 2 = GHOSTS_SET_AUTOMODE_PLAY_DURING_DEMO: Plays a ghost during a demo.  The ghost starts playing as soon as the demo starts.  The ghost filename must be the same as the demoname. 
+
+ 3 = GHOSTS_SET_AUTOMODE_DEFRAG_RECORD_PLAY: Records a new ghost on every defrag or timered run.  Plays your best ghost (if it exists) during the run.  If the ghost you are recording is a new best ghost, then the system updates the .grec file to indicate that the ghost just recorded is now your best ghost.  Ghosts are still recorded even if cheats are on, and therefore a ghost that is a new best (even if cheated) will replace the old best ghost.
+
+ 4 = GHOSTS_SET_AUTOMODE_DEFRAG_RECORD_PLAY_NOCHEATS: Records a new ghost on every defrag or timered run.  Plays your best ghost (if it exists) during the run.  If the ghost you are recording is a new best ghost, then the system updates the .grec file for the map to indicate that the ghost just recorded is now your best ghost.  Ghosts are NOT recorded if cheats are enabled, but your best ghost will still play during your cheated run.
+
+ 5 = GHOSTS_SET_AUTOMODE_DEFRAG_PLAY_PLAY: Plays both your best ghost and last recorded ghost during timered runs.  Cool to race 2 ghosts at one time, but a ghost is NOT recorded during your run.  Realize that you can later go back and create a new ghost from a demo if you want to, so this option may be fun to use at times.
+
+ 6 = GHOSTS_SET_AUTOMODE_DEFRAG_RECORD_FROM_DEMO: Records a ghost from a timered demo (a demo that triggers the defrag start and stop timers).  The ghost starts recording when the timer is started, and stops when the timer stops.  The ghost filename is the same as the demo filename.  The .grec for the map is NOT updated.  If you wish to use this ghost to be raced, you must edit the ghost filename and edit the .grec map file appropriately.  See ??? documentation for more info.  This mode is useful for recording ghosts from demos that are not to be used as a best ghost - more for recamming.
+
+ 7 = GHOSTS_SET_AUTOMODE_DEFRAG_RECORD_FROM_DEMO_OVERWRITE_BEST:  Records a ghost from a timered demo (a demo that triggers the defrag start and stop timers).  The ghost starts recording when the timer is started, and stops when the timer stops.  The ghost filename follows the format mapname_##.  If the ghost recorded from the demo has a better time than your best ghost, the .grec file for the map IS updated.  So you can start using this new ghost right away in your next run (remember to switch df_ghosts_Automode back to "4".  WARNING: As soon as you start a new run using this ghost recorded from the demo, your old best ghost file will be overwritten.
+
+8 - GHOSTS_SET_AUTOMODE_DEFRAG_RECORD_FROM_DEMO_OVERWRITE_BEST_ALWAYS: Same as mode 7, but will update (overwrite) the existing best ghost, even if the ghost generated from the demo has a slower time than the existing best ghost.

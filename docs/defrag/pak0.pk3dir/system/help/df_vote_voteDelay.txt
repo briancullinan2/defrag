@@ -1,0 +1,1 @@
+\df_vote_voteDelay [ DEFAULT: 30 RANGE: 0  TO ... ] - seconds to be spent before a vote is discarded

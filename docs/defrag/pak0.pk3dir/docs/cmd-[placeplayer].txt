@@ -1,0 +1,29 @@
+============================
+CONSOLE COMMAND: placeplayer
+============================
+
+1. Information
+2. Usage Examples
+3. History
+
+--------------------------------------------------
+placeplayer [ x y z p y r v0 v1 v2 ]
+--------------------------------------------------
+
+--------------
+1. Information
+--------------
+Places the player in the position/angles/velocity specified (if cheats are enabled).  This is used in conjunction with the savepos command.  See saveposition documentation.
+
+-----------------
+2. Usage Examples
+-----------------
+
+placeplayer 100 200 50 0 90 0 0 0 1000 // places player at xyz 100,200,50, angles 0,90,0, velocity 0,0,1000 (up)
+
+----------
+3. History
+----------
+1.9
+- Features introduced (replaced modified setposition from 1.8)
+

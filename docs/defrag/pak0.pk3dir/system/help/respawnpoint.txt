@@ -1,0 +1,41 @@
+=============================
+CONSOLE COMMAND: respawnpoint
+=============================
+
+1. Information
+2. Usage Examples
+3. History
+
+--------------------------------------------------
+respawnpoint set
+respawnpoint set x y z
+respawnpoint clear
+--------------------------------------------------
+
+--------------
+1. Information
+--------------
+Selects and uses the nearest map spawnpoint after player dies.  The respawnpoint is per player - each player can select their own spawnpoint to use.
+
+respawnpoint set - sets the player's respawnpoint to the closest one on the map, based on the player's current position.
+
+respawnpoint set x y z - sets the player's respawnpoint based on the x y z positions specified.
+
+respawnpoint clear - clears the player's respawnpoint - usage will return to normal quake3 behavior.  Note, after a new map is loaded, the respawnpoint for all players are cleared automatically.
+
+-----------------
+2. Usage Examples
+-----------------
+
+respawnpoint set // sets the players respawnpoint to the closest map respawnpoint, based on the players current position
+
+respawnpoint set 100 200 45 // sets the players respawnpoint closest to the world coordinates (100, 200, 45)
+
+respawnpoint clear // clears the players respawnpoint - usage returns to normal q3 style
+
+----------
+3. History
+----------
+1.91
+- Features introduced (replaced df_ndm_RespawnPoint cvar) - allowing per-player spawnpoint selection.
+

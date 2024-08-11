@@ -1,0 +1,1 @@
+\svinfo_summary [ TYPE: COMMAND - PARAMATERS: filename ] - Outputs a summary of the demo/server info into system/reports.

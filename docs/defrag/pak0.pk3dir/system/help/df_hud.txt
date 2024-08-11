@@ -1,0 +1,6 @@
+/df_hud [0-1] (default: 1)
+
+Toggles the Defrag HUD.
+  
+  0: overseen Quake3 HUD
+  1: Defrag shiny HUD

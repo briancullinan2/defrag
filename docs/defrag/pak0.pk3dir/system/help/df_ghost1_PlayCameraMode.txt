@@ -1,0 +1,47 @@
+\df_ghost1_PlayCameraMode [ DEFAULT: 0 RANGE: 0 TO 17 ] - changes the ghost camera mode during ghost playback.
+
+During ghost playback, normally you see the ghost player running around the map, as if it was another player.  You can actually switch you mainview (and the miniview as well) to one of the ghost cameras.  Note that your user input will still be active (pushing forwards might make you fall off a platform :P).
+
+- There are 2 types of camera: locked and free.  Locked means that your actual input while following the ghost does not effect the view.  Free means that you can move the mouse and your camera angles will change.
+- There are 2 types of "person" settings: first person or third person.
+- There is 1 type of player follow modes: player.  Follows the ghost player
+- There are 2 types of missile follow modes: first missile, last missile.  Follows your first missile fired or your last missile fired.  
+
+NOTE: For missiles cams, if no missile is in the air, the camera switches back to the ghost player.
+
+0 - CAMERAMODE_OFF: Ghost camera is off
+
+1 - 1P_PLAYER_LOCKED: Ghost camera is in first person player follow mode, and the camera angles are locked.
+
+2 - 1P_PLAYER_FREE: Ghost camera is in first person player follow mode, and the camera angles are unlocked (move mouse to change the angles).
+
+3 - 3P_PLAYER_LOCKED: Ghost camera is in the third person player follow mode, and the camera angles are locked.
+
+4 - 3P_PLAYER_FREE:  Ghost camera is in the third person player follow mode, and the camera angles are unlocked (move mouse to change the angles).
+
+5 - 1P_FIRST_MISSILE_LOCKED: Ghost camera is in the first person first missile follow mode, and the camera angles are locked.
+
+6 - 1P_FIRST_MISSILE_FREE: Ghost camera is in the first person first missile follow mode, and the camera angles are unlocked.
+
+7 - 3P_FIRST_MISSILE_LOCKED: Ghost camera is in the third person first missile follow mode, and the camera angles are locked.
+
+8 - 3P_FIRST_MISSILE_FREE: Ghost camera is in the first person first missile follow mode, and the camera angles are unlocked.
+
+9 - 1P_LAST_MISSILE_LOCKED: Ghost camera is in the first person last missile follow mode, and the camera angles are locked.
+
+10 - 1P_LAST_MISSILE_FREE: Ghost camera is in the first person last missile follow mode, and the camera angles are unlocked.
+
+11 - 3P_LAST_MISSILE_LOCKED: Ghost camera is in the third person last missile follow mode, and the camera angles are locked.
+
+12 - 3P_LAST_MISSILE_FREE: Ghost camera is in the third person last missile follow mode, and the camera angles are unlocked.
+
+13 - 1P_CAMVIEW: To be used in conjunction with "View" recording - turns off ghost's gun, crosshair, and 2d (hud)
+
+14 - 1P_CAMVIEW_LOOK_PLAYER: To be used in conjunction with "view" recording - turn's off ghost's gun, crosshair, and 2d (hud).  The camera's position is the ghost's position.  However, the camera does not use the ghost's angles, but instead continuously tracks the main player.  Especially nice for usage with demo camming techniques, such as freecamming.
+
+15 - 1P_VIEW_WITH_VARS: Ghost camera is in follow mode, angles are locked.  CVars that were recorded (using fileformat 3) are played back.
+
+16 - VIEW_VARS_ONLY: No camera mode is used.  CVars that were recorded (using fileformat 3) are played back.
+
+17 - REPLAY_DEBUG: Ghost camera is in First/Third person switching follow mode.  This is a special mode to be used for Replay Script debugging.  If df_demos_ReplayMode is 2 or 3, and a ghost is played back with this camera mode set, the replay script will use the ghost's position and cgtime values to trigger replay activations, etc.
+

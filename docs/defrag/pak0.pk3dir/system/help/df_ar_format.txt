@@ -1,0 +1,22 @@
+\df_ar_format [ TYPE: String - DEFAULT: "$map.$-route[$gt.$phys.$-mode]$m.$-s.$-ms($pl.$plc)" ] - sets the demo name format used by the autorecord.
+
+ The format string supports the following tokens :
+   $map   : map name
+   $gt    : gametype
+   $phys  : physics type
+   $route : tricks mode route
+   $mode  : tricks mode / fast caps game-mode
+   $m     : timer minutes
+   $s     : timer seconds
+   $ms    : timer milliseconds
+   $pl    : player name
+   $plc   : player country
+   $date  : current date
+   $datetime : current date & time
+   $$     : ouput a '$' character
+
+ When a token can't be translated, the characters + and - can be used to modify the output:
+   $+i : cancels the output of the character following the token in the format string.
+   $-i : cancels the output of the character preceding the token.
+ Both can be combined using $-+i. For example, "$m[$-+mode]_$p" will result in "mapname_physics" when no "mode" data is available.
+

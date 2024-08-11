@@ -1,0 +1,10 @@
+\df_chs1_LabelType [ DEFAULT: 0 (off) RANGE: 0 TO 4 ] - changes the lable type of the CHS set
+
+ 0 = off (no label displayed)
+ 1 = left (label appears to the left of the data)
+ 2 = center (style 1) (use with displaytype 4)
+ 3 = center (style 2) (use with displaytype 4)
+ 4 = right (label appears to the right of the data)
+
+* use DisplayType along with LabelType to create a display/label set to your liking
+* when a label type is on, individual chs item labels may be hidden (not displayed) by prefixing the item with a '-'.  Example: df_chs1_Info1 -23
