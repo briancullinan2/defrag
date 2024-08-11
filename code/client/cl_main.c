@@ -878,6 +878,63 @@ static void CL_CompleteDemoName(const char *args, int argNum )
 
 /*
 ====================
+CL_DemoExtCallback
+====================
+*/
+static qboolean CL_ModelNameCallback_f( const char *filename, int length )
+{
+	const int ext_len = strlen( "." );
+	const int num_len = 2;
+	int version;
+
+	if ( length <= ext_len + num_len || Q_stricmpn( filename + length - (ext_len + num_len), ".", ext_len ) != 0 )
+		return qfalse;
+
+	version = atoi( filename + length - num_len );
+	if ( version == com_protocol->integer )
+		return qtrue;
+
+	if ( version < 66 || version > NEW_PROTOCOL_VERSION )
+		return qfalse;
+
+	return qtrue;
+}
+
+
+/*
+====================
+CL_CompleteDemoName
+====================
+*/
+static void CL_CompleteModelName(const char *args, int argNum )
+{
+	if ( argNum == 2 )
+	{
+		FS_SetFilenameCallback( CL_ModelNameCallback_f );
+		Field_CompleteFilename( "models", ".", qfalse, FS_MATCH_ANY | FS_MATCH_STICK );
+		FS_SetFilenameCallback( NULL );
+	}
+}
+
+
+void CL_SpawnModel_f ( void ) {
+	// must spy on game command so we can switch cgvmi_ref to the right view when it starts receiving packets
+	if ( Cmd_Argc() > 3 || cls.state < CA_PRIMED) {
+		if(cls.state < CA_PRIMED) {
+			Com_Printf("Not connected to server.\n");
+		}
+		Com_Printf ("Usage: spawn [modelname] (<mode>)\n");
+		return;
+	}
+	//const char *i = Cmd_Argv(2);
+	//clc.selectedWorld = atoi(i);
+	CL_AddReliableCommand( Cmd_ArgsFrom(0), qfalse );
+}
+
+
+
+/*
+====================
 CL_PlayDemo_f
 
 demo <demoname>
@@ -2699,6 +2756,13 @@ static void CL_ServersResponsePacket( const netadr_t* from, msg_t *msg, qboolean
 		addresses[numservers].port += *buffptr++;
 		addresses[numservers].port = BigShort( addresses[numservers].port );
 
+
+#ifdef USE_MASTER_LAN
+		if(websocket) {
+			Q_strncpyz(addresses[numservers].protocol, "ws", 3);
+		}
+#endif
+
 		// syntax check
 		if (*buffptr != '\\' && *buffptr != '/')
 			break;
@@ -4493,6 +4557,8 @@ void CL_Init( void ) {
 	Cmd_SetCommandCompletionFunc( "record", CL_CompleteRecordName );
 	Cmd_AddCommand ("demo", CL_PlayDemo_f);
 	Cmd_SetCommandCompletionFunc( "demo", CL_CompleteDemoName );
+	Cmd_AddCommand ("spawn", CL_SpawnModel_f);
+	Cmd_SetCommandCompletionFunc( "spawn", CL_CompleteModelName );
 	Cmd_AddCommand ("cinematic", CL_PlayCinematic_f);
 	Cmd_AddCommand ("stoprecord", CL_StopRecord_f);
 	Cmd_AddCommand ("connect", CL_Connect_f);

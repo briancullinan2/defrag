@@ -710,6 +710,8 @@ typedef enum {
 #define FS_MATCH_PURE   (1<<1)
 #define FS_MATCH_UNPURE (1<<2)
 #define FS_MATCH_STICK  (1<<3)
+#define FS_MATCH_EITHER (1<<4) // used by FS_ListNearestFiles to match either by filter or pakFilter
+#define FS_MATCH_STRIP  (1<<5) // allows matching on file basename and no extension, in the case of map names
 #define FS_MATCH_PK3s   (FS_MATCH_PURE | FS_MATCH_UNPURE)
 #define FS_MATCH_ANY    (FS_MATCH_EXTERN | FS_MATCH_PURE | FS_MATCH_UNPURE)
 

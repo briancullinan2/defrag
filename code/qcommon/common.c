@@ -5125,3 +5125,48 @@ void Com_SortFileList( char **list, int nfiles, int fastSort )
 		} while( flag );
 	}
 }
+
+
+#ifdef USE_DIDYOUMEAN
+// source: https://rosettacode.org/wiki/Levenshtein_distance#C
+int levenshtein(const char *s, const char *t)
+{
+  int n = strlen(s);
+  int m = strlen(t);
+  int d[n + 1][m + 1];
+ 
+  if (n == 0) {
+    return m;
+  }
+
+  if (m == 0) {
+    return n;
+  }
+
+  for (int i = 0; i <= n; i++)
+    d[i][0] = i;
+  for (int j = 0; j <= m; j++)
+    d[0][j] = j;
+
+  for (int j = 1; j <= m; j++)
+    for (int i = 1; i <= n; i++)
+      if (s[i - 1] == t[j - 1])
+        d[i][j] = d[i - 1][j - 1];  //no operation
+      else {
+        int min;
+        if(d[i - 1][j] + 1 < d[i][j - 1] + 1) {
+          min = d[i - 1][j] + 1; //a deletion
+        } else {
+          min = d[i - 1][j] + 1; //an insertion
+        }
+        if(min < d[i - 1][j - 1] + 1) {
+          d[i][j] = min;
+        } else {
+          d[i][j] = d[i - 1][j - 1] + 1; //a substitution
+        }
+      }
+
+  return d[n][m];
+}
+#endif
+

@@ -3422,6 +3422,142 @@ void FS_SetFilenameCallback( fnamecallback_f func )
 }
 
 
+#ifdef USE_DIDYOUMEAN
+/*
+===============
+FS_ListNearestFiles
+
+Returns a uniqued list of files that partial match the given criteria
+from all or filtered search paths using a levenshtein 
+divisor strlen(x) / n differences < allowed percent
+===============
+*/
+char **FS_ListNearestFiles( const char *pathFilter, const char *filter, int *numfiles, float matchDivisor, int flags ) {
+  static char normalName[MAX_OSPATH];
+	int				nfiles;
+	char			**listCopy;
+	char			*list[MAX_FOUND_FILES];
+	searchpath_t	*search;
+	int				i;
+	int				length;
+	fileInPack_t	*buildBuffer;
+
+	if ( !fs_searchpaths )
+	{
+		Com_Error( ERR_FATAL, "Filesystem call made without initialization" );
+	}
+
+	if  ( fs_numServerPaks && !( flags & FS_MATCH_STICK ) ) {
+		flags &= ~FS_MATCH_UNPURE;
+	}
+
+	nfiles = 0;
+
+	for (search = fs_searchpaths ; search ; search = search->next) {
+		if ( search->pack && ( flags & FS_MATCH_PK3s ) ) {
+      qboolean pathMatches;
+
+			if ( !FS_PakIsPure( search->pack ) && !( flags & FS_MATCH_UNPURE ) ) {
+				continue;
+			}
+
+      length = strlen(search->pack->pakBasename);
+      pathMatches = pathFilter && pathFilter[0] != '\0' 
+        && matchDivisor > 0 
+        && (float)levenshtein( pathFilter, search->pack->pakBasename ) / length < matchDivisor;
+
+			// look through all the pak file elements
+			buildBuffer = search->pack->buildBuffer;
+			for (i = 0; i < search->pack->numfiles; i++) {
+				const char *name;
+        qboolean matches;
+
+				name = buildBuffer[i].name;
+        length = strlen( name );
+
+				matches = filter && filter[0] != '\0' 
+          && matchDivisor > 0 
+          && (float)levenshtein( filter, name ) / length < matchDivisor;
+
+        if((!(flags & FS_MATCH_EITHER) && pathMatches && matches)
+          || ((flags & FS_MATCH_EITHER) && (pathMatches || matches)))
+          nfiles = FS_AddFileToList( buildBuffer[i].name, list, nfiles );
+        else if (flags & FS_MATCH_STRIP) {
+          name = FS_SimpleFilename(buildBuffer[i].name);
+          COM_StripExtension(name, normalName, MAX_QPATH);
+          length = strlen( normalName );
+
+          matches = filter && filter[0] != '\0' 
+            && matchDivisor > 0 
+            && (float)levenshtein( filter, normalName ) / length < matchDivisor;
+
+          if((!(flags & FS_MATCH_EITHER) && pathMatches && matches)
+            || ((flags & FS_MATCH_EITHER) && (pathMatches || matches)))
+            nfiles = FS_AddFileToList( buildBuffer[i].name, list, nfiles );
+        }
+			}
+		} else if ( search->dir && ( flags & FS_MATCH_EXTERN ) && search->policy != DIR_DENY ) { // scan for files in the filesystem
+			const char *netpath;
+			int		numSysFiles;
+			char	**sysFiles;
+			const char *name;
+      qboolean pathMatches;
+
+      length = strlen(search->dir->gamedir);
+      pathMatches = pathFilter && pathFilter[0] != '\0' 
+        && matchDivisor > 0 
+        && (float)levenshtein( pathFilter, search->dir->gamedir ) / length < matchDivisor;
+
+			netpath = FS_BuildOSPath( search->dir->path, search->dir->gamedir, "" );
+			sysFiles = Sys_ListFiles( netpath, "", "", &numSysFiles, qtrue );
+			for ( i = 0 ; i < numSysFiles ; i++ ) {
+        qboolean matches;
+
+				name = sysFiles[ i ];
+				length = strlen( name );
+
+        matches = filter && filter[0] != '\0' 
+          && matchDivisor > 0 
+          && (float)levenshtein( filter, name ) / length < matchDivisor;
+
+        if((!(flags & FS_MATCH_EITHER) && pathMatches && matches)
+          || ((flags & FS_MATCH_EITHER) && (pathMatches || matches)))
+  				nfiles = FS_AddFileToList( sysFiles[ i ], list, nfiles );
+        else if (flags & FS_MATCH_STRIP) {
+          name = FS_SimpleFilename(sysFiles[ i ]);
+          COM_StripExtension(name, normalName, MAX_QPATH);
+          length = strlen( normalName );
+          
+          matches = filter && filter[0] != '\0' 
+            && matchDivisor > 0 
+            && (float)levenshtein( filter, normalName ) / length < matchDivisor;
+
+          if((!(flags & FS_MATCH_EITHER) && pathMatches && matches)
+            || ((flags & FS_MATCH_EITHER) && (pathMatches || matches)))
+            nfiles = FS_AddFileToList( sysFiles[ i ], list, nfiles );
+        }
+			}
+			Sys_FreeFileList( sysFiles );
+		}		
+	}
+
+	*numfiles = nfiles;
+
+	if ( !nfiles ) {
+		return NULL;
+	}
+
+	listCopy = Z_Malloc( ( nfiles + 1 ) * sizeof( listCopy[0] ) );
+	for ( i = 0 ; i < nfiles ; i++ ) {
+		listCopy[i] = list[i];
+	}
+	listCopy[i] = NULL;
+
+	return listCopy;
+}
+#endif
+
+
 /*
 ===============
 FS_ListFilteredFiles
@@ -5890,6 +6026,15 @@ int FS_FTell( fileHandle_t f ) {
 void FS_Flush( fileHandle_t f ) 
 {
 	fflush( fsh[f].handleFiles.file.o );
+}
+
+
+const char *FS_SimpleFilename(const char *filename) {
+  static char normalName[MAX_OSPATH];
+  const char *basename = strrchr( filename, PATH_SEP );
+  basename = basename == NULL ? filename : (basename + 1);
+  COM_StripExtension(basename, normalName, MAX_QPATH);
+  return normalName;
 }
 
 

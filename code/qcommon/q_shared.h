@@ -56,6 +56,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
 //===========================================================================
+// show did you mean? results for map names, cvars, command names, etc
+#define USE_DIDYOUMEAN 1
 
 //#define USE_MULTIVM_CLIENT 1
 //#ifndef __WASM__
@@ -863,6 +865,11 @@ const char *Com_SkipCharset( const char *s, const char *sep );
 void Com_RandomBytes( byte *string, int len );
 
 void Com_SortFileList( char **list, int nfiles, int fastSort );
+#ifdef USE_DIDYOUMEAN
+const char *FS_SimpleFilename(const char *filename);
+int levenshtein(const char *s, const char *t);
+char  **FS_ListNearestFiles( const char *pathFilter, const char *filter, int *numfiles, float matchDivisor, int flags );
+#endif
 
 // mode parm for FS_FOpenFile
 typedef enum {
