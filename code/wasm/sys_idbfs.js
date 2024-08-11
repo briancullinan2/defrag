@@ -1,5 +1,4 @@
 const DB_STORE_NAME = 'FILE_DATA';
-const MODNAME = 'demoq3';
 
 function openDatabase(noWait) {
   if(FS.database) {
