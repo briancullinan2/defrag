@@ -8,9 +8,9 @@ let soundEffects = {}
 // So that we don't keep retrying missing sounds
 const REMOTE_SOUNDS = {}
 function S_CodecLoad (name, info) {
-  if(!SND.inited) {
-    return 0
-  }
+  //if(!SND.inited) {
+  //  return 0
+  //}
   let filenameStr = addressToString(name)
   if(filenameStr.length == 0) {
     return 0

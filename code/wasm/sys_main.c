@@ -209,10 +209,15 @@ Q_EXPORT int _start( int argc, char* argv[] )
 	Sys_SetStatus("Starting up...\n");
 
 	Com_Init( cmdline );
+
+	Sys_SetStatus("Starting network...\n");
+
 	NET_Init();
 
 	// JavaScript console doesn't report input
   Cvar_Set( "ttycon", "0" );
+
+	Sys_SetStatus("Startup complete...\n");
 
   //Browser.requestAnimationFrame(_Sys_Frame);
   //var timeUntilNextTick = Math.max(0, Browser.mainLoop.tickStartTime + value - Sys_Milliseconds)|0;

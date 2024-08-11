@@ -368,9 +368,7 @@ static sfxHandle_t S_Base_RegisterSound( const char *name, qboolean compressed )
 		return 0;
 	}
 
-#ifndef __WASM__
 	if ( sfx->soundData ) {
-#endif
 		if ( sfx->defaultSound ) {
 #ifndef __WASM__
 			Com_Printf( S_COLOR_YELLOW "WARNING: could not find %s - using default\n", sfx->soundName );
@@ -378,9 +376,7 @@ static sfxHandle_t S_Base_RegisterSound( const char *name, qboolean compressed )
 			return 0;
 		}
 		return sfx - s_knownSfx;
-#ifndef __WASM__
 	}
-#endif
 
 	sfx->inMemory = qfalse;
 	sfx->soundCompressed = compressed;
@@ -430,7 +426,9 @@ static void S_memoryLoad( sfx_t *sfx ) {
 	// load the sound file
 	if ( !S_LoadSound ( sfx ) ) {
 		Com_DPrintf( S_COLOR_YELLOW "WARNING: couldn't load sound: %s\n", sfx->soundName );
+#ifndef __WASM__ // need multiple chances to load because it might have been remote
 		sfx->defaultSound = qtrue;
+#endif
 	}
 
 	sfx->inMemory = qtrue;

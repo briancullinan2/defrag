@@ -405,6 +405,7 @@ WASI_INCLUDES  := \
 
 BASE_CFLAGS    += -fno-rtti -Wall \
 	-Wimplicit -fstrict-aliasing  -fno-inline \
+  -Wbad-function-cast -Wcast-function-type \
 	-ftree-vectorize -fsigned-char -MMD \
 	-fno-short-enums  -fPIC \
   -DNO_VM_COMPILED=1 -fno-common  \

@@ -3434,7 +3434,7 @@ void CL_StartHunkUsers( void ) {
 	}
 
 #ifdef __WASM__
-	if(!first_click)
+//	if(!first_click)
 #endif
 	if ( !cls.soundStarted ) {
 		cls.soundStarted = qtrue;

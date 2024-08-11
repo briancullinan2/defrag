@@ -261,7 +261,8 @@ function Sys_Error(fmt, args) {
 
 function Sys_SetStatus(status, replacementStr) {
 	// TODO: something like  window.title = , then setTimeout( window.title = 'Quake3e' again)
-	
+	console.log(addressToString(status), replacementStr)
+
 }
 
 function CL_MenuModified(oldValue, newValue, cvar) {
