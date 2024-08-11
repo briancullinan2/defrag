@@ -4492,7 +4492,7 @@ void CL_Init( void ) {
 	cl_guidServerUniq = Cvar_Get( "cl_guidServerUniq", "1", CVAR_ARCHIVE_ND );
 	Cvar_SetDescription( cl_guidServerUniq, "Makes cl_guid unique for each server." );
 
-#ifdef __WASM__
+#if 0 //def __WASM__
 	//extern void CL_MenuModified(char *oldValue, char *newValue, cvar_t *cv);
 	//Cvar_SetModifiedFunc(Cvar_Get("ui_breadCrumb", "", CVAR_TEMP), CL_MenuModified);
 	cl_returnURL = Cvar_Get("cl_returnURL", "", CVAR_TEMP);
